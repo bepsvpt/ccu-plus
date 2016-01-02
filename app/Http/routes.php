@@ -1,16 +1,16 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Application Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register all of the routes for an application.
-| It's a breeze. Simply tell Laravel the URIs it should respond to
-| and give it the controller to call when that URI is requested.
-|
-*/
+use Illuminate\Routing\Router;
 
-Route::get('/', function () {
-    return view('welcome');
+/** @var Router $router */
+
+$router->get('/', ['uses' => 'HomeController@home']);
+
+$router->group(['domain' => 'ecourse.ccu.plus'], function (Router $router) {
+    $router->get('/', ['uses' => 'HomeController@home']);
+});
+
+$router->group(['domain' => 'sso.ccu.plus', 'namespace' => 'Sso', 'as' => 'sso.'], function (Router $router) {
+    $router->post('sign-in', ['as' => 'signIn', 'uses' => 'AuthController@signIn']);
+    $router->get('sign-out', ['as' => 'signOut', 'uses' => 'AuthController@signOut']);
 });
