@@ -14,5 +14,6 @@ $router->group(['middleware' => ['web']], function (Router $router) {
     $router->group(['domain' => 'sso.ccu.plus', 'namespace' => 'Sso', 'as' => 'sso.'], function (Router $router) {
         $router->post('sign-in', ['as' => 'signIn', 'uses' => 'AuthController@signIn']);
         $router->get('sign-out', ['as' => 'signOut', 'uses' => 'AuthController@signOut']);
+        $router->post('sign-up', ['as' => 'signUp', 'uses' => 'AuthController@signUp']);
     });
 });
