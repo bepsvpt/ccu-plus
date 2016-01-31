@@ -2,6 +2,7 @@ let Vue = require('vue');
 
 export default {
   '/': {
+    name: 'home',
     component: Vue.extend({
       template: `<h1>Hello World!</h1>`
     })

@@ -1,7 +1,23 @@
+<style lang="scss">
+    html {
+        overflow-y:scroll;
+    }
+
+    body {
+        display: flex;
+        min-height: 100vh;
+        flex-direction: column;
+    }
+
+    main {
+        flex: 1 0 auto;
+    }
+</style>
+
 <template>
     <app-header></app-header>
 
-    <main>
+    <main class="container">
         <router-view></router-view>
     </main>
 
