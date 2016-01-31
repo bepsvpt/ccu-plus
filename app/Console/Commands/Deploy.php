@@ -55,12 +55,12 @@ class Deploy extends Command
     }
 
     /**
-     * composer related update
+     * composer related update.
      */
     protected function composerUpdate()
     {
         // 取得 composer 路徑
-        $path = realpath(base_path() . '/../../composer/composer');
+        $path = realpath(base_path().'/../../composer/composer');
 
         // 設置 composer home 目錄
         $this->setComposerHome();
@@ -75,20 +75,20 @@ class Deploy extends Command
     }
 
     /**
-     * 設置 composer home 環境變數
+     * 設置 composer home 環境變數.
      *
      * @return void
      */
     protected function setComposerHome()
     {
-        $dir = realpath(base_path() . '/../../composer');
+        $dir = realpath(base_path().'/../../composer');
 
         putenv("HOME={$dir}");
         putenv("COMPOSER_HOME={$dir}");
     }
 
     /**
-     * 判斷是否要重新啟動 queue
+     * 判斷是否要重新啟動 queue.
      *
      * @return bool
      */
@@ -103,7 +103,7 @@ class Deploy extends Command
 
                 return true;
 
-            default :
+            default:
                 return false;
         }
     }
@@ -125,7 +125,7 @@ class Deploy extends Command
     }
 
     /**
-     * Put the application into maintenance mode
+     * Put the application into maintenance mode.
      *
      * @return void
      */
@@ -139,7 +139,7 @@ class Deploy extends Command
     }
 
     /**
-     * Bring the application out of maintenance mode
+     * Bring the application out of maintenance mode.
      *
      * @return void
      */
@@ -153,7 +153,7 @@ class Deploy extends Command
     }
 
     /**
-     * 清除快取
+     * 清除快取.
      *
      * @return void
      */
@@ -169,7 +169,7 @@ class Deploy extends Command
     }
 
     /**
-     * 設置快取
+     * 設置快取.
      *
      * @return void
      */
@@ -184,7 +184,7 @@ class Deploy extends Command
     }
 
     /**
-     * 執行外部程式指令
+     * 執行外部程式指令.
      *
      * @param string $command
      * @return string
@@ -197,7 +197,7 @@ class Deploy extends Command
 
         $process->run();
 
-        if ( ! $process->isSuccessful()) {
+        if (! $process->isSuccessful()) {
             throw new RuntimeException($process->getErrorOutput());
         }
 
@@ -205,7 +205,7 @@ class Deploy extends Command
     }
 
     /**
-     * 檢查指定檔案是否更改過
+     * 檢查指定檔案是否更改過.
      *
      * @param string $path
      * @return bool

@@ -36,7 +36,7 @@ return [
     ],
 
     'github-webhook' => [
-        'secret' => env('GITHUB_WEBHOOK_SECRET')
+        'secret' => env('GITHUB_WEBHOOK_SECRET'),
     ],
 
 ];

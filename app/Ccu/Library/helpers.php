@@ -6,7 +6,8 @@ if (! function_exists('file_build_path')) {
      *
      * @return string
      */
-    function file_build_path() {
+    function file_build_path()
+    {
         return implode(DIRECTORY_SEPARATOR, func_get_args());
     }
 }
