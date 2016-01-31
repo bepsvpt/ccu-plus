@@ -27,7 +27,7 @@ class Category extends Entity
      * @var array
      */
     protected $fillable = [
-        'category', 'value', 'remark',
+        'category', 'name', 'remark',
     ];
 
     /**
@@ -51,7 +51,7 @@ class Category extends Entity
         $categories = $categories->filter(function (Category $item) use ($category, $issetName, $name) {
             $filter = $item->getAttribute('category') === $category;
 
-            return $issetName ? ($filter && $item->getAttribute('value') === $name) : $filter;
+            return $issetName ? ($filter && $item->getAttribute('name') === $name) : $filter;
         });
 
         return $firstId

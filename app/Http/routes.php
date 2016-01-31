@@ -6,7 +6,7 @@ use Illuminate\Routing\Router;
 
 $router->get('/', ['middleware' => ['web', 'secure-header'], 'as' => 'home', 'uses' => 'HomeController@home']);
 
-$router->group(['prefix' => 'api', 'namespace' => 'Api', 'middleware' => ['web']], function (Router $router) {
+$router->group(['prefix' => 'api', 'namespace' => 'Api', 'middleware' => ['web', 'auth']], function (Router $router) {
     $router->group(['prefix' => 'v1', 'namespace' => 'V1'], function (Router $router) {
         $router->group(['prefix' => 'auth'], function (Router $router) {
             $router->post('sign-in', ['as' => 'signIn', 'uses' => 'AuthController@signIn']);

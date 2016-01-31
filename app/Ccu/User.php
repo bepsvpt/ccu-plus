@@ -3,11 +3,13 @@
 namespace App\Ccu;
 
 use App\Ccu\Core\Entity;
+use Illuminate\Auth\Authenticatable;
+use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 
-//use Illuminate\Foundation\Auth\User as Authenticatable;
-
-class User extends Entity
+class User extends Entity implements AuthenticatableContract
 {
+    use Authenticatable;
+
     /**
      * The table associated with the model.
      *

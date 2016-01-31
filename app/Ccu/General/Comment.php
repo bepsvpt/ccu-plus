@@ -45,7 +45,7 @@ class Comment extends Entity
      */
     public function comments()
     {
-        return $this->hasMany(self::class);
+        return $this->hasMany(static::class);
     }
 
     /**
