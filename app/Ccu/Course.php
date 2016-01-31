@@ -31,7 +31,7 @@ class Course extends Entity
     protected $fillable = [
         'semester_id', 'code', 'department_id', 'name',
     ];
-    
+
     /**
      * 課程所屬學期
      *
@@ -53,7 +53,7 @@ class Course extends Entity
     }
 
     /**
-     * 通識課程的向度
+     * 通識課程的向度.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
@@ -63,7 +63,7 @@ class Course extends Entity
     }
 
     /**
-     * 課程授課教授
+     * 課程授課教授.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
@@ -73,7 +73,7 @@ class Course extends Entity
     }
 
     /**
-     * 課程的評論
+     * 課程的評論.
      *
      * @return \Illuminate\Database\Eloquent\Relations\MorphMany
      */
@@ -83,7 +83,7 @@ class Course extends Entity
     }
 
     /**
-     * 課程的考古題
+     * 課程的考古題.
      *
      * @return \Illuminate\Database\Eloquent\Relations\MorphMany
      */

@@ -13,7 +13,7 @@ class Entity extends Eloquent
     const MINUTES_PER_MONTH = 40320;
 
     /**
-     * CCU Plus Version
+     * CCU Plus Version.
      */
     const VERSION = '0.0.1';
 
