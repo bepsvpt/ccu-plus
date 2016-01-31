@@ -38,7 +38,6 @@ class Category extends Entity
      */
     public static function getCategories($category = '', $name = '', $firstId = false)
     {
-        /** @var $categories \Illuminate\Database\Eloquent\Collection|static[] */
         $categories = Cache::remember('categoriesTable', static::MINUTES_PER_WEEK, function () {
             return static::all();
         });
