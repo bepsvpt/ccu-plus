@@ -10,7 +10,7 @@ class Entity extends Eloquent
     const MINUTES_HALF_DAY = 720;
     const MINUTES_PER_DAY = 1440;
     const MINUTES_PER_WEEK = 10080;
-    const MINUTES_PER_MONTH = 40320;
+    const MINUTES_PER_MONTH = 43200;
 
     /**
      * CCU Plus Version.

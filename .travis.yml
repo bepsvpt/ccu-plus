@@ -1,0 +1,22 @@
+# Required to run your project under the correct environment.
+language: php
+
+# Versions of PHP you want your project run with.
+php:
+  - 7.0
+  - hhvm
+
+services:
+  - mysql
+
+# Commands to be run before your environment runs.
+before_script:
+  - cp .env.travis .env
+  - mysql -e 'create database ccu_plus;'
+  - composer self-update
+  - composer install --no-interaction
+  - php artisan key:generate
+  - php artisan migrate
+
+# Commands you want to run that will verify your build.
+script: phpunit
