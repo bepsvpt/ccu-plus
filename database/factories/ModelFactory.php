@@ -1,21 +1,51 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Model Factories
-|--------------------------------------------------------------------------
-|
-| Here you may define all of your model factories. Model factories give
-| you a convenient way to create models for testing and seeding your
-| database. Just tell the factory how a default model should look.
-|
-*/
+/** @var $factory \Illuminate\Database\Eloquent\Factory */
 
-$factory->define(App\Ccu\User::class, function (Faker\Generator $faker) {
+use App\Ccu\General\Category;
+
+function categoryRandomElement($category)
+{
+    return Category::getCategories($category)->random()->getAttribute('id');
+}
+
+$factory->define(\App\Ccu\User::class, function (Faker\Generator $faker) {
     return [
-        'name' => $faker->name,
-        'email' => $faker->email,
+        'username' => $faker->userName,
         'password' => bcrypt(str_random(10)),
-        'remember_token' => str_random(10),
+        'email' => $faker->email,
+        'nickname' => $faker->name,
+    ];
+});
+
+$factory->define(\App\Ccu\Course::class, function (Faker\Generator $faker) {
+    return [
+        'semester_id' => categoryRandomElement('semester'),
+        'code' => $faker->numberBetween(1000000, 9999999),
+        'department_id' => categoryRandomElement('department'),
+        'name' => $faker->name,
+    ];
+});
+
+$factory->define(\App\Ccu\General\Attachment::class, function (Faker\Generator $faker) {
+    return [
+        'sha256' => $faker->sha256,
+        'info' => ['name' => $faker->name, 'size' => $faker->numberBetween(1, 1024)],
+        'path' => $faker->sentence,
+        'downloads' => $faker->numberBetween(0, 65536),
+        'created_at' => $faker->dateTime,
+    ];
+});
+
+$factory->define(\App\Ccu\General\Comment::class, function (Faker\Generator $faker) {
+    return [
+        'content' => $faker->text,
+        'anonymous' => $faker->boolean(),
+    ];
+});
+
+$factory->define(\App\Ccu\General\Like::class, function (Faker\Generator $faker) {
+    return [
+        'created_at' => $faker->dateTime,
     ];
 });

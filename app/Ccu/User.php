@@ -2,9 +2,10 @@
 
 namespace App\Ccu;
 
-use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\Ccu\Core\Entity;
+//use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class User extends Authenticatable
+class User extends Entity
 {
     /**
      * The table associated with the model.
@@ -19,7 +20,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'username', 'password', 'email', 'nickname',
     ];
 
     /**
