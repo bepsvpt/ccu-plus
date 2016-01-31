@@ -8,28 +8,28 @@ use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
 class ApiController extends Controller
 {
     /**
-     * Http response status
+     * Http response status.
      *
      * @var int
      */
     private $status = SymfonyResponse::HTTP_OK;
 
     /**
-     * Http response content
+     * Http response content.
      *
      * @var mixed
      */
     private $data = [];
 
     /**
-     * Additional Http response headers
+     * Additional Http response headers.
      *
      * @var array
      */
     private $headers = [];
 
     /**
-     * Error data
+     * Error data.
      *
      * @var array
      */
@@ -39,7 +39,7 @@ class ApiController extends Controller
     ];
 
     /**
-     * Http response
+     * Http response.
      *
      * @return \Illuminate\Http\JsonResponse
      */
@@ -49,7 +49,7 @@ class ApiController extends Controller
     }
 
     /**
-     * Http success response
+     * Http success response.
      *
      * @param $status
      * @return \Illuminate\Http\JsonResponse
@@ -60,7 +60,7 @@ class ApiController extends Controller
     }
 
     /**
-     * Http error response
+     * Http error response.
      *
      * @param int $status
      * @return \Illuminate\Http\JsonResponse
@@ -76,7 +76,7 @@ class ApiController extends Controller
     }
 
     /**
-     * Http ok response
+     * Http ok response.
      *
      * @link https://en.wikipedia.org/wiki/List_of_HTTP_status_codes#200
      *
@@ -88,7 +88,7 @@ class ApiController extends Controller
     }
 
     /**
-     * Http created response
+     * Http created response.
      *
      * @link https://en.wikipedia.org/wiki/List_of_HTTP_status_codes#201
      *
@@ -100,7 +100,7 @@ class ApiController extends Controller
     }
 
     /**
-     * Http unauthorized response
+     * Http unauthorized response.
      *
      * @link https://en.wikipedia.org/wiki/List_of_HTTP_status_codes#401
      *
@@ -112,7 +112,7 @@ class ApiController extends Controller
     }
 
     /**
-     * Http forbidden response
+     * Http forbidden response.
      *
      * @link https://en.wikipedia.org/wiki/List_of_HTTP_status_codes#403
      *
@@ -124,7 +124,7 @@ class ApiController extends Controller
     }
 
     /**
-     * Http not found response
+     * Http not found response.
      *
      * @link https://en.wikipedia.org/wiki/List_of_HTTP_status_codes#404
      *
@@ -136,7 +136,7 @@ class ApiController extends Controller
     }
 
     /**
-     * Http unprocessable entity response
+     * Http unprocessable entity response.
      *
      * @link https://en.wikipedia.org/wiki/List_of_HTTP_status_codes#422
      *
@@ -148,7 +148,7 @@ class ApiController extends Controller
     }
 
     /**
-     * Http unknown error response
+     * Http unknown error response.
      *
      * @link https://en.wikipedia.org/wiki/List_of_HTTP_status_codes#520
      *
