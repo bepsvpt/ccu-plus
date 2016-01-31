@@ -1,5 +1,6 @@
 vendor/
 node_modules/
+public/js/
 
 Homestead.yaml
 Homestead.json

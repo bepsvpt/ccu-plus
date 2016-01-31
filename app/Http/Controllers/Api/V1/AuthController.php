@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use App\Http\Controllers\Controller;
+use Auth;
 
-class AuthController extends Controller
+class AuthController extends ApiController
 {
     public function signIn()
     {
@@ -12,6 +12,9 @@ class AuthController extends Controller
 
     public function signOut()
     {
+        Auth::guard()->logout();
+
+        return $this->responseOk();
     }
 
     public function signUp()
