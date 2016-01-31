@@ -11,7 +11,7 @@ class CategoryTest extends TestCase
     use DatabaseTransactions;
 
     /**
-     * 測試資料
+     * 測試資料.
      *
      * @var array
      */
@@ -30,7 +30,7 @@ class CategoryTest extends TestCase
     }
 
     /**
-     * 建置測試資料
+     * 建置測試資料.
      *
      * @return void
      */
