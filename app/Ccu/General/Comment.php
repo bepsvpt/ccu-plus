@@ -39,17 +39,17 @@ class Comment extends Entity
     ];
 
     /**
-     * 評論的評論
+     * 評論的評論.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function comments()
     {
-        return $this->hasMany(Comment::class);
+        return $this->hasMany(self::class);
     }
 
     /**
-     * 評論按讚資料
+     * 評論按讚資料.
      *
      * @return \Illuminate\Database\Eloquent\Relations\MorphMany
      */

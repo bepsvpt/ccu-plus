@@ -42,6 +42,6 @@ class Attachment extends Entity
      * @var array
      */
     protected $casts = [
-        'info' => 'array'
+        'info' => 'array',
     ];
 }

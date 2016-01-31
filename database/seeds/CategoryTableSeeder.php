@@ -147,7 +147,7 @@ class CategoryTableSeeder extends Seeder
             foreach ($items as $item) {
                 Category::firstOrCreate([
                     'category' => $category,
-                    'value' => $item
+                    'value' => $item,
                 ]);
             }
         }

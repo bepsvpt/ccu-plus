@@ -2,7 +2,7 @@
 
 use Illuminate\Routing\Router;
 
-/** @var Router $router */
+/* @var Router $router */
 
 $router->get('/', ['middleware' => ['web', 'secure-header'], 'as' => 'home', 'uses' => 'HomeController@home']);
 

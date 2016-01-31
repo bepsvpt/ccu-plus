@@ -3,6 +3,7 @@
 namespace App\Ccu;
 
 use App\Ccu\Core\Entity;
+
 //use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Entity

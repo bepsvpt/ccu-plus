@@ -1,7 +1,6 @@
 <?php
 
 /** @var $factory \Illuminate\Database\Eloquent\Factory */
-
 use App\Ccu\General\Category;
 
 function categoryRandomElement($category)
