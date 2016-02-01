@@ -10,13 +10,18 @@
                     <h5 class="white-text">Links</h5>
                     <ul>
                         <li>
+                            <a class="grey-text text-lighten-3" href="https://www.facebook.com/Changing.CCU" target="_blank">
+                                <span><i class="fa fa-facebook-official fa-fw"></i> Facebook</span>
+                            </a>
+                        </li>
+                        <li>
                             <a class="grey-text text-lighten-3" href="https://github.com/BePsvPT/CCU-Plus" target="_blank">
                                 <span><i class="fa fa-github fa-fw"></i> Github</span>
                             </a>
                         </li>
                         <li>
-                            <a class="grey-text text-lighten-3" href="https://www.facebook.com/Changing.CCU" target="_blank">
-                                <span><i class="fa fa-facebook-official fa-fw"></i> Facebook</span>
+                            <a class="grey-text text-lighten-3" href="https://onemid.net" target="_blank">
+                                <span><i class="fa fa-sun-o fa-fw"></i> onemid.net</span>
                             </a>
                         </li>
                     </ul>
@@ -26,7 +31,7 @@
         <div class="footer-copyright">
             <div class="container">
                 <span>© 2016 ccu.plus</span>
-                <a class="grey-text text-lighten-4 right" href="#!">More Links</a>
+                <span class="grey-text text-lighten-4 right">Collaborator: <a class="grey-text text-lighten-4" href="https://www.facebook.com/1281974381" target="_blank">Gary Gong</a></span>
             </div>
         </div>
     </footer>
