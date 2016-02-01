@@ -2,8 +2,8 @@
 
 namespace App\Http\Middleware;
 
+use Auth;
 use Closure;
-use Illuminate\Support\Facades\Auth;
 
 class Authenticate
 {
@@ -21,7 +21,7 @@ class Authenticate
             if ($request->ajax()) {
                 return response('Unauthorized.', 401);
             } else {
-                return redirect()->guest('login');
+                return redirect()->route('home');
             }
         }
 

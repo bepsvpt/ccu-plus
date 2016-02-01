@@ -4,11 +4,16 @@ let VueRouter = require('vue-router');
 Vue.use(require('vue-resource'));
 Vue.use(VueRouter);
 
+Vue.http.headers.common['X-XSRF-TOKEN'] = decodeURIComponent(('; ' + document.cookie).split('; XSRF-TOKEN=').pop().split(';').shift());
+
 import App from './components/main.vue';
-import routes from './routes';
+import Arrive from './components/arrive';
+import router from './routes';
 
-let router = new VueRouter();
+Arrive();
 
-router.map(routes);
+let Router = new VueRouter();
 
-router.start(App, 'main');
+Router.map(router.routes);
+
+Router.start(App, 'main');

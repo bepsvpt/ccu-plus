@@ -31,7 +31,7 @@
     export default {
         data() {
             return {
-                'sign-in': null
+                user: null
             };
         },
 
@@ -40,10 +40,18 @@
             'app-footer': footer
         },
 
+        events: {
+            'http-success'(response) {
+            },
+
+            'http-error'(response) {
+            }
+        },
+
         created() {
             this.$http.get('/api/v1/profile').then((response) => {
-                if (Object.keys(response.data).length > 0) {
-                    this.$data['sign-in'] = response.data;
+                if (response.data.hasOwnProperty('username')) {
+                    this.$data['user'] = response.data;
                 }
             });
         }
