@@ -65,10 +65,15 @@ class HomeController extends Controller
     /**
      * Reset opcache.
      *
+     * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function opcacheReset()
+    public function opcacheReset(Request $request)
     {
-        return response()->json(opcache_reset(), 200);
+        if ('127.0.0.1' === $request->ip()) {
+            opcache_reset();
+        }
+
+        return response()->json('', 200);
     }
 }
