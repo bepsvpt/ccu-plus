@@ -6,7 +6,7 @@
 
 <template>
     <header>
-        <nav>
+        <nav class="cyan darken-1">
             <div class="nav-wrapper container">
                 <a v-link="{name: 'home'}" class="brand-logo">Logo</a>
                 <ul id="nav-mobile" class="right hide-on-med-and-down">
