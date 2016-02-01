@@ -18,5 +18,4 @@ Vue.component('recaptcha', Recaptcha);
 let Router = new VueRouter();
 
 Router.map(router.routes);
-
 Router.start(App, 'main');
