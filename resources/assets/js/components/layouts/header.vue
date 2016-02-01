@@ -10,14 +10,15 @@
             <div class="nav-wrapper container">
                 <a v-link="{name: 'home'}" class="brand-logo">Logo</a>
                 <ul id="nav-mobile" class="right hide-on-med-and-down">
-                    <li><a v-link="{name: 'courses'}">課程評論</a></li>
-                    <li><a v-link="{name: 'ecourse-lite'}">Ecourse Lite</a></li>
+                    <li><a v-link="{name: 'courses'}"><i class="fa fa-book fa-fw"></i> 課程評論</a></li>
+                    <li><a v-link="{name: 'ecourse-lite'}"><i class="fa fa-cloud fa-fw"></i> Ecourse Lite</a></li>
                     <template v-if="$parent.$data['user']">
-                        <li><a @click="signOut()">登出</a></li>
+                        <li><a><i class="fa fa-user fa-fw"></i> {{ $parent.$data['user'].nickname }}</a></li>
+                        <li><a @click="signOut()"><i class="fa fa-sign-out fa-fw"></i> 登出</a></li>
                     </template>
                     <template v-else>
-                        <li><a data-target="sign-in-modal" class="modal-trigger">登入</a></li>
-                        <li><a v-link="{name: 'sign-up'}">註冊</a></li>
+                        <li><a data-target="sign-in-modal" class="modal-trigger"><i class="fa fa-sign-in fa-fw"></i> 登入</a></li>
+                        <li><a v-link="{name: 'sign-up'}"><i class="fa fa-user-plus fa-fw"></i> 註冊</a></li>
                     </template>
                 </ul>
             </div>
