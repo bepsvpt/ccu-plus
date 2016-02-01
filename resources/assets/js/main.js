@@ -6,11 +6,14 @@ Vue.use(VueRouter);
 
 Vue.http.headers.common['X-XSRF-TOKEN'] = decodeURIComponent(('; ' + document.cookie).split('; XSRF-TOKEN=').pop().split(';').shift());
 
-import App from './components/main.vue';
+import App from './templates/main.vue';
 import Arrive from './components/arrive';
+import Recaptcha from './components/recaptcha.vue';
 import router from './routes';
 
 Arrive();
+
+Vue.component('recaptcha', Recaptcha);
 
 let Router = new VueRouter();
 

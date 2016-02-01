@@ -1,4 +1,4 @@
-import signUp from './components/sign-up.vue';
+import signUp from './templates/sign-up.vue';
 
 let Vue = require('vue');
 

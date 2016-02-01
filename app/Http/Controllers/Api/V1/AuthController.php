@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\V1;
 
+use App\Http\Requests\Api\V1;
 use Auth;
 use Illuminate\Http\Request;
 
@@ -34,7 +35,12 @@ class AuthController extends ApiController
         return $this->responseOk();
     }
 
-    public function signUp()
+    /**
+     * Sign up the application.
+     *
+     * @param V1\RegisterRequest $request
+     */
+    public function signUp(V1\RegisterRequest $request)
     {
     }
 }

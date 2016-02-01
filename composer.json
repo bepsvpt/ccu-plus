@@ -8,6 +8,7 @@
     "laravel/framework": "5.2.*",
     "bepsvpt/laravel-security-header": "~1.1",
     "doctrine/dbal": "~2.5",
+    "greggilbert/recaptcha": "~2.1",
     "guzzlehttp/guzzle": "~6.1",
     "nesbot/carbon": "~1.20",
     "predis/predis": "~1.0"

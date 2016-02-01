@@ -67,6 +67,12 @@
 
             <div class="row">
                 <div class="col s12">
+                    <recaptcha></recaptcha>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col s12">
                     <button class="btn waves-effect waves-light right" type="submit" name="action">
                         <span>註冊</span><i class="material-icons right">send</i>
                     </button>
