@@ -5,7 +5,7 @@ namespace App\Ccu\Validator;
 use GuzzleHttp\Client;
 use Illuminate\Validation\Validator;
 
-class RegisterValidator
+class SignUpValidator
 {
     /**
      * @var Client

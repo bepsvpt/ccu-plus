@@ -101,7 +101,9 @@
                         redirect: {
                             name: 'home'
                         }
-                    })
+                    });
+
+                    this.$parent.$data['user'] = response.data;
                 }, (response) => {
                     this.$dispatch('http-response', response);
 

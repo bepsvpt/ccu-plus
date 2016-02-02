@@ -5,23 +5,22 @@ namespace App\Http\Controllers\Api\V1;
 use App\Ccu\User\User;
 use App\Http\Requests\Api\V1;
 use Auth;
-use Illuminate\Http\Request;
 
 class AuthController extends ApiController
 {
     /**
      * Sign in the application.
      *
-     * @param Request $request
+     * @param V1\SignInRequest $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function signIn(Request $request)
+    public function signIn(V1\SignInRequest $request)
     {
-        if (! Auth::guard()->attempt($request->only(['username', 'password']), true)) {
-            return $this->setMessages(['Invalid username or password.'])->responseUnprocessableEntity();
-        }
+        $user = User::where('username', $request->input('username'))->first();
 
-        return $this->setData(Auth::guard()->user())->responseOk();
+        Auth::guard()->login($user, true);
+
+        return $this->setData($user)->responseOk();
     }
 
     /**
@@ -39,10 +38,10 @@ class AuthController extends ApiController
     /**
      * Sign up the application.
      *
-     * @param V1\RegisterRequest $request
+     * @param V1\SignUpRequest $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function signUp(V1\RegisterRequest $request)
+    public function signUp(V1\SignUpRequest $request)
     {
         $user = User::create($request->only(['username', 'nickname', 'email']));
 
