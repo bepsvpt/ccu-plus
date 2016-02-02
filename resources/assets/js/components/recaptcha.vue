@@ -56,12 +56,12 @@
                 if ('undefined' === typeof window.grecaptchaLoaded) {
                     window.grecaptchaLoaded = function (callable) {
                         // 如果 callable 不是 undefined，代表是由 vue-recaptcha component 呼叫，此時將
-                        // callable push 到 queue 中；如果是 undefined，則代表是由 recaptcha api 呼叫，
+                        // callable push 到 stack 中；如果是 undefined，則代表是由 recaptcha api 呼叫，
                         // 開始 rendor recaptcha
                         if ('undefined' !== typeof callable) {
-                            grecaptchaLoaded.queue.push(callable);
+                            grecaptchaLoaded.stack.push(callable);
                         } else {
-                            while (callable = grecaptchaLoaded.queue.pop()) {
+                            while (callable = grecaptchaLoaded.stack.pop()) {
                                 callable();
                             }
 
@@ -69,7 +69,7 @@
                         }
                     };
 
-                    window.grecaptchaLoaded.queue = [];
+                    window.grecaptchaLoaded.stack = [];
                 }
 
                 window.grecaptchaLoaded(this.render);
