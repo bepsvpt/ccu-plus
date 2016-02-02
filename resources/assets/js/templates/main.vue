@@ -28,6 +28,7 @@
 <script>
     import header from './layouts/header.vue';
     import footer from './layouts/footer.vue';
+    import events from '../components/events';
 
     export default {
         data() {
@@ -41,13 +42,7 @@
             'app-footer': footer
         },
 
-        events: {
-            'http-success'(response) {
-            },
-
-            'http-error'(response) {
-            }
-        },
+        events: events,
 
         created() {
             this.$http.get('/api/v1/profile').then((response) => {

@@ -93,9 +93,9 @@
         methods: {
             signUp() {
                 this.$http.post('/api/v1/auth/sign-up', this.form).then((response) => {
-                    this.$dispatch('http-success', response)
+                    this.$dispatch('http-response', response)
                 }, (response) => {
-                    this.$dispatch('http-error', response);
+                    this.$dispatch('http-response', response);
                 });
             }
         }
