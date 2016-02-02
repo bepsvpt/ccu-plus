@@ -10,9 +10,9 @@
                         v-model="form.username"
                         id="username"
                         type="text"
+                        pattern="\d{9}"
                         class="validate"
                         maxlength="9"
-                        length="9"
                         required
                     >
                     <label for="username">學號</label>
@@ -41,6 +41,8 @@
                         id="nickname"
                         type="text"
                         class="validate"
+                        pattern=".{3,}"
+                        title="至少需三個字"
                         maxlength="12"
                         length="12"
                         required
@@ -67,7 +69,7 @@
 
             <div class="row">
                 <div class="col s12">
-                    <recaptcha></recaptcha>
+                    <recaptcha :g-recaptcha-response.sync="form['g-recaptcha-response']"></recaptcha>
                 </div>
             </div>
 
@@ -86,7 +88,9 @@
     export default {
         data() {
             return {
-                form: {}
+                form: {
+                    'g-recaptcha-response': ''
+                }
             };
         },
 
@@ -100,6 +104,8 @@
                     })
                 }, (response) => {
                     this.$dispatch('http-response', response);
+
+                    this.form['g-recaptcha-response'] = '';
                 });
             }
         }

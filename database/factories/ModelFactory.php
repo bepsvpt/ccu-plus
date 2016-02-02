@@ -8,7 +8,7 @@ function categoryRandomElement($category)
     return Category::getCategories($category)->random()->getAttribute('id');
 }
 
-$factory->define(\App\Ccu\User::class, function (Faker\Generator $faker) {
+$factory->define(\App\Ccu\User\User::class, function (Faker\Generator $faker) {
     return [
         'username' => $faker->userName,
         'password' => bcrypt(str_random(10)),

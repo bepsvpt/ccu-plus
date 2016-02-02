@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Ccu;
+namespace App\Ccu\User;
 
 use App\Ccu\Core\Entity;
 use Illuminate\Auth\Authenticatable;

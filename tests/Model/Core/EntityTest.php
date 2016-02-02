@@ -3,7 +3,7 @@
 namespace Tests\Model\Core;
 
 use App\Ccu\Core\Entity;
-use App\Ccu\User;
+use App\Ccu\User\User;
 use Tests\TestCase;
 
 class EntityTest extends TestCase

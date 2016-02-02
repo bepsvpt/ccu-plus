@@ -83,7 +83,7 @@ return [
     */
 
     'interfaces' => [
-        '\Illuminate\Contracts\Auth\Authenticatable' => config('auth.model', \App\Ccu\User::class),
+        '\Illuminate\Contracts\Auth\Authenticatable' => config('auth.model', \App\Ccu\User\User::class),
     ],
 
     /*

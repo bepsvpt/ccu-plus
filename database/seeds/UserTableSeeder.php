@@ -1,6 +1,6 @@
 <?php
 
-use App\Ccu\User;
+use App\Ccu\User\User;
 use Illuminate\Database\Seeder;
 
 class UserTableSeeder extends Seeder
