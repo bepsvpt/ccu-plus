@@ -10,32 +10,6 @@ let events = {
     const HTTP_UNPROCESSABLE_ENTITY = 422;
     const HTTP_TOO_MANY_REQUESTS = 429;
 
-    function http_ok() {
-    }
-
-    function http_created() {
-    }
-
-    function http_unprocessable_entity() {
-    }
-
-    function http_success() {
-    }
-
-    function http_error() {
-      // Reset recaptcha.
-      let g = document.querySelectorAll('textarea[id^="g-recaptcha-response"]');
-
-      for (let i in g) {
-        if (g.hasOwnProperty(i)) {
-          let tokens = g[i].id.split('-');
-
-          grecaptcha.reset(4 === tokens.length ? +tokens.pop() : 0);
-        }
-
-      }
-    }
-
     function toastSuccess(message) {
       toast(message, 'green');
     }
@@ -53,12 +27,40 @@ let events = {
     }
 
     switch (response.status) {
-      case HTTP_OK: http_ok(); break;
-      case HTTP_CREATED: http_created(); break;
-      case HTTP_UNPROCESSABLE_ENTITY: http_unprocessable_entity(); break;
+      case HTTP_OK:
+        break;
+
+      case HTTP_CREATED:
+        break;
+
+      case HTTP_UNAUTHORIZED:
+        break;
+
+      case HTTP_FORBIDDEN:
+        break;
+
+      case HTTP_NOT_FOUND:
+        break;
+
+      case HTTP_METHOD_NOT_ALLOWED:
+        break;
+
+      case HTTP_CONFLICT:
+        break;
+
+      case HTTP_UNPROCESSABLE_ENTITY:
+        break;
+
+      case HTTP_TOO_MANY_REQUESTS:
+        break;
     }
 
-    response.ok ? http_success() : http_error();
+    if (! response.ok) {
+      // Reset recaptcha.
+      this.$broadcast('recaptcha-reset');
+    } else {
+      //
+    }
 
     if (options.hasOwnProperty('modal-close')) {
       $(options['modal-close']).closeModal();

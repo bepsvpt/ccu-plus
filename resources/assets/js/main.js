@@ -13,8 +13,6 @@ import router from './routes';
 
 Arrive();
 
-Vue.component('recaptcha', Recaptcha);
-
 let Router = new VueRouter();
 
 Router.map(router.routes);
