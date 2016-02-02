@@ -87,10 +87,15 @@
         methods: {
             signIn() {
                 this.$http.post('/api/v1/auth/sign-in', this.form).then((response) => {
-                    $('#sign-in-modal').closeModal();
+                    this.$dispatch('http-response', response, {
+                        'modal-close': '#sign-in-modal'
+                    });
 
                     this.form = {};
+
                     this.$parent.$data['user'] = response.data;
+                }, (response) => {
+                    this.$dispatch('http-response', response);
                 });
             },
 

@@ -6,11 +6,8 @@
     export default {
         data() {
             return {
-                recaptcha: 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-                    let r = Math.random() * 16 | 0,
-                        v = c == 'x' ? r : (r & 0x3 | 0x8);
-
-                    return v.toString(16);
+                recaptcha: 'recaptcha-xxxxxxxx-xxxx'.replace(/[x]/g, function(c) {
+                    return (Math.random() * 16 | 0).toString(16);
                 })
             };
         },

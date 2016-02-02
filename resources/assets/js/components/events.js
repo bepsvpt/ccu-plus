@@ -22,6 +22,12 @@ let events = {
     }
 
     function http_error() {
+      // Reset recaptcha.
+      let count = document.querySelectorAll('div[id^="recaptcha"]').length;
+
+      while (count--) {
+        grecaptcha.reset(count);
+      }
     }
 
     function toastSuccess(message) {
@@ -44,6 +50,12 @@ let events = {
       case HTTP_OK: http_ok(); break;
       case HTTP_CREATED: http_created(); break;
       case HTTP_UNPROCESSABLE_ENTITY: http_unprocessable_entity(); break;
+    }
+
+    response.ok ? http_success() : http_error();
+
+    if (options.hasOwnProperty('modal-close')) {
+      $(options['modal-close']).closeModal();
     }
 
     if (options.hasOwnProperty('redirect') && options.redirect.hasOwnProperty('name')) {
