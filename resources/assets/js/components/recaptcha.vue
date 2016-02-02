@@ -52,9 +52,27 @@
 
         ready() {
             if ('undefined' === typeof  window.grecaptcha) {
-                window.grecaptchaLoaded = () => {
-                    this.render();
-                };
+                // 如果尚未定義 grecaptchaLoaded，則代表是第一個呼叫此函式
+                if ('undefined' === typeof window.grecaptchaLoaded) {
+                    window.grecaptchaLoaded = function (callable) {
+                        // 如果 callable 不是 undefined，代表是由 vue-recaptcha component 呼叫，此時將
+                        // callable push 到 queue 中；如果是 undefined，則代表是由 recaptcha api 呼叫，
+                        // 開始 rendor recaptcha
+                        if ('undefined' !== typeof callable) {
+                            grecaptchaLoaded.queue.push(callable);
+                        } else {
+                            while (callable = grecaptchaLoaded.queue.pop()) {
+                                callable();
+                            }
+
+                            delete window.grecaptchaLoaded;
+                        }
+                    };
+
+                    window.grecaptchaLoaded.queue = [];
+                }
+
+                window.grecaptchaLoaded(this.render);
             } else {
                 this.render();
             }
