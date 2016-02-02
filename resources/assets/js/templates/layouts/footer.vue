@@ -11,7 +11,12 @@
                     <ul>
                         <li>
                             <a class="grey-text text-lighten-3" href="https://www.facebook.com/Changing.CCU" target="_blank">
-                                <span><i class="fa fa-facebook-official fa-fw"></i> Facebook</span>
+                                <span><i class="fa fa-facebook-official fa-fw"></i> 粉絲專頁</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="grey-text text-lighten-3" href="https://goo.gl/forms/3XzPt3bEJZ" target="_blank">
+                                <span><i class="fa fa-file-text fa-fw"></i> 意見回饋</span>
                             </a>
                         </li>
                         <li>

@@ -12,6 +12,7 @@
                 <ul id="nav-mobile" class="right hide-on-med-and-down">
                     <li><a v-link="{name: 'courses'}"><i class="fa fa-book fa-fw"></i> 課程評論</a></li>
                     <li><a v-link="{name: 'ecourse-lite'}"><i class="fa fa-cloud fa-fw"></i> Ecourse Lite</a></li>
+                    <li><a v-link="{name: 'home'}"><i class="fa fa-exchange fa-fw"></i> 二手交易</a></li>
                     <template v-if="$parent.$data['user']">
                         <li><a><i class="fa fa-user fa-fw"></i> {{ $parent.$data['user'].nickname }}</a></li>
                         <li><a @click="signOut()"><i class="fa fa-sign-out fa-fw"></i> 登出</a></li>
