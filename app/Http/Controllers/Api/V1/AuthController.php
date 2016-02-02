@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\V1;
 
+use App\Ccu\User\User;
 use App\Http\Requests\Api\V1;
 use Auth;
 use Illuminate\Http\Request;
@@ -39,8 +40,20 @@ class AuthController extends ApiController
      * Sign up the application.
      *
      * @param V1\RegisterRequest $request
+     * @return \Illuminate\Http\JsonResponse
      */
     public function signUp(V1\RegisterRequest $request)
     {
+        $user = User::create($request->only(['username', 'nickname', 'email']));
+
+        if (! $user->exists) {
+            return $this->responseUnknownError();
+        }
+
+        $user->fresh();
+
+        Auth::guard()->login($user, true);
+
+        return $this->setData($user)->responseCreated();
     }
 }

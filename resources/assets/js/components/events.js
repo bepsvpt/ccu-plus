@@ -23,10 +23,15 @@ let events = {
 
     function http_error() {
       // Reset recaptcha.
-      let count = document.querySelectorAll('div[id^="recaptcha"]').length;
+      let g = document.querySelectorAll('textarea[id^="g-recaptcha-response"]');
 
-      while (count--) {
-        grecaptcha.reset(count);
+      for (let i in g) {
+        if (g.hasOwnProperty(i)) {
+          let tokens = g[i].id.split('-');
+
+          grecaptcha.reset(4 === tokens.length ? +tokens.pop() : 0);
+        }
+
       }
     }
 
