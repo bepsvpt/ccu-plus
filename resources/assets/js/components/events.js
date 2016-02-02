@@ -8,6 +8,7 @@ let events = {
     const HTTP_METHOD_NOT_ALLOWED = 405;
     const HTTP_CONFLICT = 409;
     const HTTP_UNPROCESSABLE_ENTITY = 422;
+    const HTTP_TOO_MANY_REQUESTS = 429;
 
     function http_ok() {
     }
