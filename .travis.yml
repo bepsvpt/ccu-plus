@@ -10,7 +10,6 @@ language: php
 # Versions of PHP you want your project run with.
 php:
   - 7.0
-  - hhvm
 
 services:
   - mysql
