@@ -8,6 +8,7 @@
         <meta property="og:url" content="{{ route('home') }}">
         <meta property="og:image" content="{{ asset('assets/images/logo.png') }}">
         <meta property="og:locale" content="zh_TW">
+        <meta property="fb:app_id" content="1706154966284270">
         <title>CCU Plus | 全新生活 由此領航</title>
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css">
