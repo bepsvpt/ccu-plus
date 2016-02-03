@@ -7,10 +7,7 @@ use Cache;
 use Carbon\Carbon;
 use File;
 use GuzzleHttp\Client;
-use Illuminate\Console\Command;
 use Log;
-use RuntimeException;
-use Symfony\Component\Process\Process;
 
 class Deploy extends Command
 {
@@ -181,27 +178,6 @@ class Deploy extends Command
 
         $this->call('clear-compiled');
         $this->call('optimize');
-    }
-
-    /**
-     * 執行外部程式指令.
-     *
-     * @param string $command
-     * @return string
-     */
-    protected function externalCommand($command)
-    {
-        $process = new Process($command);
-
-        $process->setWorkingDirectory(base_path());
-
-        $process->run();
-
-        if (! $process->isSuccessful()) {
-            throw new RuntimeException($process->getErrorOutput());
-        }
-
-        return $process->getOutput();
     }
 
     /**
