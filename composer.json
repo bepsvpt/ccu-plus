@@ -11,6 +11,7 @@
     "greggilbert/recaptcha": "~2.1",
     "guzzlehttp/guzzle": "~6.1",
     "nesbot/carbon": "~1.20",
+    "paquettg/php-html-parser": "~1.6",
     "predis/predis": "~1.0"
   },
   "require-dev": {

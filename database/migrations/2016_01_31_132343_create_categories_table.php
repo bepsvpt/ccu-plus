@@ -19,6 +19,8 @@ class CreateCategoriesTable extends Migration
             $table->string('remark', 190)->nullable();
 
             $table->unique(['category', 'name']);
+
+            $table->index('remark');
         });
     }
 
