@@ -10,7 +10,7 @@
                     <h5 class="white-text">Links</h5>
                     <ul>
                         <li>
-                            <a class="grey-text text-lighten-3" href="https://www.facebook.com/Changing.CCU" target="_blank">
+                            <a class="grey-text text-lighten-3" href="https://www.facebook.com/ccu.plus" target="_blank">
                                 <span><i class="fa fa-facebook-official fa-fw"></i> 粉絲專頁</span>
                             </a>
                         </li>

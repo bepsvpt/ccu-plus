@@ -15,6 +15,7 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         Commands\Deploy::class,
         Commands\DownloadCourseArchive::class,
+        Commands\ImportCourse::class,
     ];
 
     /**

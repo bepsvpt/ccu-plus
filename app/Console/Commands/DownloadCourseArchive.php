@@ -23,6 +23,16 @@ class DownloadCourseArchive extends Command
     protected $description = 'Download ccu course archive.';
 
     /**
+     * @var Client
+     */
+    protected $client;
+
+    /**
+     * @var Filesystem
+     */
+    protected $filesystem;
+
+    /**
      * Course semester.
      *
      * @var string
@@ -44,21 +54,34 @@ class DownloadCourseArchive extends Command
     protected $archivePath;
 
     /**
-     * Execute the console command.
+     * Create a new command instance.
      *
      * @param Client $client
      * @param Filesystem $filesystem
+     */
+    public function __construct(Client $client, Filesystem $filesystem)
+    {
+        parent::__construct();
+
+        $this->client = $client;
+
+        $this->filesystem = $filesystem;
+    }
+
+    /**
+     * Execute the console command.
+     *
      * @return mixed
      */
-    public function handle(Client $client, Filesystem $filesystem)
+    public function handle()
     {
         $this->init();
 
-        if (! $this->download($client, $filesystem)) {
+        if (! $this->download()) {
             $this->error("There is something wrong when downloading the archive: {$this->url}");
         }
 
-        $this->decompress($filesystem);
+        $this->decompress();
     }
 
     /**
@@ -86,13 +109,11 @@ class DownloadCourseArchive extends Command
     /**
      * Download the course archive.
      *
-     * @param Client $client
-     * @param Filesystem $filesystem
      * @return bool
      */
-    protected function download($client, $filesystem)
+    protected function download()
     {
-        $response = $client->get($this->url, [
+        $response = $this->client->get($this->url, [
             'http_errors' => false,
         ]);
 
@@ -100,7 +121,7 @@ class DownloadCourseArchive extends Command
             return false;
         }
 
-        $this->saveArchive($response, $filesystem);
+        $this->saveArchive($response);
 
         return true;
     }
@@ -109,36 +130,34 @@ class DownloadCourseArchive extends Command
      * Save file to disk.
      *
      * @param \GuzzleHttp\Psr7\Response $response
-     * @param Filesystem $filesystem
      * @return void
      */
-    protected function saveArchive($response, $filesystem)
+    protected function saveArchive($response)
     {
         $destination = storage_path(file_build_path('app', 'courses', 'archive', $this->semester));
 
-        if (! $filesystem->isDirectory($destination)) {
-            $filesystem->makeDirectory($destination, 0770, true);
+        if (! $this->filesystem->isDirectory($destination)) {
+            $this->filesystem->makeDirectory($destination, 0770, true);
         }
 
         $this->archivePath = file_build_path($destination, "{$this->semester}.tgz");
 
-        $filesystem->put($this->archivePath, $response->getBody()->getContents());
+        $this->filesystem->put($this->archivePath, $response->getBody()->getContents());
     }
 
     /**
      * Decompress archive and delete non-used files.
      *
-     * @param Filesystem $filesystem
      * @return void
      */
-    protected function decompress($filesystem)
+    protected function decompress()
     {
         $directory = dirname($this->archivePath);
 
         $this->externalCommand("tar zxf {$this->archivePath}", $directory);
 
-        $filesystem->delete(array_merge(
-            $filesystem->glob(file_build_path($directory, '*e.html')),
+        $this->filesystem->delete(array_merge(
+            $this->filesystem->glob(file_build_path($directory, '*e.html')),
             [
                 file_build_path($directory, 'index.html'),
                 file_build_path($directory, 'all_english.html'),
