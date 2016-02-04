@@ -1,5 +1,11 @@
+<style lang="scss">
+    footer {
+        background-color: #42b1ae !important;
+    }
+</style>
+
 <template>
-    <footer class="page-footer cyan darken-3">
+    <footer class="page-footer">
         <div class="container">
             <div class="row">
                 <div class="col l6 s12">

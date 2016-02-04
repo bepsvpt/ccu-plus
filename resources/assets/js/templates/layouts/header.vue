@@ -2,6 +2,10 @@
     header {
         user-select: none;
 
+        nav {
+            background-color: #b1d282;
+        }
+
         .brand-logo img {
             vertical-align: middle;
         }
@@ -10,7 +14,7 @@
 
 <template>
     <header>
-        <nav class="cyan darken-1">
+        <nav>
             <div class="nav-wrapper container">
                 <a v-link="{name: 'home'}" class="brand-logo">
                     <img src="/assets/images/logo.svg" alt="Logo" height="42">

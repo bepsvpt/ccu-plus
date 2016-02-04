@@ -52,22 +52,6 @@
             </div>
 
             <div class="row">
-                <div class="input-field col s12">
-                    <i class="material-icons prefix">email</i>
-                    <input
-                        v-model="form.email"
-                        id="email"
-                        type="email"
-                        class="validate"
-                        maxlength="48"
-                        length="48"
-                        required
-                    >
-                    <label for="email">信箱</label>
-                </div>
-            </div>
-
-            <div class="row">
                 <div class="col s12">
                     <vue-recaptcha :g-response.sync="form['g-recaptcha-response']"></vue-recaptcha>
                 </div>
@@ -112,8 +96,6 @@
                     this.$parent.$data['user'] = response.data;
                 }, (response) => {
                     this.$dispatch('http-response', response);
-
-                    this.form['g-recaptcha-response'] = '';
                 });
             }
         }

@@ -23,7 +23,7 @@ class User extends Entity implements AuthenticatableContract
      * @var array
      */
     protected $fillable = [
-        'username', 'password', 'email', 'nickname',
+        'username', 'email', 'nickname',
     ];
 
     /**
@@ -32,6 +32,6 @@ class User extends Entity implements AuthenticatableContract
      * @var array
      */
     protected $hidden = [
-        'id', 'password', 'remember_token', 'created_at', 'updated_at',
+        'id', 'remember_token', 'created_at', 'updated_at',
     ];
 }

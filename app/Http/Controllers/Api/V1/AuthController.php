@@ -43,7 +43,7 @@ class AuthController extends ApiController
      */
     public function signUp(V1\SignUpRequest $request)
     {
-        $user = User::create($request->only(['username', 'nickname', 'email']));
+        $user = User::create($request->only(['username', 'nickname']));
 
         if (! $user->exists) {
             return $this->responseUnknownError();

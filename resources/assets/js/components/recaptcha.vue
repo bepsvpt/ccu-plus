@@ -33,6 +33,8 @@
             'recaptcha-reset'() {
                 if (this.$data['recaptcha-id'] > -1) {
                     grecaptcha.reset(this.$data['recaptcha-id']);
+
+                    this.gResponse = '';
                 }
             }
         },
