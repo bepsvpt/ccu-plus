@@ -1,6 +1,7 @@
 <style lang="scss">
     html {
         font-family: "Lato", "Roboto", sans-serif;
+        font-size: 16px;
         overflow-y:scroll;
     }
 
