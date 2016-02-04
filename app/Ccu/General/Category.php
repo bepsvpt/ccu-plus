@@ -22,6 +22,13 @@ class Category extends Entity
     public $timestamps = false;
 
     /**
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
+     */
+    protected $hidden = ['category', 'remark'];
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array

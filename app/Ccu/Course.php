@@ -24,6 +24,13 @@ class Course extends Entity
     public $timestamps = false;
 
     /**
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
+     */
+    protected $hidden = ['semester_id', 'department_id'];
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array
