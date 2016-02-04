@@ -55,7 +55,7 @@ class Category extends Entity
         });
 
         return $firstId
-            ? $categories->first()->getAttribute('id')
+            ? ($categories->count() ? $categories->first()->getAttribute('id') : null)
             : ($issetName ? $categories->first() : $categories->values());
     }
 }

@@ -82,6 +82,8 @@ class DownloadCourseArchive extends Command
         }
 
         $this->decompress();
+
+        $this->info("{$this->semester} course archive has successfully downloaded and decompressed.");
     }
 
     /**
@@ -94,7 +96,7 @@ class DownloadCourseArchive extends Command
         $semester = $this->argument('semester');
 
         if (is_null($semester)) {
-            $now = Carbon::now()->subMonths(0);
+            $now = Carbon::now();
 
             $year = $now->year - (($now->month >= 8) ? 1911 : 1912);
 
@@ -156,14 +158,42 @@ class DownloadCourseArchive extends Command
 
         $this->externalCommand("tar zxf {$this->archivePath}", $directory);
 
+        $specifics = [
+            file_build_path($directory, 'index.html'),
+            file_build_path($directory, 'all_english.html'),
+            $this->archivePath,
+        ];
+
         $this->filesystem->delete(array_merge(
             $this->filesystem->glob(file_build_path($directory, '*e.html')),
-            [
-                file_build_path($directory, 'index.html'),
-                file_build_path($directory, 'all_english.html'),
-                file_build_path($directory, 'I000.html'),
-                $this->archivePath,
-            ]
+            $this->getOldFiles($directory),
+            $specifics
         ));
+    }
+
+    /**
+     * 取得遺骸檔案列表.
+     *
+     * @param string $directory
+     * @return array
+     */
+    protected function getOldFiles($directory)
+    {
+        $semester = intval(substr($this->semester, -1));
+
+        $now = Carbon::createFromDate(
+            intval(substr($this->semester, 0, -1)) + ((1 === $semester) ? 1911 : 1912),
+            (1 === $semester) ? 10 : 3
+        )->timestamp;
+
+        $files = [];
+
+        foreach ($this->filesystem->files($directory) as $file) {
+            if ($now - $this->filesystem->lastModified($file) > 12960000) {
+                $files[] = $file;
+            }
+        }
+
+        return $files;
     }
 }

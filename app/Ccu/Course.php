@@ -29,7 +29,7 @@ class Course extends Entity
      * @var array
      */
     protected $fillable = [
-        'semester_id', 'code', 'department_id', 'name',
+        'semester_id', 'code', 'department_id', 'name', 'series_id',
     ];
 
     /**
