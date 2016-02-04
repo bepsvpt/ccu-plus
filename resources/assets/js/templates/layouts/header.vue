@@ -3,7 +3,7 @@
         user-select: none;
 
         nav {
-            background-color: #E2943B;
+            background-color: #9D9171;
         }
 
         .brand-logo img {

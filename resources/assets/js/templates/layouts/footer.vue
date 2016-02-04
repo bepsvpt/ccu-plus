@@ -1,6 +1,6 @@
 <style lang="scss">
     footer {
-        background-color: #B68E55 !important;
+        background-color: #827759 !important;
     }
 </style>
 
