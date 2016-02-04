@@ -14,7 +14,9 @@ class CourseCommentRequest extends Request
     public function rules()
     {
         return [
-            //
+            'comment_id' => 'sometimes|exists:comments,id',
+            'content' => 'required|string|max:3000',
+            'anonymous' => 'boolean'
         ];
     }
 }

@@ -86,7 +86,7 @@ class Course extends Entity
      */
     public function comments()
     {
-        return $this->morphMany(Comment::class, 'commentable');
+        return $this->morphMany(Comment::class, 'commentable', null, null, 'series_id');
     }
 
     /**

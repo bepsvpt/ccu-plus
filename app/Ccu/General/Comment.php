@@ -3,6 +3,7 @@
 namespace App\Ccu\General;
 
 use App\Ccu\Core\Entity;
+use App\Ccu\User\User;
 
 class Comment extends Entity
 {
@@ -37,6 +38,33 @@ class Comment extends Entity
     protected $casts = [
         'anonymous' => 'boolean',
     ];
+
+    /**
+     * The relations to eager load on every query.
+     *
+     * @var array
+     */
+    protected $with = ['user', 'comments', 'likes'];
+
+    /**
+     * 評論的使用者.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    /**
+     * Get all of the owning commentable models.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\MorphTo
+     */
+    public function commentable()
+    {
+        return $this->morphTo();
+    }
 
     /**
      * 評論的評論.
