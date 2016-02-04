@@ -23,7 +23,7 @@ $router->group(['prefix' => 'api', 'namespace' => 'Api', 'middleware' => ['web']
 
         $router->group(['prefix' => 'courses'], function (Router $router) {
             $router->get('search', 'CourseController@search');
-            $router->get('show/{courses}', 'CourseController@show');
+            $router->get('{courses}', 'CourseController@show');
         });
 
         $router->group(['prefix' => 'resources'], function (Router $router) {

@@ -1,0 +1,80 @@
+<style lang="scss">
+    .professor:not(:first-child) {
+        margin-left: 5px;
+    }
+
+    .tabs-pushpin {
+        margin-top: 180px;
+    }
+</style>
+
+<template>
+    <div class="row">
+        <div class="col hide-on-small-only m3 l2" style="min-height: 1px;">
+            <div class="tabs-pushpin">
+                <ul class="section table-of-contents">
+                    <li><a href="#info" @click.prevent="pushpin">課程資訊</a></li>
+                    <li><a href="#comments" @click.prevent="pushpin">課程評論</a></li>
+                    <li><a href="#exams" @click.prevent="pushpin">考古題</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="col s12 m9 l10">
+            <div id="info">
+                <div>
+                    <ul class="collection">
+                        <li class="collection-item avatar">
+                            <i class="material-icons circle orange">book</i>
+                            <h5>{{courses[0].name}}：{{ courses[0].code }}</h5>
+                        </li>
+                        <template v-for="course in courses">
+                            <li class="collection-item avatar">
+                                <i class="material-icons circle green">insert_chart</i>
+                                <span class="title">{{ course.semester.name }}</span>
+                                <p>
+                                    <span v-for="professor in course.professors" class="professor">{{ professor.name }}</span>
+                                </p>
+                            </li>
+                        </template>
+
+                    </ul>
+                </div>
+            </div>
+
+            <div id="comments">
+            </div>
+
+            <div id="exams">
+            </div>
+        </div>
+    </div>
+</template>
+
+<script>
+    export default {
+        data() {
+            return {
+                courses: []
+            };
+        },
+
+        methods: {
+            pushpin(e) {
+                document.body.scrollTop = document.getElementById(e.target.hash.substr(1)).offsetTop - 16;
+            }
+        },
+
+        created() {
+            this.$http.get('/api/v1/courses/' + this.$route.params.seriesId).then((response) => {
+                this.courses = response.data;
+            }, (response) => {
+                this.$dispatch('http-response', response, {
+                    redirect: {
+                        name: 'courses.index'
+                    }
+                });
+            });
+        }
+    }
+</script>
