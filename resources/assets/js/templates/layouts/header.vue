@@ -1,14 +1,16 @@
 <style lang="scss">
-    header {
+    nav {
         user-select: none;
+        background-color: #9D9171;
 
-        nav {
-            background-color: #9D9171;
-        }
+        .brand-logo {
+            font-size: inherit;
 
-        .brand-logo img {
-            height: 42px;
-            vertical-align: sub;
+            img {
+                margin-top: -4px;
+                height: 44px;
+                vertical-align: middle;
+            }
         }
     }
 </style>
