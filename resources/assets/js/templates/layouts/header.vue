@@ -2,8 +2,8 @@
     header {
         user-select: none;
 
-        .brand-logo span {
-            vertical-align: super;
+        .brand-logo img {
+            vertical-align: middle;
         }
     }
 </style>
@@ -13,8 +13,7 @@
         <nav class="cyan darken-1">
             <div class="nav-wrapper container">
                 <a v-link="{name: 'home'}" class="brand-logo">
-                    <img src="/assets/images/logo.png" alt="Logo" height="42">
-                    <span>CCU Plus</span>
+                    <img src="/assets/images/logo.svg" alt="Logo" height="42">
                 </a>
                 <ul id="nav-mobile" class="right hide-on-med-and-down">
                     <li><a v-link="{name: 'courses'}"><i class="fa fa-book fa-fw"></i> 課程評論</a></li>
