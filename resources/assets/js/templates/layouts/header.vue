@@ -1,6 +1,10 @@
 <style lang="scss">
     header {
         user-select: none;
+
+        .brand-logo span {
+            vertical-align: super;
+        }
     }
 </style>
 
@@ -8,7 +12,10 @@
     <header>
         <nav class="cyan darken-1">
             <div class="nav-wrapper container">
-                <a v-link="{name: 'home'}" class="brand-logo">Logo</a>
+                <a v-link="{name: 'home'}" class="brand-logo">
+                    <img src="/assets/images/logo.png" alt="Logo" height="42">
+                    <span>CCU Plus</span>
+                </a>
                 <ul id="nav-mobile" class="right hide-on-med-and-down">
                     <li><a v-link="{name: 'courses'}"><i class="fa fa-book fa-fw"></i> 課程評論</a></li>
                     <li><a v-link="{name: 'ecourse-lite'}"><i class="fa fa-cloud fa-fw"></i> Ecourse Lite</a></li>

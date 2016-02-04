@@ -15,7 +15,7 @@
                         maxlength="9"
                         required
                     >
-                    <label for="username">學號</label>
+                    <label for="username">單一入口帳號</label>
                 </div>
             </div>
 
@@ -29,7 +29,7 @@
                         class="validate"
                         required
                     >
-                    <label for="password">密碼</label>
+                    <label for="password">單一入口密碼</label>
                 </div>
             </div>
 
