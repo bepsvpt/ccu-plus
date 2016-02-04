@@ -3,11 +3,12 @@
         user-select: none;
 
         nav {
-            background-color: #283f50;
+            background-color: #E2943B;
         }
 
         .brand-logo img {
-            vertical-align: middle;
+            height: 42px;
+            vertical-align: sub;
         }
     }
 </style>
@@ -17,7 +18,7 @@
         <nav>
             <div class="nav-wrapper container">
                 <a v-link="{name: 'home'}" class="brand-logo">
-                    <img src="/assets/images/logo.svg" alt="Logo" height="42">
+                    <img src="/assets/images/logo.svg" alt="Logo">
                 </a>
                 <ul id="nav-mobile" class="right hide-on-med-and-down">
                     <li><a v-link="{name: 'courses'}"><i class="fa fa-book fa-fw"></i> 課程評論</a></li>
