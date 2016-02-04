@@ -276,7 +276,7 @@ class ImportCourse extends Command
         $course = Course::orderBy('id')->where('code', $code)->first();
 
         if (! is_null($course)) {
-            return $course->getAttribute('id');
+            return $course->getAttribute('series_id');
         }
 
         $max = Course::max('series_id');
