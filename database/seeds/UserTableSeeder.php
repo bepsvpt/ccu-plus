@@ -12,13 +12,6 @@ class UserTableSeeder extends Seeder
      */
     public function run()
     {
-        if (app()->environment(['local', 'testing'])) {
-            factory(User::class)->create([
-                'username' => 'test',
-                'password' => bcrypt('test'),
-            ]);
-        }
-
         factory(User::class, mt_rand(10, 30))->create();
     }
 }

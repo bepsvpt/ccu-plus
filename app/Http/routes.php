@@ -27,7 +27,7 @@ $router->group(['prefix' => 'api', 'namespace' => 'Api', 'middleware' => ['web']
         });
 
         $router->group(['prefix' => 'resources'], function (Router $router) {
-            $router->get('college/{name}', 'ResourceController@college');
+            $router->get('colleges/{name?}', 'ResourceController@colleges');
         });
     });
 });

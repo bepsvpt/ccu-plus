@@ -12,12 +12,14 @@ class ResourceController extends ApiController
      * @param string $name
      * @return \Illuminate\Http\JsonResponse
      */
-    public function college($name)
+    public function colleges($name = '')
     {
         $college = Category::getCategories('college', $name);
 
         if (is_null($college)) {
             return $this->responseNotFound();
+        } else if (empty($name)) {
+            return $this->setData($college)->responseOk();
         }
 
         $departments = Category::whereIn('id', explode(',', $college->getAttribute('remark')))->get();

@@ -11,7 +11,6 @@ function categoryRandomElement($category)
 $factory->define(\App\Ccu\User\User::class, function (Faker\Generator $faker) {
     return [
         'username' => $faker->userName,
-        'password' => bcrypt(str_random(10)),
         'email' => $faker->email,
         'nickname' => $faker->name,
     ];

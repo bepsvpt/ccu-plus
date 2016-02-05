@@ -1,4 +1,5 @@
 import signUp from './templates/sign-up.vue';
+import coursesIndex from './templates/courses/index.vue';
 import coursesShow from './templates/courses/show.vue';
 
 let Vue = require('vue');
@@ -15,7 +16,7 @@ export default {
     },
     '/courses': {
       name: 'courses.index',
-      component: Vue.extend({template: `<h1>Hello World!</h1>`})
+      component: coursesIndex
     },
     '/courses/:seriesId': {
       name: 'courses.show',
