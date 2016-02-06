@@ -41,7 +41,7 @@ class Category extends Entity
      * @param string $category
      * @param string $name
      * @param bool $firstId
-     * @return \Illuminate\Database\Eloquent\Collection|int|static[]
+     * @return \Illuminate\Database\Eloquent\Collection|Category|int|static[]
      */
     public static function getCategories($category = '', $name = '', $firstId = false)
     {

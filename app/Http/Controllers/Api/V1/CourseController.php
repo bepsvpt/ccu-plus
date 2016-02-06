@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Ccu\Course;
+use App\Ccu\General\Category;
 use Cache;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
@@ -11,15 +12,22 @@ class CourseController extends ApiController
 {
     public function search(Request $request)
     {
-        $key = 'course-search-'.sha1($request->input('department_id').'|'.$request->input('keyword'));
+        $key = 'course-search-'.sha1(implode('|', $request->only(['college', 'department_id', 'keyword'])));
 
-        $courses = Cache::remember($key, 10, function () use ($request) {
-            $query = Course::with(['semester', 'department', 'dimension', 'professors'])
+        $courses = Cache::remember($key, Course::MINUTES_PER_WEEK, function () use ($request) {
+            $query = Course::with(['semester', 'dimension', 'professors'])
                 ->groupBy('series_id')
-                ->orderBy('semester_id', 'desc');
+                ->orderBy('semester_id', 'desc')
+                ->orderBy('department_id')
+                ->orderBy('code');
 
             if ($request->has('department_id')) {
                 $query = $query->where('department_id', $request->input('department_id'));
+            } else if ($request->has('college')) {
+                $query = $query->whereIn(
+                    'department_id',
+                    explode(',', Category::getCategories('college', $request->input('college'))->getAttribute('remark'))
+                );
             }
 
             if ($request->has('keyword')) {
@@ -38,7 +46,7 @@ class CourseController extends ApiController
     public function show($seriesId)
     {
         $course = Cache::remember("course-info-{$seriesId}", Course::MINUTES_PER_MONTH, function () use ($seriesId) {
-            return Course::with(['semester', 'department', 'professors'])
+            return Course::with(['semester', 'professors'])
                 ->where('series_id', $seriesId)
                 ->orderBy('semester_id', 'desc')
                 ->get();

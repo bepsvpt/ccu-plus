@@ -15,6 +15,15 @@ class Comment extends Entity
     protected $table = 'comments';
 
     /**
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
+     */
+    protected $hidden = [
+        'user_id', 'comment_id', 'commentable_id', 'commentable_type', 'deleted_at',
+    ];
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array
@@ -44,7 +53,18 @@ class Comment extends Entity
      *
      * @var array
      */
-    protected $with = ['user', 'comments', 'likes'];
+    protected $with = ['user'];
+
+    /**
+     * Get the comment's user_id attribute.
+     *
+     * @param int $value
+     * @return int|null
+     */
+    public function getUserIdAttribute($value)
+    {
+        return $this->getAttribute('anonymous') ? null : $value;
+    }
 
     /**
      * 評論的使用者.

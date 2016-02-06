@@ -1,5 +1,7 @@
 function arrive() {
   $(function () {
+    moment.locale('zh-tw');
+
     // http://materializecss.com/modals.html#initialization
     $(document).arrive('.modal-trigger', function() {
       $(this).leanModal();
@@ -26,6 +28,10 @@ function arrive() {
     });
     $(document).leave('.tooltipped', function () {
       $(this).tooltip('remove');
+    });
+
+    $(document).arrive('span[data-time-humanize]', function() {
+      $(this).text(moment($(this).data('time-humanize')).fromNow());
     });
   });
 }

@@ -28,7 +28,7 @@ class Course extends Entity
      *
      * @var array
      */
-    protected $hidden = ['semester_id', 'department_id'];
+    protected $hidden = ['id', 'semester_id', 'department_id'];
 
     /**
      * The attributes that are mass assignable.
@@ -38,6 +38,13 @@ class Course extends Entity
     protected $fillable = [
         'semester_id', 'code', 'department_id', 'name', 'series_id',
     ];
+
+    /**
+     * The relations to eager load on every query.
+     *
+     * @var array
+     */
+    protected $with = ['department'];
 
     /**
      * 課程所屬學期

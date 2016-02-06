@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api\V1;
 use App\Ccu\Course;
 use App\Ccu\General\Comment;
 use App\Http\Requests\Api\V1;
-use App\Http\Requests\Request;
+use Illuminate\Http\Request;
 
 class CourseCommentControl extends ApiController
 {
@@ -40,7 +40,18 @@ class CourseCommentControl extends ApiController
         return $this->setData($comment)->responseCreated();
     }
 
-    public function wookmark(Request $request)
+    public function waterfall(Request $request)
     {
+        $query = Comment::with(['commentable', 'commentable.department'])
+            ->where('commentable_type', 'course')
+            ->whereNull('comment_id')
+            ->latest()
+            ->take(5);
+
+        if ($request->has('id')) {
+            $query = $query->where('id', '<', $request->input('id'));
+        }
+
+        return $this->setData($query->get())->responseOk();
     }
 }
