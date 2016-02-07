@@ -16,7 +16,7 @@ class CourseCommentRequest extends Request
         return [
             'comment_id' => 'sometimes|exists:comments,id',
             'content' => 'required|string|max:3000',
-            'anonymous' => 'boolean'
+            'anonymous' => 'boolean',
         ];
     }
 }

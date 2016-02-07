@@ -1,10 +1,7 @@
 <?php
 
 use App\Ccu\Course;
-use App\Ccu\General\Attachment;
 use App\Ccu\General\Category;
-use App\Ccu\General\Comment;
-use App\Ccu\General\Like;
 use App\Ccu\User\User;
 use Illuminate\Database\Seeder;
 

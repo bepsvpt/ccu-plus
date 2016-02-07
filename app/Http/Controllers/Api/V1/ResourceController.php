@@ -18,7 +18,7 @@ class ResourceController extends ApiController
 
         if (is_null($college)) {
             return $this->responseNotFound();
-        } else if (empty($name)) {
+        } elseif (empty($name)) {
             return $this->setData($college)->responseOk();
         }
 

@@ -23,7 +23,7 @@ class CourseController extends ApiController
 
             if ($request->has('department_id')) {
                 $query = $query->where('department_id', $request->input('department_id'));
-            } else if ($request->has('college')) {
+            } elseif ($request->has('college')) {
                 $query = $query->whereIn(
                     'department_id',
                     explode(',', Category::getCategories('college', $request->input('college'))->getAttribute('remark'))

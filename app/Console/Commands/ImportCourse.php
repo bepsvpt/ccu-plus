@@ -101,7 +101,7 @@ class ImportCourse extends Command
     {
         $semester = $this->option('semester') ?? $this->ask('請輸入匯入學年及學期（如：1042）');
 
-        $semester = substr($semester, 0, -1) . ('1' === substr($semester, -1) ? '上' : '下');
+        $semester = substr($semester, 0, -1).('1' === substr($semester, -1) ? '上' : '下');
 
         $id = Category::getCategories('semester', $semester, true);
 
@@ -125,7 +125,7 @@ class ImportCourse extends Command
         foreach ($this->files as $file) {
             $content = $this->removeAnnoys($this->filesystem->get($file));
 
-            $rows =  $this->dom->loadStr($content, [])->find('tr')->toArray();
+            $rows = $this->dom->loadStr($content, [])->find('tr')->toArray();
 
             // 移除表格標題列
             array_shift($rows);
@@ -186,7 +186,7 @@ class ImportCourse extends Command
         foreach ($row->getChildren() as $node) {
             if ($i >= $size) {
                 break;
-            } else if (is_a($node, \PHPHtmlParser\Dom\TextNode::class)) {
+            } elseif (is_a($node, \PHPHtmlParser\Dom\TextNode::class)) {
                 continue;
             }
 
