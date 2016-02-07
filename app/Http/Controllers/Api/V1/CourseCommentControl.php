@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\V1;
 use App\Ccu\Course;
 use App\Ccu\General\Comment;
 use App\Http\Requests\Api\V1;
+use Cache;
 use Illuminate\Http\Request;
 
 class CourseCommentControl extends ApiController
@@ -42,16 +43,22 @@ class CourseCommentControl extends ApiController
 
     public function waterfall(Request $request)
     {
-        $query = Comment::with(['commentable', 'commentable.department'])
-            ->where('commentable_type', 'course')
-            ->whereNull('comment_id')
-            ->latest()
-            ->take(5);
+        $key = 'course-comment-waterfall-'.$request->input('id', 0);
 
-        if ($request->has('id')) {
-            $query = $query->where('id', '<', $request->input('id'));
-        }
+        $comments = Cache::remember($key, 5, function () use ($request) {
+            $query = Comment::with(['commentable', 'commentable.department'])
+                ->where('commentable_type', 'course')
+                ->whereNull('comment_id')
+                ->latest()
+                ->take(5);
 
-        return $this->setData($query->get())->responseOk();
+            if ($request->has('id')) {
+                $query = $query->where('id', '<', $request->input('id'));
+            }
+
+            return $query->get();
+        });
+
+        return $this->setData($comments)->responseOk();
     }
 }

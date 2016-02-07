@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Ccu\General\Category;
+use Cache;
 
 class ResourceController extends ApiController
 {
@@ -22,7 +23,11 @@ class ResourceController extends ApiController
             return $this->setData($college)->responseOk();
         }
 
-        $departments = Category::whereIn('id', explode(',', $college->getAttribute('remark')))->get();
+        $key = 'resource-department-'.$college->getAttribute('id');
+
+        $departments = Cache::remember($key, Category::MINUTES_PER_MONTH, function () use ($college) {
+            return Category::whereIn('id', explode(',', $college->getAttribute('remark')))->get();
+        });
 
         return $this->setData($departments)->responseOk();
     }

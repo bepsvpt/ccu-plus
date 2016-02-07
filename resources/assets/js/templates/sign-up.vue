@@ -53,7 +53,7 @@
 
             <div class="row">
                 <div class="col s12">
-                    <vue-recaptcha :g-response.sync="form['g-recaptcha-response']"></vue-recaptcha>
+                    <recaptcha :g-response.sync="form['g-recaptcha-response']"></recaptcha>
                 </div>
             </div>
 
@@ -69,7 +69,7 @@
 </template>
 
 <script>
-    import VueRecaptcha from '../components/recaptcha.vue';
+    import Recaptcha from '../components/recaptcha.vue';
 
     export default {
         data() {
@@ -81,7 +81,7 @@
         },
 
         components: {
-            VueRecaptcha
+            Recaptcha
         },
 
         methods: {

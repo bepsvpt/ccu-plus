@@ -1,8 +1,9 @@
 function arrive() {
   $(function () {
-    moment.locale('zh-tw');
 
     // http://materializecss.com/modals.html#initialization
+    $('.modal-trigger').leanModal();
+
     $(document).arrive('.modal-trigger', function() {
       $(this).leanModal();
     });
@@ -29,6 +30,9 @@ function arrive() {
     $(document).leave('.tooltipped', function () {
       $(this).tooltip('remove');
     });
+
+    // http://momentjs.com/
+    moment.locale('zh-tw');
 
     $(document).arrive('span[data-time-humanize]', function() {
       $(this).text(moment($(this).data('time-humanize')).fromNow());

@@ -14,7 +14,7 @@ class CourseController extends ApiController
     {
         $key = 'course-search-'.sha1(implode('|', $request->only(['college', 'department_id', 'keyword'])));
 
-        $courses = Cache::remember($key, Course::MINUTES_PER_WEEK, function () use ($request) {
+        $courses = Cache::remember($key, Course::MINUTES_PER_MONTH, function () use ($request) {
             $query = Course::with(['semester', 'dimension', 'professors'])
                 ->groupBy('series_id')
                 ->orderBy('semester_id', 'desc')

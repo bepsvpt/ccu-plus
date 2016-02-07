@@ -16,58 +16,68 @@
              padding: 5px 20px 20px !important;
         }
     }
+
+    hr {
+        margin-top: 2em;
+    }
 </style>
 
 <template>
     <div>
-        <div class="row">
-            <form class="col s12" @submit.prevent="search()">
-                <div class="row">
-                    <div class="input-field col s12 offset-m1 m3">
-                        <select
-                            v-model="form.college"
-                            id="college"
-                        >
-                            <option value="">學院</option>
-                            <template v-for="college in colleges">
-                                <option :value="college.name">{{ college.name }}</option>
-                            </template>
-                        </select>
-                    </div>
+        <div>
+            <div class="row">
+                <form class="col s12" @submit.prevent="search()">
+                    <div class="row">
+                        <div class="input-field col s12 offset-m1 m3">
+                            <select
+                                v-model="form.college"
+                                id="college"
+                            >
+                                <option value="">學院</option>
+                                <template v-for="college in colleges">
+                                    <option :value="college.name">{{ college.name }}</option>
+                                </template>
+                            </select>
+                        </div>
 
-                    <div class="input-field col s12 m3">
-                        <select
-                            v-model="form.department_id"
-                            id="department_id"
-                        >
-                            <option value="">系所</option>
-                            <template v-for="department in departments">
-                                <option :value="department.id">{{ department.name }}</option>
-                            </template>
-                        </select>
-                    </div>
+                        <div class="input-field col s12 m3">
+                            <select
+                                v-model="form.department_id"
+                                id="department_id"
+                            >
+                                <option value="">系所</option>
+                                <template v-for="department in departments">
+                                    <option :value="department.id">{{ department.name }}</option>
+                                </template>
+                            </select>
+                        </div>
 
-                    <div class="input-field col s12 m3">
-                        <input
-                            v-model="form.keyword"
-                            id="keyword"
-                            type="text"
-                            class="validate"
-                        >
-                        <label for="keyword">課程代碼/課程名稱</label>
-                    </div>
+                        <div class="input-field col s12 m3">
+                            <input
+                                v-model="form.keyword"
+                                id="keyword"
+                                type="text"
+                                class="validate"
+                            >
+                            <label for="keyword">課程代碼/課程名稱</label>
+                        </div>
 
-                    <div class="input-field col s12 m2">
-                        <button class="btn waves-effect waves-light" type="submit" name="action">
-                            <span>搜尋</span><i class="material-icons right">search</i>
-                        </button>
+                        <div class="input-field col s12 m2">
+                            <button
+                                type="submit"
+                                class="btn waves-effect waves-light"
+                                :disabled="loading.courses"
+                            >
+                                <span>搜尋</span><i class="material-icons right">search</i>
+                            </button>
+                        </div>
                     </div>
-                </div>
-            </form>
+                </form>
+            </div>
         </div>
 
         <div>
-            <table class="bordered striped highlight centered z-depth-1">
+            <table class="bordered highlight centered hoverable z-depth-1">
                 <thead>
                     <tr>
                         <th>學期</th>
@@ -78,7 +88,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="course in courses">
+                    <tr v-show="! loading.courses" v-for="course in courses">
                         <td>{{ course.semester.name }}</td>
                         <td class="hide-on-small-only">{{ course.department.name }}</td>
                         <td>{{ course.code }}</td>
@@ -103,18 +113,27 @@
                             </template>
                         </td>
                     </tr>
-                    <tr v-show="0 === courses.length">
+
+                    <tr v-show="! loading.courses && 0 === courses.length">
                         <td colspan="5">探索，帶來無限可能！</td>
+                    </tr>
+
+                    <tr v-show="loading.courses">
+                        <td colspan="5">
+                            <progress-bar :loading="loading.courses"></progress-bar>
+                        </td>
                     </tr>
                 </tbody>
             </table>
         </div>
 
-        <br><br>
-
         <div>
+            <hr>
+
             <div class="row">
                 <div class="col s12 m7">
+                    <h4>最新評論</h4>
+
                     <template v-for="comment in comments">
                         <div class="card hoverable" data-comment>
                             <div class="card-content comment-header">
@@ -149,8 +168,19 @@
                             </div>
                         </div>
                     </template>
+
+                    <div v-show="loading.comments" class="row">
+                        <div class="col s12 center">
+                            <br><br>
+
+                            <progress-bar :loading="loading.comments"></progress-bar>
+                        </div>
+                    </div>
                 </div>
-                <div class="col s12 m5"></div>
+
+                <div class="col s12 m5">
+                    <h4>追蹤課程</h4>
+                </div>
             </div>
 
         </div>
@@ -158,6 +188,8 @@
 </template>
 
 <script>
+    import ProgressBar from '../../components/progress.vue';
+
     export default{
         data() {
             return{
@@ -171,8 +203,15 @@
                     keyword: ''
                 },
                 selectTouchTimes: 0,
-                loadingComment: false
+                loading: {
+                    comments: false,
+                    courses: false
+                }
             }
+        },
+
+        components: {
+            ProgressBar
         },
 
         methods: {
@@ -181,14 +220,18 @@
             },
 
             search() {
+                this.loading.courses = true;
+
                 this.$http.get(`/api/v1/courses/search`, this.form).then((response) => {
                     this.courses = response.data;
+
+                    this.loading.courses = false;
                 });
             },
 
             loadComments() {
-                if (! this.loadingComment) {
-                    this.loadingComment = true;
+                if (! this.loading.comments) {
+                    this.loading.comments = true;
 
                     this.$http.get('/api/v1/courses/waterfall', {
                         id: this.comments[this.comments.length - 1].id
@@ -197,7 +240,7 @@
                             this.comments.push(item);
                         });
 
-                        this.loadingComment = false;
+                        this.loading.comments = false;
                     });
                 }
             }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\V1;
 use App\Ccu\User\User;
 use App\Http\Requests\Api\V1;
 use Auth;
+use Session;
 
 class AuthController extends ApiController
 {
@@ -20,6 +21,11 @@ class AuthController extends ApiController
 
         Auth::guard()->login($user, true);
 
+        Session::put('sso', [
+            'username' => encrypt($request->input('username')),
+            'password' => encrypt($request->input('password')),
+        ]);
+
         return $this->setData($user)->responseOk();
     }
 
@@ -30,9 +36,23 @@ class AuthController extends ApiController
      */
     public function signOut()
     {
+        $this->clearSession();
+
         Auth::guard()->logout();
 
         return $this->responseOk();
+    }
+
+    /**
+     * Clear data which stored in session.
+     *
+     * @return void
+     */
+    protected function clearSession()
+    {
+        Session::forget([
+            'sso',
+        ]);
     }
 
     /**

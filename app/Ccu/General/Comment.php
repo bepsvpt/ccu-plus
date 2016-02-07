@@ -20,7 +20,7 @@ class Comment extends Entity
      * @var array
      */
     protected $hidden = [
-        'user_id', 'comment_id', 'commentable_id', 'commentable_type', 'deleted_at',
+        'user_id', 'comment_id', 'commentable_id', 'anonymous', 'commentable_type', 'deleted_at',
     ];
 
     /**
