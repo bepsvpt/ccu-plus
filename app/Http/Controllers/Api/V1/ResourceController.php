@@ -23,9 +23,9 @@ class ResourceController extends ApiController
             return $this->setData($college)->responseOk();
         }
 
-        $key = 'resource-department-'.$college->getAttribute('id');
+        $key = 'department-'.$college->getAttribute('id');
 
-        $departments = Cache::remember($key, Category::MINUTES_PER_MONTH, function () use ($college) {
+        $departments = Cache::tags('resource')->remember($key, Category::MINUTES_PER_MONTH, function () use ($college) {
             return Category::whereIn('id', explode(',', $college->getAttribute('remark')))->get();
         });
 

@@ -12,9 +12,9 @@ class CourseController extends ApiController
 {
     public function search(Request $request)
     {
-        $key = 'course-search-'.sha1(implode('|', $request->only(['college', 'department_id', 'keyword'])));
+        $key = 'search-'.sha1(implode('|', $request->only(['college', 'department_id', 'keyword'])));
 
-        $courses = Cache::remember($key, Course::MINUTES_PER_MONTH, function () use ($request) {
+        $courses = Cache::tags('course')->remember($key, Course::MINUTES_PER_MONTH, function () use ($request) {
             $query = Course::with(['semester', 'dimension', 'professors'])
                 ->groupBy('series_id')
                 ->orderBy('semester_id', 'desc')
@@ -45,7 +45,7 @@ class CourseController extends ApiController
 
     public function show($seriesId)
     {
-        $course = Cache::remember("course-info-{$seriesId}", Course::MINUTES_PER_MONTH, function () use ($seriesId) {
+        $course = Cache::tags('course')->remember("info-{$seriesId}", Course::MINUTES_PER_MONTH, function () use ($seriesId) {
             return Course::with(['semester', 'professors'])
                 ->where('series_id', $seriesId)
                 ->orderBy('semester_id', 'desc')

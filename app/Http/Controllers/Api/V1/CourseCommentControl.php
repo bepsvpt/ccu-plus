@@ -43,9 +43,9 @@ class CourseCommentControl extends ApiController
 
     public function waterfall(Request $request)
     {
-        $key = 'course-comment-waterfall-'.$request->input('id', 0);
+        $key = 'comment-waterfall-'.$request->input('id', 0);
 
-        $comments = Cache::remember($key, 5, function () use ($request) {
+        $comments = Cache::tags('course')->remember($key, 5, function () use ($request) {
             $query = Comment::with(['commentable', 'commentable.department'])
                 ->where('commentable_type', 'course')
                 ->whereNull('comment_id')
