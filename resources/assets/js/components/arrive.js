@@ -31,6 +31,11 @@ function arrive() {
       $(this).tooltip('remove');
     });
 
+    // http://materializecss.com/collapsible.html#intialization
+    $(document).arrive('.collapsible', function() {
+      $(this).collapsible();
+    });
+
     // http://momentjs.com/
     moment.locale('zh-tw');
 

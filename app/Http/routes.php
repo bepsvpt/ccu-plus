@@ -27,7 +27,7 @@ $router->group(['prefix' => 'api', 'namespace' => 'Api', 'middleware' => ['web']
             $router->get('{courses}', 'CourseController@show');
         });
 
-        $router->group(['prefix' => 'ecourse-lite'], function (Router $router) {
+        $router->group(['prefix' => 'ecourse-lite', 'middleware' => ['auth']], function (Router $router) {
             $router->get('course-list', 'EcourseLiteController@courseList');
         });
 

@@ -21,7 +21,7 @@ class AuthController extends ApiController
 
         Auth::guard()->login($user, true);
 
-        Session::put('sso', [
+        Session::put('ccu.sso', [
             'username' => encrypt($request->input('username')),
             'password' => encrypt($request->input('password')),
         ]);
@@ -51,7 +51,7 @@ class AuthController extends ApiController
     protected function clearSession()
     {
         Session::forget([
-            'sso',
+            'ccu',
         ]);
     }
 

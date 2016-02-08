@@ -1,6 +1,7 @@
 import signUp from './templates/sign-up.vue';
 import coursesIndex from './templates/courses/index.vue';
 import coursesShow from './templates/courses/show.vue';
+import courseLite from './templates/ecourse-lite.vue';
 
 let Vue = require('vue');
 
@@ -24,7 +25,7 @@ export default {
     },
     '/ecourse-lite': {
       name: 'ecourse-lite',
-      component: Vue.extend({template: `<h1>Hello World!</h1>`})
+      component: courseLite
     }
   }
 }

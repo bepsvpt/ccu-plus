@@ -24,7 +24,7 @@
                 </a>
                 <ul id="nav-mobile" class="right hide-on-med-and-down">
                     <li><a v-link="{name: 'courses.index'}"><i class="fa fa-book fa-fw"></i> 課程評論</a></li>
-                    <li><a v-link="{name: 'ecourse-lite'}"><i class="fa fa-cloud fa-fw"></i> Ecourse Lite</a></li>
+                    <li><a v-if="$parent.$data['user']" v-link="{name: 'ecourse-lite'}"><i class="fa fa-cloud fa-fw"></i> Ecourse Lite</a></li>
                     <li><a v-link="{name: 'home'}"><i class="fa fa-exchange fa-fw"></i> 二手交易</a></li>
                     <template v-if="$parent.$data['user']">
                         <li><a><i class="fa fa-user fa-fw"></i> {{ $parent.$data['user'].nickname }}</a></li>
@@ -116,6 +116,8 @@
             signOut() {
                 this.$http.get('/api/v1/auth/sign-out').then((response) => {
                     this.$parent.$data['user'] = null;
+
+                    this.$router.go({name: 'home'});
                 });
             }
         }
