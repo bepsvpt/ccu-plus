@@ -24,166 +24,163 @@
 
 <template>
     <div>
-        <div>
-            <div class="row">
-                <form class="col s12" @submit.prevent="search()">
-                    <div class="row">
-                        <div class="input-field col s12 offset-m1 m3">
-                            <select
-                                v-model="form.college"
-                                id="college"
-                            >
-                                <option value="">學院</option>
-                                <template v-for="college in colleges">
-                                    <option :value="college.name">{{ college.name }}</option>
-                                </template>
-                            </select>
-                        </div>
-
-                        <div class="input-field col s12 m3">
-                            <select
-                                v-model="form.department_id"
-                                id="department_id"
-                            >
-                                <option value="">系所</option>
-                                <template v-for="department in departments">
-                                    <option :value="department.id">{{ department.name }}</option>
-                                </template>
-                            </select>
-                        </div>
-
-                        <div class="input-field col s12 m3">
-                            <input
-                                v-model="form.keyword"
-                                id="keyword"
-                                type="text"
-                                class="validate"
-                            >
-                            <label for="keyword">課程代碼/課程名稱</label>
-                        </div>
-
-                        <div class="input-field col s12 m2">
-                            <button
-                                type="submit"
-                                class="btn waves-effect waves-light"
-                                :disabled="loading.courses"
-                            >
-                                <span>搜尋</span><i class="material-icons right">search</i>
-                            </button>
-                        </div>
+        <div class="row">
+            <form class="col s12" @submit.prevent="search()">
+                <div class="row">
+                    <div class="input-field col s12 offset-m1 m3">
+                        <select
+                            v-model="form.college"
+                            id="college"
+                        >
+                            <option value="">學院</option>
+                            <template v-for="college in colleges">
+                                <option :value="college.name">{{ college.name }}</option>
+                            </template>
+                        </select>
                     </div>
-                </form>
-            </div>
-        </div>
 
-        <div>
-            <table class="bordered highlight centered hoverable z-depth-1">
-                <thead>
-                    <tr>
-                        <th>學期</th>
-                        <th class="hide-on-small-only">開課系所</th>
-                        <th>課程代碼</th>
-                        <th>課程名稱</th>
-                        <th>授課教授</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr v-show="! loading.courses" v-for="course in courses">
-                        <td>{{ course.semester.name }}</td>
-                        <td class="hide-on-small-only">{{ course.department.name }}</td>
-                        <td>{{ course.code }}</td>
-                        <td>
-                            <template v-if="course.dimension.length > 0">
-                                <a
-                                    v-link="{name: 'courses.show', params: {seriesId: course.series_id}}"
-                                    class="tooltipped"
-                                    data-position="bottom"
-                                    data-delay="100"
-                                    data-tooltip="{{ course.dimension[0].name }}"
-                                >{{ course.name }}</a>
+                    <div class="input-field col s12 m3">
+                        <select
+                            v-model="form.department_id"
+                            id="department_id"
+                        >
+                            <option value="">系所</option>
+                            <template v-for="department in departments">
+                                <option :value="department.id">{{ department.name }}</option>
+                            </template>
+                        </select>
+                    </div>
+
+                    <div class="input-field col s12 m3">
+                        <input
+                            v-model="form.keyword"
+                            id="keyword"
+                            type="text"
+                        >
+                        <label for="keyword">課程代碼/課程名稱</label>
+                    </div>
+
+                    <div class="input-field col s12 m2">
+                        <button
+                            type="submit"
+                            class="btn waves-effect waves-light"
+                            :disabled="loading.courses"
+                        >
+                            <span>搜尋</span><i class="material-icons right">search</i>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div>
+        <table class="bordered highlight centered hoverable z-depth-1">
+            <thead>
+                <tr>
+                    <th>學期</th>
+                    <th class="hide-on-small-only">開課系所</th>
+                    <th>課程代碼</th>
+                    <th>課程名稱</th>
+                    <th>授課教授</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-show="! loading.courses" v-for="course in courses">
+                    <td>{{ course.semester.name }}</td>
+                    <td class="hide-on-small-only">{{ course.department.name }}</td>
+                    <td>{{ course.code }}</td>
+                    <td>
+                        <template v-if="course.dimension.length > 0">
+                            <a
+                                v-link="{name: 'courses.show', params: {seriesId: course.series_id}}"
+                                class="tooltipped"
+                                data-position="bottom"
+                                data-delay="100"
+                                data-tooltip="{{ course.dimension[0].name }}"
+                            >{{ course.name }}</a>
+                        </template>
+                        <template v-else>
+                            <a v-link="{name: 'courses.show', params: {seriesId: course.series_id}}">{{ course.name }}</a>
+                        </template>
+                    </td>
+                    <td>
+                        <template v-for="professor in course.professors | limitBy 5">
+                            <span class="truncate">{{ professor.name }}</span>
+                            <span v-if="4 === $index" class="truncate">……</span>
+                        </template>
+                    </td>
+                </tr>
+
+                <tr v-show="! loading.courses && 0 === courses.length">
+                    <td colspan="5">探索，帶來無限可能！</td>
+                </tr>
+
+                <tr v-show="loading.courses">
+                    <td colspan="5">
+                        <progress-bar :loading="loading.courses"></progress-bar>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div>
+        <hr>
+
+        <div class="row">
+            <div class="col s12 m7">
+                <h5><i class="material-icons" style="vertical-align: bottom">forum</i> 最新評論</h5>
+
+                <template v-for="comment in comments">
+                    <div class="card hoverable" data-comment>
+                        <div class="card-content comment-header">
+                            <template v-if="null !== comment.user">
+                                <strong class="teal-text text-darken-1">{{ comment.user.nickname }}</strong>
                             </template>
                             <template v-else>
-                                <a v-link="{name: 'courses.show', params: {seriesId: course.series_id}}">{{ course.name }}</a>
+                                <span class="grey-text text-darken-1">匿名</span>
                             </template>
-                        </td>
-                        <td>
-                            <template v-for="professor in course.professors | limitBy 5">
-                                <span class="truncate">{{ professor.name }}</span>
-                                <span v-if="4 === $index" class="truncate">……</span>
-                            </template>
-                        </td>
-                    </tr>
 
-                    <tr v-show="! loading.courses && 0 === courses.length">
-                        <td colspan="5">探索，帶來無限可能！</td>
-                    </tr>
-
-                    <tr v-show="loading.courses">
-                        <td colspan="5">
-                            <progress-bar :loading="loading.courses"></progress-bar>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-
-        <div>
-            <hr>
-
-            <div class="row">
-                <div class="col s12 m7">
-                    <h4>最新評論</h4>
-
-                    <template v-for="comment in comments">
-                        <div class="card hoverable" data-comment>
-                            <div class="card-content comment-header">
-                                <template v-if="null !== comment.user">
-                                    <strong class="teal-text text-darken-1">{{ comment.user.nickname }}</strong>
-                                </template>
-                                <template v-else>
-                                    <span class="grey-text text-darken-1">匿名</span>
-                                </template>
-
-                                <a
-                                    v-link="{name: 'courses.show', params: {seriesId: comment.commentable.series_id}}"
-                                    class="right"
-                                >{{ comment.commentable.department.name }}：{{ comment.commentable.name }}</a>
-                            </div>
-
-                            <div class="card-content comment-content">
-                                <blockquote>{{ comment.content }}</blockquote>
-                            </div>
-
-                            <div class="card-content comment-footer">
-                                <span class="green-text"><i class="fa fa-thumbs-o-up"></i> {{ comment.likes }}</span>
-                                <span> · </span>
-                                <span
-                                    class="tooltipped"
-                                    data-position="bottom"
-                                    data-delay="100"
-                                    data-tooltip="{{ comment.created_at }}"
-                                    data-time-humanize="{{ comment.created_at }}"
-                                ></span>
-                                <a @click="backToTop()" class="right grey-text text-darken-1 back-to-top">Back to top.</a>
-                            </div>
+                            <a
+                                v-link="{name: 'courses.show', params: {seriesId: comment.commentable.series_id}}"
+                                class="right"
+                            >{{ comment.commentable.department.name }}：{{ comment.commentable.name }}</a>
                         </div>
-                    </template>
 
-                    <div v-show="loading.comments" class="row">
-                        <div class="col s12 center">
-                            <br><br>
+                        <div class="card-content comment-content">
+                            <blockquote>{{ comment.content }}</blockquote>
+                        </div>
 
-                            <progress-bar :loading="loading.comments"></progress-bar>
+                        <div class="card-content comment-footer">
+                            <span class="green-text"><i class="fa fa-thumbs-o-up"></i> {{ comment.likes }}</span>
+                            <span> · </span>
+                            <span
+                                class="tooltipped"
+                                data-position="bottom"
+                                data-delay="100"
+                                data-tooltip="{{ comment.created_at }}"
+                                data-time-humanize="{{ comment.created_at }}"
+                            ></span>
+                            <a @click="backToTop()" class="right grey-text text-darken-1 back-to-top">Back to top.</a>
                         </div>
                     </div>
-                </div>
+                </template>
 
-                <div class="col s12 m5">
-                    <h4>追蹤課程</h4>
+                <div v-show="loading.comments" class="row">
+                    <div class="col s12 center">
+                        <br><br>
+
+                        <progress-bar :loading="loading.comments"></progress-bar>
+                    </div>
                 </div>
             </div>
 
+            <div class="col s12 m5">
+                <h5><i class="material-icons" style="vertical-align: bottom">favorite</i> 課程追蹤</h5>
+            </div>
         </div>
+
     </div>
 </template>
 
@@ -297,7 +294,13 @@
             });
 
             $(document).on('change', '#college, #department_id', function () {
-                _this.$set(`form['${$(this).attr('id')}']`, $(this).val());
+                let id = $(this).attr('id');
+
+                _this.$set(`form['${id}']`, $(this).val());
+
+                if ('college' === id) {
+                    _this.$set(`form['department_id']`, '');
+                }
             });
 
             $(window).scroll(function () {
