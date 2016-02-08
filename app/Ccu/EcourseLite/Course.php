@@ -48,6 +48,10 @@ class Course extends Core
             while ($i < $size) {
                 $temp[$name[$i]] = trim($row->children($i + 1)->plaintext);
 
+                if (preg_match('/^\d$/', $temp[$name[$i]])) {
+                    $temp[$name[$i]] = intval($temp[$name[$i]]);
+                }
+
                 ++$i;
             }
 
