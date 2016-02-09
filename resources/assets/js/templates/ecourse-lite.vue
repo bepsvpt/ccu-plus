@@ -107,7 +107,9 @@
                                         </template>
                                     </td>
                                     <td>
-                                        <span :class="{'red-text': homework.warning}">{{ homework.date }} (<span data-time-humanize="{{ homework.date}}"></span>)</span>
+                                        <span :class="{'red-text': homework.warning}">{{ homework.date }}<br class="hide-on-med-and-up">
+                                            <span> ( <span data-time-humanize="{{ homework.date}}"></span> )</span>
+                                        </span>
                                     </td>
                                     <td>
                                         <i v-if="homework.submitted" class="material-icons green-text">done</i>
