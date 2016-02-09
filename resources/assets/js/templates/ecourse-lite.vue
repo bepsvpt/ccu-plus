@@ -11,7 +11,12 @@
                 <ul class="collection">
                     <li class="collection-item avatar">
                         <i class="material-icons circle green" style="top: 17%;">book</i>
-                        <span class="title">{{ course.name }}</span>
+                        <a
+                            @click.stop
+                            v-link="{name: 'courses.show', params: {seriesId: course.seriesId}}"
+                            target="_blank"
+                            class="title"
+                        >{{ course.name }}</a>
                         <p style="color: rgba(0,0,0,0.7);">{{ course.professor }}<br>{{ course.department }}</p>
                         <div class="secondary-content hide-on-small-only">
                             <i
@@ -76,14 +81,12 @@
                                 </div>
                             </li>
                         </ul>
+
                         <h5 v-else class="center">尚無公告</h5>
                     </div>
                     <!-- 作業 -->
                     <div id="{{ course.code }}-homework" class="col offset-s1 s10 tab-content">
-                        <table
-                            v-if="course.content.homework.length > 0"
-                            class="bordered striped centered"
-                        >
+                        <table v-if="course.content.homework.length > 0" class="bordered striped centered">
                             <thead>
                                 <tr>
                                     <th>作業名稱</th>
@@ -113,6 +116,7 @@
                                 </tr>
                             </tbody>
                         </table>
+
                         <h5 v-else class="center">尚無作業</h5>
                     </div>
                     <!-- 成績 -->
@@ -134,11 +138,13 @@
                     </div>
                     <!-- 教材 -->
                     <div id="{{ course.code }}-attachments" class="col offset-s1 s10 tab-content">
-                        <div class="collection">
+                        <div v-if="course.content.attachments.length > 0" class="collection">
                             <template v-for="attachment in course.content.attachments">
                                 <a href="{{ attachment.link }}" target="_blank" class="collection-item">{{ attachment.name }}</a>
                             </template>
                         </div>
+
+                        <h5 v-else class="center">尚無教材</h5>
                     </div>
                 </div>
 
@@ -148,9 +154,11 @@
             </div>
         </li>
     </ul>
+
     <div v-else class="center">
         <progress-bar :loading="0 === courses.length"></progress-bar>
     </div>
+
     <div id="homework-content" class="modal">
         <div class="modal-content">
             <p class="pre-line">{{{ $data['homework-content'] }}}</p>
