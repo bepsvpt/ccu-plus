@@ -19,9 +19,12 @@ import Arrive from './components/arrive';
 import Recaptcha from './components/recaptcha.vue';
 import router from './routes';
 
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;ga('create', 'UA-65962475-4', 'auto');
+
 Arrive();
 
 let Router = new VueRouter();
 
 Router.map(router.routes);
+Router.afterEach(router.afterEach);
 Router.start(App, 'main');

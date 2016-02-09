@@ -27,5 +27,9 @@ export default {
       name: 'ecourse-lite',
       component: courseLite
     }
+  },
+
+  afterEach(transition) {
+    ga('send', 'pageview', transition.to.path);
   }
 }

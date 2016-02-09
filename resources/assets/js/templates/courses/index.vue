@@ -215,6 +215,8 @@
                     this.courses = response.data;
 
                     this.loading.courses = false;
+
+                    ga('send', 'event', 'Course', 'search');
                 });
             },
 

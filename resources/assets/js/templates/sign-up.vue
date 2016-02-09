@@ -94,6 +94,8 @@
                     });
 
                     this.$parent.$data['user'] = response.data;
+
+                    ga('send', 'event', 'User', 'sign-up');
                 }, (response) => {
                     this.$dispatch('http-response', response);
                 });
