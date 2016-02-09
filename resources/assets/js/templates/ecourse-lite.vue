@@ -133,7 +133,13 @@
                         </table>
                     </div>
                     <!-- 教材 -->
-                    <div id="{{ course.code }}-attachments" class="col offset-s1 s10 tab-content">這是授課教材</div>
+                    <div id="{{ course.code }}-attachments" class="col offset-s1 s10 tab-content">
+                        <div class="collection">
+                            <template v-for="attachment in course.content.attachments">
+                                <a href="{{ attachment.link }}" target="_blank" class="collection-item">{{ attachment.name }}</a>
+                            </template>
+                        </div>
+                    </div>
                 </div>
 
                 <div v-else class="center" style="margin: 20px 0;">

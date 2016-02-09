@@ -13,9 +13,6 @@ abstract class Core
     const SIGN_IN = self::BASE_URL.'/index_login.php';
     const COURSES_LIST = self::BASE_URL.'/Courses_Admin/take_course.php?frame=1';
     const COURSES_SHOW = self::BASE_URL.'/login_s.php';
-    const COURSES_GRADES = self::BASE_URL.'/Trackin/SGQueryFrame1.php';
-    const COURSES_FILES = self::BASE_URL.'/textbook/course_menu.php?list=1';
-    const COURSES_TEXTBOOK = self::BASE_URL.'/php/textbook/';
 
     /**
      * @var Client

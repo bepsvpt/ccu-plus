@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Ccu\Core\Entity;
 use App\Ccu\EcourseLite\Announcement;
+use App\Ccu\EcourseLite\Attachment;
 use App\Ccu\EcourseLite\Course;
 use App\Ccu\EcourseLite\Grade;
 use App\Ccu\EcourseLite\Homework;
@@ -50,9 +51,9 @@ class EcourseLiteController extends ApiController
 
         $data = [
             'announcements' => $this->announcements(),
+            'attachments' => $this->attachments(),
             'homework' => $this->homework($request),
             'grades' => $this->grades($request),
-            'attachments' => [],
         ];
 
         return $this->setData($data)->responseOk();
@@ -69,6 +70,20 @@ class EcourseLiteController extends ApiController
 
         return Cache::tags('ecourse-lite')->remember($key, 15, function () {
             return Announcement::lists($this->courseId);
+        });
+    }
+
+    /**
+     * 授課教材.
+     *
+     * @return array
+     */
+    protected function attachments()
+    {
+        $key = 'attachments-'.$this->courseId;
+
+        return Cache::tags('ecourse-lite')->remember($key, Carbon::now()->endOfDay(), function () {
+            return Attachment::lists($this->courseId);
         });
     }
 
