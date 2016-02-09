@@ -95,8 +95,6 @@
                             <a
                                 v-link="{name: 'courses.show', params: {seriesId: course.series_id}}"
                                 class="tooltipped"
-                                data-position="bottom"
-                                data-delay="100"
                                 data-tooltip="{{ course.dimension[0].name }}"
                             >{{ course.name }}</a>
                         </template>
@@ -157,8 +155,6 @@
                             <span> · </span>
                             <span
                                 class="tooltipped"
-                                data-position="bottom"
-                                data-delay="100"
                                 data-tooltip="{{ comment.created_at }}"
                                 data-time-humanize="{{ comment.created_at }}"
                             ></span>
