@@ -55,6 +55,8 @@ class Course extends Core
                 ++$i;
             }
 
+            $temp['courseId'] = substr(strrchr($row->children(3)->find('a', 0)->href, '='), 1);
+
             $result[] = $temp;
         }
 

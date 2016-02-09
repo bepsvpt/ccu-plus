@@ -28,6 +28,11 @@ class Core
     protected $jar;
 
     /**
+     * @var string
+     */
+    protected $courseId;
+
+    /**
      * Core constructor.
      */
     public function __construct()
@@ -83,5 +88,33 @@ class Core
         Session::put('ccu.ecourse', [
             'jar' => encrypt(serialize($this->jar)),
         ]);
+    }
+
+    /**
+     * 更改 ecourse session 中 course id 的值.
+     *
+     * @return $this
+     */
+    protected function touchSession()
+    {
+        $this->client->get(self::COURSES_SHOW, [
+            'cookies' => $this->jar,
+            'query' => [
+                'courseid' => $this->courseId,
+            ],
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * @param string $courseId
+     * @return $this
+     */
+    public function setCourseId($courseId)
+    {
+        $this->courseId = $courseId;
+
+        return $this;
     }
 }

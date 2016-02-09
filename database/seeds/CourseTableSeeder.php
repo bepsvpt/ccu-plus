@@ -32,7 +32,7 @@ class CourseTableSeeder extends Seeder
                 }
 
                 // 課程教授
-                $course->professors()->saveMany($professors->random(mt_rand(2, 3)));
+                //$course->professors()->saveMany($professors->random(mt_rand(2, 3)));
             });
     }
 }

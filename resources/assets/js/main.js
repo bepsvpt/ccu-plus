@@ -6,6 +6,14 @@ Vue.use(VueRouter);
 
 Vue.http.headers.common['X-XSRF-TOKEN'] = decodeURIComponent(('; ' + document.cookie).split('; XSRF-TOKEN=').pop().split(';').shift());
 
+Vue.filter('urlify', function (value) {
+  let urlRegex =/(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
+
+  return value.replace(urlRegex, function (url) {
+    return `<a href="${url}" target="_blank">${url}</a>`;
+  })
+});
+
 import App from './templates/main.vue';
 import Arrive from './components/arrive';
 import Recaptcha from './components/recaptcha.vue';

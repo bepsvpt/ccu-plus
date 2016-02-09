@@ -29,6 +29,7 @@ $router->group(['prefix' => 'api', 'namespace' => 'Api', 'middleware' => ['web']
 
         $router->group(['prefix' => 'ecourse-lite', 'middleware' => ['auth']], function (Router $router) {
             $router->get('course-list', 'EcourseLiteController@courseList');
+            $router->get('course-content/{courseId}', 'EcourseLiteController@courseContent');
         });
 
         $router->group(['prefix' => 'resources'], function (Router $router) {

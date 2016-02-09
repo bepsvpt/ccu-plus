@@ -36,6 +36,11 @@ function arrive() {
       $(this).collapsible();
     });
 
+    // http://materializecss.com/tabs.html#initialization
+    $(document).arrive('ul.tabs', function() {
+      $(this).tabs();
+    });
+
     // http://momentjs.com/
     moment.locale('zh-tw');
 

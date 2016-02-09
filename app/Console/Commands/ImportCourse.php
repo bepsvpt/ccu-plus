@@ -6,7 +6,7 @@ use App\Ccu\Course;
 use App\Ccu\General\Category;
 use Cache;
 use Illuminate\Filesystem\Filesystem;
-use PHPHtmlParser\Dom;
+use Sunra\PhpSimple\HtmlDomParser;
 
 class ImportCourse extends Command
 {
@@ -23,11 +23,6 @@ class ImportCourse extends Command
      * @var string
      */
     protected $description = 'Import course data from directory or file.';
-
-    /**
-     * @var Dom
-     */
-    protected $dom;
 
     /**
      * @var Filesystem
@@ -50,13 +45,10 @@ class ImportCourse extends Command
      * Create a new command instance.
      *
      * @param Filesystem $filesystem
-     * @param Dom $dom
      */
-    public function __construct(Filesystem $filesystem, Dom $dom)
+    public function __construct(Filesystem $filesystem)
     {
         parent::__construct();
-
-        $this->dom = $dom;
 
         $this->filesystem = $filesystem;
     }
@@ -125,7 +117,7 @@ class ImportCourse extends Command
         foreach ($this->files as $file) {
             $content = $this->removeAnnoys($this->filesystem->get($file));
 
-            $rows = $this->dom->loadStr($content, [])->find('tr')->toArray();
+            $rows = HtmlDomParser::str_get_html($content)->find('tr');
 
             // 移除表格標題列
             array_shift($rows);
@@ -183,14 +175,12 @@ class ImportCourse extends Command
 
         $result = [];
 
-        foreach ($row->getChildren() as $node) {
+        foreach ($row->children() as $node) {
             if ($i >= $size) {
                 break;
-            } elseif (is_a($node, \PHPHtmlParser\Dom\TextNode::class)) {
-                continue;
             }
 
-            $result[$name[$i++]] = trim($node->innerhtml);
+            $result[$name[$i++]] = trim($node->plaintext);
         }
 
         return $result;
@@ -292,7 +282,7 @@ class ImportCourse extends Command
      */
     protected function professors($professors)
     {
-        $professors = explode(' ', $professors);
+        $professors = explode(' ', str_replace('  ', ' ', str_replace('教師未定', '', $professors)));
 
         $result = Category::where('category', 'professor')->whereIn('name', $professors)->get();
 
