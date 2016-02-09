@@ -7,7 +7,7 @@ use GuzzleHttp\Cookie\CookieJar;
 use Illuminate\Auth\Access\AuthorizationException;
 use Session;
 
-class Core
+abstract class Core
 {
     const BASE_URL = 'https://ecourse.ccu.edu.tw/php';
     const SIGN_IN = self::BASE_URL.'/index_login.php';
@@ -85,9 +85,28 @@ class Core
             throw new AuthorizationException;
         }
 
-        Session::put('ccu.ecourse', [
-            'jar' => encrypt(serialize($this->jar)),
+        Session::put('ccu.ecourse.jar', encrypt(serialize($this->jar)));
+    }
+
+    /**
+     * 取得分析列表.
+     *
+     * @param string $courseId
+     * @return array
+     */
+    public static function lists($courseId = '')
+    {
+        $_this = new static;
+
+        if (! empty($courseId)) {
+            $_this->setCourseId($courseId)->touchSession();
+        }
+
+        $response = $_this->client->get(static::LIST, [
+            'cookies' => $_this->jar,
         ]);
+
+        return $_this->parseLists($response->getBody()->getContents());
     }
 
     /**
@@ -97,12 +116,16 @@ class Core
      */
     protected function touchSession()
     {
-        $this->client->get(self::COURSES_SHOW, [
-            'cookies' => $this->jar,
-            'query' => [
-                'courseid' => $this->courseId,
-            ],
-        ]);
+        if ($this->courseId !== Session::get('ccu.ecourse.courseId')) {
+            $this->client->get(self::COURSES_SHOW, [
+                'cookies' => $this->jar,
+                'query' => [
+                    'courseid' => $this->courseId,
+                ],
+            ]);
+
+            Session::put('ccu.ecourse.courseId', $this->courseId);
+        }
 
         return $this;
     }
@@ -117,4 +140,6 @@ class Core
 
         return $this;
     }
+
+    abstract protected function parseLists($content);
 }

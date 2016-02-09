@@ -54,6 +54,7 @@
                             <li class="tab col s3"><a href="#{{ course.code }}-attachments">授課教材</a></li>
                         </ul>
                     </div>
+                    <!-- 公告 -->
                     <div id="{{ course.code }}-announcements" class="col offset-s1 s10 tab-content">
                         <ul
                             v-if="course.content.announcements.length > 0"
@@ -71,15 +72,68 @@
                                     ></span>
                                 </div>
                                 <div class="collapsible-body">
-                                    <p style="white-space: pre-line;">{{{ announcement.content | urlify }}}</p>
+                                    <p class="pre-line">{{{ announcement.content | urlify }}}</p>
                                 </div>
                             </li>
                         </ul>
                         <h5 v-else class="center">尚無公告</h5>
                     </div>
-                    <div id="{{ course.code }}-homework" class="col offset-s1 s12 tab-content">這是作業</div>
-                    <div id="{{ course.code }}-grades" class="col offset-s1 s12 tab-content">這是成績查詢</div>
-                    <div id="{{ course.code }}-attachments" class="col offset-s1 s12 tab-content">這是授課教材</div>
+                    <!-- 作業 -->
+                    <div id="{{ course.code }}-homework" class="col offset-s1 s10 tab-content">
+                        <table
+                            v-if="course.content.homework.length > 0"
+                            class="bordered striped centered"
+                        >
+                            <thead>
+                                <tr>
+                                    <th>作業名稱</th>
+                                    <th>繳交期限</th>
+                                    <th>已繳交</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="homework in course.content.homework">
+                                    <td>
+                                        <a v-if="homework.link" href="{{ homework.link }}" target="_blank">{{ homework.name }}</a>
+                                        <template v-else>
+                                            <a
+                                                @click="updateModal(homework.content)"
+                                                class="modal-trigger"
+                                                href="#homework-content"
+                                            >{{ homework.name }}</a>
+                                        </template>
+                                    </td>
+                                    <td>
+                                        <span :class="{'red-text': homework.warning}">{{ homework.date }} (<span data-time-humanize="{{ homework.date}}"></span>)</span>
+                                    </td>
+                                    <td>
+                                        <i v-if="homework.submitted" class="material-icons green-text">done</i>
+                                        <i v-else class="material-icons red-text">clear</i>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <h5 v-else class="center">尚無作業</h5>
+                    </div>
+                    <!-- 成績 -->
+                    <div id="{{ course.code }}-grades" class="col offset-s1 s10 tab-content">
+                        <table class="bordered striped centered">
+                            <thead>
+                                <tr>
+                                    <th>項目</th>
+                                    <th>成績</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="grade in course.content.grades">
+                                    <td>{{ grade.name }}</td>
+                                    <td>{{ grade.value || '-' }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- 教材 -->
+                    <div id="{{ course.code }}-attachments" class="col offset-s1 s10 tab-content">這是授課教材</div>
                 </div>
 
                 <div v-else class="center" style="margin: 20px 0;">
@@ -91,6 +145,11 @@
     <div v-else class="center">
         <progress-bar :loading="0 === courses.length"></progress-bar>
     </div>
+    <div id="homework-content" class="modal">
+        <div class="modal-content">
+            <p class="pre-line">{{{ $data['homework-content'] }}}</p>
+        </div>
+    </div>
 </template>
 
 <script>
@@ -99,7 +158,8 @@
     export default {
         data() {
             return {
-                courses: []
+                courses: [],
+                'homework-content': ''
             };
         },
 
@@ -115,6 +175,10 @@
                         course.touch = true;
                     });
                 }
+            },
+
+            updateModal(content) {
+                this.$data['homework-content'] = content;
             }
         },
 

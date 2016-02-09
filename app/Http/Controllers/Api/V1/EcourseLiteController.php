@@ -2,14 +2,24 @@
 
 namespace App\Http\Controllers\Api\V1;
 
+use App\Ccu\Core\Entity;
 use App\Ccu\EcourseLite\Announcement;
 use App\Ccu\EcourseLite\Course;
+use App\Ccu\EcourseLite\Grade;
+use App\Ccu\EcourseLite\Homework;
 use Cache;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class EcourseLiteController extends ApiController
 {
+    /**
+     * 課程 id.
+     *
+     * @var string
+     */
+    protected $courseId = '';
+
     /**
      * Ecourse 課程列表.
      *
@@ -30,15 +40,18 @@ class EcourseLiteController extends ApiController
     /**
      * 課程內容.
      *
+     * @param Request $request
      * @param string $courseId
      * @return \Illuminate\Http\JsonResponse
      */
-    public function courseContent($courseId)
+    public function courseContent(Request $request, $courseId)
     {
+        $this->courseId = $courseId;
+
         $data = [
-            'announcements' => $this->announcements($courseId),
-            'homework' => [],
-            'grades' => [],
+            'announcements' => $this->announcements(),
+            'homework' => $this->homework($request),
+            'grades' => $this->grades($request),
             'attachments' => [],
         ];
 
@@ -46,17 +59,46 @@ class EcourseLiteController extends ApiController
     }
 
     /**
-     * Ecourse 公告.
+     * 公告列表.
      *
-     * @param string $courseId
-     * @return mixed
+     * @return array
      */
-    protected function announcements($courseId)
+    protected function announcements()
     {
-        $key = 'announcements-'.$courseId;
+        $key = 'announcements-'.$this->courseId;
 
-        return Cache::tags('ecourse-lite')->remember($key, 30, function () use ($courseId) {
-            return Announcement::lists($courseId);
+        return Cache::tags('ecourse-lite')->remember($key, 15, function () {
+            return Announcement::lists($this->courseId);
+        });
+    }
+
+    /**
+     * 成績資料.
+     *
+     * @param Request $request
+     * @return array
+     */
+    protected function grades(Request $request)
+    {
+        $key = 'grades-'.md5($request->user()->getAuthIdentifier()).'-'.$this->courseId;
+
+        return Cache::tags('ecourse-lite')->remember($key, Carbon::now()->endOfDay(), function () {
+            return Grade::lists($this->courseId);
+        });
+    }
+
+    /**
+     * 作業列表.
+     *
+     * @param Request $request
+     * @return array
+     */
+    protected function homework(Request $request)
+    {
+        $key = 'homework-'.md5($request->user()->getAuthIdentifier()).'-'.$this->courseId;
+
+        return Cache::tags('ecourse-lite')->remember($key, Entity::MINUTES_QUARTER_DAY, function () {
+            return Homework::lists($this->courseId);
         });
     }
 }

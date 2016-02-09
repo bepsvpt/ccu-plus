@@ -11,25 +11,6 @@ class Announcement extends Core
     const CONTENT = self::BASE_URL.'/news/content.php';
 
     /**
-     * 取得公告列表.
-     *
-     * @param string $courseId
-     * @return array
-     */
-    public static function lists($courseId)
-    {
-        $_this = new self;
-
-        $_this->setCourseId($courseId)->touchSession();
-
-        $response = $_this->client->get(self::LIST, [
-            'cookies' => $_this->jar,
-        ]);
-
-        return $_this->parseLists($response->getBody()->getContents());
-    }
-
-    /**
      * 分析公告列表.
      *
      * @param string $content

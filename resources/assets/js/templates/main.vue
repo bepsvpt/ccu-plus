@@ -18,6 +18,10 @@
     a {
         cursor: pointer;
     }
+
+    .pre-line {
+        white-space: pre-line;
+    }
 </style>
 
 <template>
