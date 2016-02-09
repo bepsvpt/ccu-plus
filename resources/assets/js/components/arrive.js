@@ -8,6 +8,13 @@ function arrive() {
       $(this).leanModal();
     });
 
+    // http://materializecss.com/navbar.html#mobile-collapse
+    $(".button-collapse").sideNav();
+
+    $(document).arrive('.button-collapse', function() {
+      $(this).sideNav();
+    });
+
     // http://materializecss.com/forms.html#character-counter
     $(document).arrive('input[length], textarea[length]', function() {
       $(this).characterCounter();

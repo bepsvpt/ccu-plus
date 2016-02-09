@@ -7,7 +7,6 @@
         margin-top: 180px;
 
         a {
-            cursor: pointer;
             user-select: none;
         }
     }

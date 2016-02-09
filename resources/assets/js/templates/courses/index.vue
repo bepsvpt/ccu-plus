@@ -1,8 +1,4 @@
 <style lang="scss">
-    .back-to-top {
-        cursor: pointer;
-    }
-
     .comment {
         &-header {
             padding: 20px 20px 5px !important;

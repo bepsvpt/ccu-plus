@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\V1;
 use App\Ccu\EcourseLite\Announcement;
 use App\Ccu\EcourseLite\Course;
 use Cache;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class EcourseLiteController extends ApiController
@@ -19,7 +20,7 @@ class EcourseLiteController extends ApiController
     {
         $key = 'course-list-'.md5($request->user()->getAuthIdentifier());
 
-        $courses = Cache::tags('ecourse-lite')->remember($key, 10, function () {
+        $courses = Cache::tags('ecourse-lite')->remember($key, Carbon::now()->endOfDay(), function () {
             return Course::lists();
         });
 
@@ -54,7 +55,7 @@ class EcourseLiteController extends ApiController
     {
         $key = 'announcements-'.$courseId;
 
-        return Cache::tags('ecourse-lite')->remember($key, 10, function () use ($courseId) {
+        return Cache::tags('ecourse-lite')->remember($key, 30, function () use ($courseId) {
             return Announcement::lists($courseId);
         });
     }

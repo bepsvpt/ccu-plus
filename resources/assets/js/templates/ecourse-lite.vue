@@ -1,17 +1,11 @@
 <style lang="scss">
-    a {
-        cursor: pointer;
-    }
-
-    .course-content {
-        div:not(:first-child) {
-            margin-top: 1.75rem;
-        }
+    .tab-content {
+        margin-top: 1.75rem;
     }
 </style>
 
 <template>
-    <ul class="collapsible popout" data-collapsible="accordion">
+    <ul v-if="courses.length > 0" class="collapsible popout" data-collapsible="accordion">
         <li v-for="course in courses">
             <div @click="touchCourse(course)" class="collapsible-header">
                 <ul class="collection">
@@ -51,7 +45,7 @@
                 </ul>
             </div>
             <div class="collapsible-body">
-                <div v-if="course.touch" class="row course-content">
+                <div v-if="course.touch" class="row">
                     <div class="col s12">
                         <ul class="tabs">
                             <li class="tab col s3"><a href="#{{ course.code }}-announcements" class="active">公告</a></li>
@@ -60,7 +54,7 @@
                             <li class="tab col s3"><a href="#{{ course.code }}-attachments">授課教材</a></li>
                         </ul>
                     </div>
-                    <div id="{{ course.code }}-announcements" class="col offset-s1 s10">
+                    <div id="{{ course.code }}-announcements" class="col offset-s1 s10 tab-content">
                         <ul
                             v-if="course.content.announcements.length > 0"
                             class="collapsible"
@@ -83,16 +77,20 @@
                         </ul>
                         <h5 v-else class="center">尚無公告</h5>
                     </div>
-                    <div id="{{ course.code }}-homework" class="col s12">這是作業</div>
-                    <div id="{{ course.code }}-grades" class="col s12">這是成績查詢</div>
-                    <div id="{{ course.code }}-attachments" class="col s12">這是授課教材</div>
+                    <div id="{{ course.code }}-homework" class="col offset-s1 s12 tab-content">這是作業</div>
+                    <div id="{{ course.code }}-grades" class="col offset-s1 s12 tab-content">這是成績查詢</div>
+                    <div id="{{ course.code }}-attachments" class="col offset-s1 s12 tab-content">這是授課教材</div>
                 </div>
+
                 <div v-else class="center" style="margin: 20px 0;">
                     <progress-bar :loading="! course.touch"></progress-bar>
                 </div>
             </div>
         </li>
     </ul>
+    <div v-else class="center">
+        <progress-bar :loading="0 === courses.length"></progress-bar>
+    </div>
 </template>
 
 <script>

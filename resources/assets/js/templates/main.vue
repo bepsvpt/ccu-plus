@@ -14,6 +14,10 @@
         flex: 1 0 auto;
         margin-top: 20px !important;
     }
+
+    a {
+        cursor: pointer;
+    }
 </style>
 
 <template>
