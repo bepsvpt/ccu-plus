@@ -17,6 +17,13 @@ class Course extends Entity
     protected $table = 'courses';
 
     /**
+     * The primary key for the model.
+     *
+     * @var string
+     */
+    protected $primaryKey = 'series_id'; // Magic.
+
+    /**
      * Indicates if the model should be timestamped.
      *
      * @var bool

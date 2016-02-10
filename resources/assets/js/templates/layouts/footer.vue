@@ -1,9 +1,3 @@
-<style lang="scss">
-    footer {
-        background-color: #827759 !important;
-    }
-</style>
-
 <template>
     <footer class="page-footer">
         <div class="container">

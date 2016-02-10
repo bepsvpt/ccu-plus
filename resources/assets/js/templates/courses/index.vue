@@ -12,10 +12,6 @@
              padding: 5px 20px 20px !important;
         }
     }
-
-    hr {
-        margin-top: 2em;
-    }
 </style>
 
 <template>
@@ -120,7 +116,7 @@
     </div>
 
     <div>
-        <hr>
+        <br>
 
         <div class="row">
             <div class="col s12 m5">
@@ -147,7 +143,7 @@
                         </div>
 
                         <div class="card-content comment-content">
-                            <blockquote>{{ comment.content }}</blockquote>
+                            <blockquote class="pre-line">{{ comment.content }}</blockquote>
                         </div>
 
                         <div class="card-content comment-footer">

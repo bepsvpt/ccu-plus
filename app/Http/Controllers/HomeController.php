@@ -13,9 +13,15 @@ class HomeController extends Controller
      */
     public function home()
     {
-        $js = ('production' === config('app.env')) ? $this->elixir('js/main.js') : asset('js/main.js');
+        if ('production' === config('app.env')) {
+            $js = $this->elixir('js/main.js');
+            $css = $this->elixir('css/main.css');
+        } else {
+            $js = asset('js/main.js');
+            $css = asset('css/main.css');
+        }
 
-        return view('home', compact('js'));
+        return view('home', compact('js', 'css'));
     }
 
     /**

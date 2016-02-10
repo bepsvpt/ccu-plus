@@ -9,9 +9,10 @@ if (elixir.config.production) {
 }
 
 elixir(function(mix) {
-  mix.browserify('main.js');
+  mix.sass('main.scss')
+    .browserify('main.js');
 
   if (elixir.config.production) {
-    mix.version('js/main.js');
+    mix.version(['js/main.js', 'css/main.css']);
   }
 });

@@ -29,7 +29,7 @@ class Comment extends Entity
      * @var array
      */
     protected $fillable = [
-        'content', 'anonymous', 'likes',
+        'user_id', 'content', 'anonymous', 'likes',
     ];
 
     /**
@@ -74,6 +74,16 @@ class Comment extends Entity
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    /**
+     * 所評論的教授.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function professors()
+    {
+        return $this->belongsToMany(Category::class, 'comment_professor', 'comment_id', 'professor_id');
     }
 
     /**

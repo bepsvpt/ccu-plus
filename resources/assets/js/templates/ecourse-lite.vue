@@ -10,7 +10,7 @@
             <div @click="touchCourse(course)" class="collapsible-header">
                 <ul class="collection">
                     <li class="collection-item avatar">
-                        <i class="material-icons circle green" style="top: 17%;">book</i>
+                        <i class="material-icons circle green">book</i>
                         <a
                             @click.stop
                             v-link="{name: 'courses.show', params: {seriesId: course.seriesId}}"

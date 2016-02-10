@@ -12,20 +12,20 @@ class CourseCommentControl extends ApiController
 {
     public function index($seriesId)
     {
-        $course = Course::where('seriesId', $seriesId)->first();
+        $course = Course::where('series_id', $seriesId)->first();
 
         if (is_null($course)) {
             return $this->responseNotFound();
         }
 
-        $comments = $course->comments()->latest()->paginate(5);
+        $comments = $course->comments()->with(['professors'])->latest()->simplePaginate(5);
 
         return $this->setData($comments)->responseOk();
     }
 
     public function store(V1\CourseCommentRequest $request, $seriesId)
     {
-        $course = Course::where('seriesId', $seriesId)->first();
+        $course = Course::where('series_id', $seriesId)->first();
 
         if (is_null($course)) {
             return $this->responseNotFound();
@@ -38,26 +38,40 @@ class CourseCommentControl extends ApiController
             'anonymous' => $request->input('anonymous'),
         ]));
 
-        return $this->setData($comment)->responseCreated();
+        $comment->professors()->sync($request->input('professor'));
+
+        return $this->setData($comment->fresh()->load(['professors']))->responseCreated();
     }
 
     public function waterfall(Request $request)
     {
         $key = 'comment-waterfall-'.$request->input('id', 0);
 
-        $comments = Cache::tags('course')->remember($key, 5, function () use ($request) {
-            $query = Comment::with(['commentable', 'commentable.department'])
-                ->where('commentable_type', 'course')
-                ->whereNull('comment_id')
-                ->latest()
-                ->take(5);
+//        $comments = Cache::tags('course')->remember($key, 5, function () use ($request) {
+//            $query = Comment::with(['commentable', 'commentable.department'])
+//                ->where('commentable_type', 'course')
+//                ->whereNull('comment_id')
+//                ->latest()
+//                ->take(5);
+//
+//            if ($request->has('id')) {
+//                $query = $query->where('id', '<', $request->input('id'));
+//            }
+//
+//            return $query->get();
+//        });
 
-            if ($request->has('id')) {
-                $query = $query->where('id', '<', $request->input('id'));
-            }
+        $query = Comment::with(['commentable', 'commentable.department'])
+            ->where('commentable_type', 'course')
+            ->whereNull('comment_id')
+            ->latest()
+            ->take(5);
 
-            return $query->get();
-        });
+        if ($request->has('id')) {
+            $query = $query->where('id', '<', $request->input('id'));
+        }
+
+        $comments = $query->get();
 
         return $this->setData($comments)->responseOk();
     }

@@ -1,30 +1,3 @@
-<style lang="scss">
-    html {
-        font-family: "Lato", "Roboto", sans-serif;
-        overflow-y:scroll;
-    }
-
-    body {
-        display: flex;
-        min-height: 100vh;
-        flex-direction: column;
-    }
-
-    main {
-        flex: 1 0 auto;
-        margin-top: 20px !important;
-    }
-
-    a {
-        cursor: pointer;
-    }
-
-    .pre-line {
-        white-space: pre-line;
-        word-wrap: break-word;
-    }
-</style>
-
 <template>
     <app-header></app-header>
 

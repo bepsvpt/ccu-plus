@@ -25,6 +25,8 @@ $router->group(['prefix' => 'api', 'namespace' => 'Api', 'middleware' => ['web']
             $router->get('search', 'CourseController@search');
             $router->get('waterfall', 'CourseCommentControl@waterfall');
             $router->get('{courses}', 'CourseController@show');
+            $router->get('{courses}/comments', 'CourseCommentControl@index');
+            $router->post('{courses}/comments', 'CourseCommentControl@store');
         });
 
         $router->group(['prefix' => 'ecourse-lite', 'middleware' => ['auth']], function (Router $router) {

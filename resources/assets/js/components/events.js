@@ -1,6 +1,6 @@
 let events = {
   'http-response'(response, options = {}) {
-    const HTTP_OK = 201;
+    const HTTP_OK = 200;
     const HTTP_CREATED = 201;
     const HTTP_UNAUTHORIZED = 401;
     const HTTP_FORBIDDEN = 403;
@@ -13,11 +13,11 @@ let events = {
     const HTTP_UNKNOWN_ERROR = 520;
 
     this.toastSuccess = function (message) {
-      toast(message, 'green');
+      this.toast(message, 'green');
     };
 
     this.toastInfo = function (message, style = 'amber darken-2') {
-      toast(message, style);
+      this.toast(message, style);
     };
 
     this.toastError = function (message) {
