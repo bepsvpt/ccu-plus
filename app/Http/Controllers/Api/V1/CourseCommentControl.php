@@ -47,31 +47,19 @@ class CourseCommentControl extends ApiController
     {
         $key = 'comment-waterfall-'.$request->input('id', 0);
 
-//        $comments = Cache::tags('course')->remember($key, 5, function () use ($request) {
-//            $query = Comment::with(['commentable', 'commentable.department'])
-//                ->where('commentable_type', 'course')
-//                ->whereNull('comment_id')
-//                ->latest()
-//                ->take(5);
-//
-//            if ($request->has('id')) {
-//                $query = $query->where('id', '<', $request->input('id'));
-//            }
-//
-//            return $query->get();
-//        });
+        $comments = Cache::tags('course')->remember($key, 5, function () use ($request) {
+            $query = Comment::with(['commentable', 'commentable.department'])
+                ->where('commentable_type', 'course')
+                ->whereNull('comment_id')
+                ->latest()
+                ->take(5);
 
-        $query = Comment::with(['commentable', 'commentable.department'])
-            ->where('commentable_type', 'course')
-            ->whereNull('comment_id')
-            ->latest()
-            ->take(5);
+            if ($request->has('id')) {
+                $query = $query->where('id', '<', $request->input('id'));
+            }
 
-        if ($request->has('id')) {
-            $query = $query->where('id', '<', $request->input('id'));
-        }
-
-        $comments = $query->get();
+            return $query->get();
+        });
 
         return $this->setData($comments)->responseOk();
     }
