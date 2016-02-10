@@ -123,6 +123,10 @@
         <hr>
 
         <div class="row">
+            <div class="col s12 m5">
+                <h5><i class="material-icons" style="vertical-align: bottom">favorite</i> 課程追蹤</h5>
+            </div>
+
             <div class="col s12 m7">
                 <h5><i class="material-icons" style="vertical-align: bottom">forum</i> 最新評論</h5>
 
@@ -166,10 +170,6 @@
                         <progress-bar :loading="loading.comments"></progress-bar>
                     </div>
                 </div>
-            </div>
-
-            <div class="col s12 m5">
-                <h5><i class="material-icons" style="vertical-align: bottom">favorite</i> 課程追蹤</h5>
             </div>
         </div>
 
