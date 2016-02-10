@@ -71,7 +71,7 @@
     </div>
 
     <div>
-        <table class="bordered highlight centered hoverable z-depth-1">
+        <table class="bordered highlight centered z-depth-1">
             <thead>
                 <tr>
                     <th>學期</th>

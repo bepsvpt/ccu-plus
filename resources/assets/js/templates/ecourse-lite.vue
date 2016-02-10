@@ -68,12 +68,15 @@
                         >
                             <li v-for="announcement in course.content.announcements">
                                 <div class="collapsible-header">
-                                    <i class="material-icons">sms</i>
+                                    <i
+                                        :class="[isRecent(announcement.date) ? 'green-text' : 'grey-text']"
+                                        class="material-icons"
+                                    >sms</i>
                                     <span>{{ announcement.title}}</span>
                                     <span
                                         class="right grey-text"
                                         style="font-style: italic;"
-                                        data-time-humanize="{{ announcement.date}}"
+                                        data-time-humanize="{{ announcement.date }}"
                                     ></span>
                                 </div>
                                 <div class="collapsible-body">
@@ -191,6 +194,10 @@
                         course.touch = true;
                     });
                 }
+            },
+
+            isRecent(date, days = 5) {
+                return moment().diff(moment(date), 'days') < days;
             },
 
             updateModal(content) {
