@@ -48,7 +48,9 @@ class CourseCommentControl extends ApiController
         $key = 'comment-waterfall-'.$request->input('id', 0);
 
         $comments = Cache::tags('course')->remember($key, 5, function () use ($request) {
-            $query = Comment::with(['commentable', 'commentable.department'])
+            Course::setPrimaryKey('series_id');
+
+            $query = Comment::with(['commentable'])
                 ->where('commentable_type', 'course')
                 ->whereNull('comment_id')
                 ->latest()

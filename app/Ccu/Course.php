@@ -17,13 +17,6 @@ class Course extends Entity
     protected $table = 'courses';
 
     /**
-     * The primary key for the model.
-     *
-     * @var string
-     */
-    protected $primaryKey = 'series_id'; // Magic.
-
-    /**
      * Indicates if the model should be timestamped.
      *
      * @var bool
@@ -52,6 +45,37 @@ class Course extends Entity
      * @var array
      */
     protected $with = ['department'];
+
+    /**
+     * The primary key for the model.
+     *
+     * @var string
+     */
+    protected static $replacePrimaryKey;
+
+    /**
+     * Set the primary key for the model.
+     *
+     * @param $primaryKey
+     */
+    public static function setPrimaryKey($primaryKey)
+    {
+        self::$replacePrimaryKey = $primaryKey;
+    }
+
+    /**
+     * Get the primary key for the model.
+     *
+     * @return string
+     */
+    public function getKeyName()
+    {
+        if (! is_null(self::$replacePrimaryKey)) {
+            return self::$replacePrimaryKey;
+        }
+
+        return $this->primaryKey;
+    }
 
     /**
      * 課程所屬學期

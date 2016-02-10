@@ -26,22 +26,36 @@
 
         <div class="col s12 m9 l10">
             <section id="info">
-                <h5><i class="material-icons" style="vertical-align: bottom">info</i> 課程資訊</h5>
+                <div class="card blue-grey darken-1">
+                    <div class="card-content white-text">
+                        <span class="card-title">{{ info.name }}</span>
+                        <p>{{ info.department.name }} {{ info.code }}</p>
+                    </div>
 
-                <ul class="collection">
-                    <template v-for="course in courses">
-                        <li v-if="0 === $index" class="collection-item avatar">
-                            <i class="material-icons circle orange" style="top: 19%;">book</i>
-                            <h5>{{course.department.name}}：{{course.name}} - {{ course.code }}</h5>
-                        </li>
+                    <div class="card-action white-text">
+                        <div class="row">
+                            <div class="col s4 m2">
+                                <p><i class="material-icons icon-top">info</i> 授課年度</p>
+                                <p style="margin-left: 25px;">{{ info.semester.name }}</p>
+                            </div>
+                            <div class="col s8 m10">
+                                <p><i class="material-icons icon-top">person</i> 授課教師</p>
+                                <p style="margin-left: 25px;">{{ professorsJoin(info.professors) }}</p>
+                            </div>
+                        </div>
+                    </div>
 
-                        <li class="collection-item avatar">
-                            <i class="material-icons circle green">insert_chart</i>
-                            <span class="title">{{ course.semester.name }}</span>
-                            <p>{{ professorsJoin(course.professors) }}</p>
-                        </li>
-                    </template>
-                </ul>
+                    <div class="card-action white-text">
+                        <p><i class="material-icons icon-top">info</i> 授課歷史資料</p>
+
+                        <p style="margin-left: 25px;">
+                            <a
+                                v-for="course in courses"
+                                @click="currentSemester = $index"
+                            >{{ course.semester.name }}</a>
+                        </p>
+                    </div>
+                </div>
             </section>
 
             <br>
@@ -154,6 +168,7 @@
         data() {
             return {
                 courses: [],
+                currentSemester: 0,
                 comments: [],
                 form: {
                     anonymous: false
@@ -162,6 +177,18 @@
         },
 
         computed: {
+            info() {
+                if (0 === this.courses.length) {
+                    return {
+                        department: {},
+                        semester: {},
+                        professors: []
+                    };
+                }
+
+                return this.courses[this.currentSemester];
+            },
+
             professors() {
                 let professors = [];
 

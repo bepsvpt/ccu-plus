@@ -30,3 +30,13 @@ a {
 .material-icons.circle {
   top: 14%;
 }
+
+.icon {
+  &-top {
+    vertical-align: top;
+  }
+
+  &-bottom {
+    vertical-align: bottom;
+  }
+}
