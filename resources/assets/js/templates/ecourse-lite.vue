@@ -110,7 +110,10 @@
                                         </template>
                                     </td>
                                     <td>
-                                        <span :class="{'red-text': homework.warning}">{{ homework.date }}<br class="hide-on-med-and-up">
+                                        <span
+                                            :class="{'red-text': ! homework.submitted && ! isRecent(homework.date, 3)}"
+                                        >{{ homework.date }}
+                                            <br class="hide-on-med-and-up">
                                             <span> ( <span data-time-humanize="{{ homework.date}}"></span> )</span>
                                         </span>
                                     </td>

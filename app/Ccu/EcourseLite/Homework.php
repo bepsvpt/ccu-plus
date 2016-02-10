@@ -52,7 +52,6 @@ class Homework extends Core
 
         for ($i = 0, $size = count($result); $i < $size; ++$i) {
             $result[$i]['submitted'] = $this->parseSubmitted($response['submitted'][$i]->getBody()->getContents());
-            $result[$i]['warning'] = ! $result[$i]['submitted'] && Carbon::now()->diffInDays(Carbon::parse($result[$i]['date']), false) < 3;
 
             if ($response['content'][$i]->hasHeader('location')) {
                 $result[$i]['link'] = self::BASE_URL.'/'.$response['content'][$i]->getHeaderLine('location');
