@@ -21,6 +21,7 @@
 
     .pre-line {
         white-space: pre-line;
+        word-wrap: break-word;
     }
 </style>
 
