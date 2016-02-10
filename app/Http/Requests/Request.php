@@ -15,4 +15,19 @@ abstract class Request extends FormRequest
     {
         return true;
     }
+
+    /**
+     * Get the proper failed validation response for the request.
+     *
+     * @param  array  $errors
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function response(array $errors)
+    {
+        if ($this->ajax() || $this->wantsJson()) {
+            return response()->json(['messages' => $errors], 422);
+        }
+
+        return parent::response($errors);
+    }
 }

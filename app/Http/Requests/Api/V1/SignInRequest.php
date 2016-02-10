@@ -18,4 +18,16 @@ class SignInRequest extends Request
             'password' => 'required|ccu_sign_in',
         ];
     }
+
+    /**
+     * Set custom messages for validator errors.
+     *
+     * @return array
+     */
+    public function messages()
+    {
+        return [
+            'username.exists' => '',
+        ];
+    }
 }

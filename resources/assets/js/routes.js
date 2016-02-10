@@ -2,6 +2,7 @@ import signUp from './templates/sign-up.vue';
 import coursesIndex from './templates/courses/index.vue';
 import coursesShow from './templates/courses/show.vue';
 import courseLite from './templates/ecourse-lite.vue';
+import notFound from './templates/not-found.vue';
 
 let Vue = require('vue');
 
@@ -26,6 +27,10 @@ export default {
     '/ecourse-lite': {
       name: 'ecourse-lite',
       component: courseLite
+    },
+    '*': {
+      name: 'not-found',
+      component: notFound
     }
   },
 

@@ -29,16 +29,6 @@ class ApiController extends Controller
     private $headers = [];
 
     /**
-     * Error data.
-     *
-     * @var array
-     */
-    private $error = [
-        'no' => 0,
-        'info' => null,
-    ];
-
-    /**
      * Http response.
      *
      * @return \Illuminate\Http\JsonResponse
@@ -69,7 +59,6 @@ class ApiController extends Controller
     {
         $this->setData([
             'messages' => $this->data,
-            'error' => $this->error,
         ]);
 
         return $this->setStatus($status)->response();
@@ -197,17 +186,6 @@ class ApiController extends Controller
     public function setHeaders($headers)
     {
         $this->headers = $headers;
-
-        return $this;
-    }
-
-    /**
-     * @param array $error
-     * @return $this
-     */
-    public function setError($error)
-    {
-        $this->error = $error;
 
         return $this;
     }
