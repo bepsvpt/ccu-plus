@@ -14,6 +14,7 @@
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
         <style>
             html {
+                font-family: sans-serif;
                 height: 100%;
                 font-size: 15px;
                 line-height: 1.5;
