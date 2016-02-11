@@ -18,6 +18,7 @@
                             class="title"
                         >{{ course.name }}</a>
                         <p style="color: rgba(0,0,0,0.7);">{{ course.professor }}<br>{{ course.department }}</p>
+
                         <div class="secondary-content hide-on-small-only">
                             <i
                                 :class="[
@@ -49,8 +50,10 @@
                     </li>
                 </ul>
             </div>
+
             <div class="collapsible-body">
                 <div v-if="course.touch" class="row">
+                    <!-- Tabs -->
                     <div class="col s12">
                         <ul class="tabs">
                             <li class="tab col s3"><a href="#{{ course.code }}-announcements" class="active">公告</a></li>
@@ -59,6 +62,7 @@
                             <li class="tab col s3"><a href="#{{ course.code }}-attachments">授課教材</a></li>
                         </ul>
                     </div>
+
                     <!-- 公告 -->
                     <div id="{{ course.code }}-announcements" class="col offset-s1 s10 tab-content">
                         <ul
@@ -79,6 +83,7 @@
                                         data-time-humanize="{{ announcement.date }}"
                                     ></span>
                                 </div>
+
                                 <div class="collapsible-body">
                                     <p class="pre-line">{{{ announcement.content | urlify }}}</p>
                                 </div>
@@ -87,6 +92,7 @@
 
                         <h5 v-else class="center">尚無公告</h5>
                     </div>
+
                     <!-- 作業 -->
                     <div id="{{ course.code }}-homework" class="col offset-s1 s10 tab-content">
                         <table v-if="course.content.homework.length > 0" class="bordered striped centered">
@@ -127,6 +133,7 @@
 
                         <h5 v-else class="center">尚無作業</h5>
                     </div>
+
                     <!-- 成績 -->
                     <div id="{{ course.code }}-grades" class="col offset-s1 s10 tab-content">
                         <table class="bordered striped centered">
@@ -144,6 +151,7 @@
                             </tbody>
                         </table>
                     </div>
+
                     <!-- 教材 -->
                     <div id="{{ course.code }}-attachments" class="col offset-s1 s10 tab-content">
                         <div v-if="course.content.attachments.length > 0" class="collection">

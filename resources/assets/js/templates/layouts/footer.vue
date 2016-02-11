@@ -6,6 +6,7 @@
                     <h5 class="white-text">The Higher We Dreamed, the Closer We Succeed.</h5>
                     <p class="grey-text text-lighten-4">We are the dreamers. And this space is for those who want to make their dreams come true.</p>
                 </div>
+
                 <div class="col l4 offset-l2 s12">
                     <h5 class="white-text">Links</h5>
                     <ul>
@@ -33,6 +34,7 @@
                 </div>
             </div>
         </div>
+
         <div class="footer-copyright">
             <div class="container">
                 <span>© 2016 <a class="grey-text text-lighten-4" href="https://ccu.plus">ccu.plus</a></span>

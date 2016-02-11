@@ -5,7 +5,7 @@
         <form @submit.prevent="signUp()" class="col l6 offset-l3 s12">
             <div class="row">
                 <div class="input-field col s12">
-                    <i class="material-icons prefix">perm_identity</i>
+                    <i class="fa fa-user fa-fw prefix"></i>
                     <input
                         v-model="form.username"
                         id="username"
@@ -21,7 +21,7 @@
 
             <div class="row">
                 <div class="input-field col s12">
-                    <i class="material-icons prefix">lock</i>
+                    <i class="fa fa-lock fa-fw prefix"></i>
                     <input
                         v-model="form.password"
                         id="password"
@@ -35,7 +35,7 @@
 
             <div class="row">
                 <div class="input-field col s12">
-                    <i class="material-icons prefix">contacts</i>
+                    <i class="fa fa-certificate fa-fw prefix"></i>
                     <input
                         v-model="form.nickname"
                         id="nickname"
@@ -59,8 +59,8 @@
 
             <div class="row">
                 <div class="col s12">
-                    <button class="btn waves-effect waves-light right" type="submit" name="action">
-                        <span>註冊</span><i class="material-icons right">send</i>
+                    <button type="submit" class="btn waves-effect waves-light right">
+                        <span>註冊</span><i class="fa fa-user-plus right"></i>
                     </button>
                 </div>
             </div>

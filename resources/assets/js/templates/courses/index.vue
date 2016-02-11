@@ -58,7 +58,7 @@
                             class="btn waves-effect waves-light"
                             :disabled="loading.courses"
                         >
-                            <span>搜尋</span><i class="material-icons right">search</i>
+                            <span>搜尋</span><i class="fa fa-search right"></i>
                         </button>
                     </div>
                 </div>
@@ -120,11 +120,11 @@
 
         <div class="row">
             <div class="col s12 m5">
-                <h5><i class="material-icons" style="vertical-align: bottom">favorite</i> 課程追蹤</h5>
+                <h5><i class="fa fa-heart"></i> 課程追蹤</h5>
             </div>
 
             <div class="col s12 m7">
-                <h5><i class="material-icons" style="vertical-align: bottom">forum</i> 最新評論</h5>
+                <h5><i class="fa fa-comments"></i> 最新評論</h5>
 
                 <template v-for="comment in comments">
                     <div class="card hoverable" data-comment>

@@ -17,9 +17,9 @@
         <div class="col hide-on-small-only m3 l2" style="min-height: 1px;">
             <div class="tabs-pushpin">
                 <ul class="section table-of-contents">
-                    <li><a data-target="info" @click="pushpin">課程資訊</a></li>
-                    <li><a data-target="comments" @click="pushpin">課程評論</a></li>
-                    <li><a data-target="exams" @click="pushpin">考古題</a></li>
+                    <li><a data-target="info" @click="pushpin"><i class="fa fa-caret-right fa-fw"></i> 課程資訊</a></li>
+                    <li><a data-target="comments" @click="pushpin"><i class="fa fa-caret-right fa-fw"></i> 課程評論</a></li>
+                    <li><a data-target="exams" @click="pushpin"><i class="fa fa-caret-right fa-fw"></i> 考古題</a></li>
                 </ul>
             </div>
         </div>
@@ -35,18 +35,18 @@
                     <div class="card-action white-text">
                         <div class="row">
                             <div class="col s4 m2">
-                                <p><i class="material-icons icon-top">info</i> 授課年度</p>
+                                <p><i class="fa fa-info-circle fa-fw fa-inverse"></i> 授課年度</p>
                                 <p style="margin-left: 25px;">{{ info.semester.name }}</p>
                             </div>
                             <div class="col s8 m10">
-                                <p><i class="material-icons icon-top">person</i> 授課教師</p>
+                                <p><i class="fa fa-user fa-fw fa-inverse"></i> 授課教師</p>
                                 <p style="margin-left: 25px;">{{ professorsJoin(info.professors) }}</p>
                             </div>
                         </div>
                     </div>
 
                     <div class="card-action white-text">
-                        <p><i class="material-icons icon-top">info</i> 授課歷史資料</p>
+                        <p><i class="fa fa-info-circle fa-fw fa-inverse"></i> 授課歷史資料</p>
 
                         <p style="margin-left: 25px;">
                             <a
@@ -61,7 +61,7 @@
             <br>
 
             <section id="comments">
-                <h5><i class="material-icons" style="vertical-align: bottom">message</i> 課程評論</h5>
+                <h5><i class="fa fa-comments"></i> 課程評論</h5>
 
                 <div v-if="$parent.$data['user']">
                     <div class="row">
@@ -110,7 +110,7 @@
                                             class="btn waves-effect waves-light"
                                             style="margin-left: 20px; vertical-align: text-top;"
                                         >
-                                            <span>送出 <i class="material-icons right">send</i></span>
+                                            <span>送出 <i class="fa fa-send right"></i></span>
                                         </button>
                                     </div>
                                 </div>
