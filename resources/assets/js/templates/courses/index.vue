@@ -210,6 +210,8 @@
                 this.$http.get(`/api/v1/courses/search`, this.form).then((response) => {
                     this.courses = response.data;
 
+                    sessionStorage.setItem('courses.search', JSON.stringify(response.data));
+
                     this.loading.courses = false;
 
                     ga('send', 'event', 'Course', 'search');
@@ -266,17 +268,21 @@
         },
 
         created() {
-            var _this = this;
-            let colleges = JSON.parse(localStorage.getItem('colleges'));
+            let _this = this;
 
-            if (null !== colleges) {
-                this.colleges = colleges;
+            if (null !== localStorage.getItem('colleges')) {
+                this.colleges = JSON.parse(localStorage.getItem('colleges'));
             } else {
                 this.$http.get(`/api/v1/resources/colleges`).then((response) => {
                     this.colleges = response.data;
 
                     localStorage.setItem('colleges', JSON.stringify(response.data));
                 });
+            }
+
+            // 取得搜尋快取紀錄
+            if (null !== sessionStorage.getItem('courses.search')) {
+                this.courses = JSON.parse(sessionStorage.getItem('courses.search'));
             }
 
             this.$http.get('/api/v1/courses/waterfall').then((response) => {

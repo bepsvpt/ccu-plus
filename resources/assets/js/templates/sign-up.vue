@@ -93,7 +93,7 @@
                         }
                     });
 
-                    this.$parent.$data['user'] = response.data;
+                    this.$root.$data.user = response.data;
 
                     ga('send', 'event', 'User', 'sign-up');
                 }, (response) => {

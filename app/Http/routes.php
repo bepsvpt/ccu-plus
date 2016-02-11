@@ -27,6 +27,7 @@ $router->group(['prefix' => 'api', 'namespace' => 'Api', 'middleware' => ['web']
             $router->get('{courses}', 'CourseController@show');
             $router->get('{courses}/comments', 'CourseCommentControl@index');
             $router->post('{courses}/comments', 'CourseCommentControl@store');
+            $router->patch('{courses}/comments/{comments}/like', 'CourseCommentControl@like');
         });
 
         $router->group(['prefix' => 'ecourse-lite', 'middleware' => ['auth']], function (Router $router) {

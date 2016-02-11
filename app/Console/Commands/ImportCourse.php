@@ -282,7 +282,8 @@ class ImportCourse extends Command
      */
     protected function professors($professors)
     {
-        $professors = explode(' ', str_replace('  ', ' ', str_replace('教師未定', '', $professors)));
+        //$professors = explode(' ', str_replace('  ', ' ', str_replace('教師未定', '', $professors)));
+        $professors = explode(' ', $professors);
 
         $result = Category::where('category', 'professor')->whereIn('name', $professors)->get();
 

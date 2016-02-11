@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Ccu\Course;
 use App\Ccu\General\Comment;
+use App\Ccu\General\Like;
 use App\Http\Requests\Api\V1;
 use Cache;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class CourseCommentControl extends ApiController
@@ -64,5 +66,33 @@ class CourseCommentControl extends ApiController
         });
 
         return $this->setData($comments)->responseOk();
+    }
+
+    public function like(Request $request, $seriesId, $commentId)
+    {
+        $comment = Comment::with(['likes'])->where('id', $commentId)->first();
+
+        if (is_null($comment)) {
+            return $this->responseNotFound();
+        }
+
+        $index = $comment->getRelation('likes')->search(function ($like) use ($request) {
+            return $request->user()->getAttribute('id') === $like->getAttribute('user_id');
+        });
+
+        if (false === $index) {
+            $comment->likes()->save(new Like([
+                'user_id' => $request->user()->getAttribute('id'),
+                'created_at' => Carbon::now(),
+            ]));
+
+            $comment->increment('likes');
+        } else {
+            $comment->getRelation('likes')[$index]->delete();
+
+            $comment->decrement('likes');
+        }
+
+        return $this->setData($comment->fresh())->responseOk();
     }
 }

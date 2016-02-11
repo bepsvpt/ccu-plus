@@ -28,11 +28,11 @@
                 <!-- Desktop -->
                 <ul id="nav-mobile" class="right hide-on-med-and-down">
                     <li><a v-link="{name: 'courses.index'}"><i class="fa fa-book fa-fw"></i> 課程評論</a></li>
-                    <li><a v-if="$parent.$data['user']" v-link="{name: 'ecourse-lite'}"><i class="fa fa-cloud fa-fw"></i> Ecourse Lite</a></li>
+                    <li><a v-if="$root.$data.user" v-link="{name: 'ecourse-lite'}"><i class="fa fa-cloud fa-fw"></i> Ecourse Lite</a></li>
                     <li><a v-link="{name: 'home'}"><i class="fa fa-shopping-cart fa-fw"></i> 二手交易</a></li>
 
-                    <template v-if="$parent.$data['user']">
-                        <li><a><i class="fa fa-user fa-fw"></i> {{ $parent.$data['user'].nickname }}</a></li>
+                    <template v-if="$root.$data.user">
+                        <li><a><i class="fa fa-user fa-fw"></i> {{ $root.$data.user.nickname }}</a></li>
                         <li><a @click="signOut()"><i class="fa fa-sign-out fa-fw"></i> 登出</a></li>
                     </template>
 
@@ -45,11 +45,11 @@
                 <!-- Mobile -->
                 <ul id="mobile-menu" class="side-nav">
                     <li><a v-link="{name: 'courses.index'}"><i class="fa fa-book fa-fw"></i> 課程評論</a></li>
-                    <li><a v-if="$parent.$data['user']" v-link="{name: 'ecourse-lite'}"><i class="fa fa-cloud fa-fw"></i> Ecourse Lite</a></li>
+                    <li><a v-if="$root.$data.user" v-link="{name: 'ecourse-lite'}"><i class="fa fa-cloud fa-fw"></i> Ecourse Lite</a></li>
                     <li><a v-link="{name: 'home'}"><i class="fa fa-shopping-cart fa-fw"></i> 二手交易</a></li>
 
-                    <template v-if="$parent.$data['user']">
-                        <li><a><i class="fa fa-user fa-fw"></i> {{ $parent.$data['user'].nickname }}</a></li>
+                    <template v-if="$root.$data.user">
+                        <li><a><i class="fa fa-user fa-fw"></i> {{ $root.$data.user.nickname }}</a></li>
                         <li><a @click="signOut()"><i class="fa fa-sign-out fa-fw"></i> 登出</a></li>
                     </template>
 
@@ -61,7 +61,7 @@
             </div>
         </nav>
 
-        <template v-if="! $parent.$data['user']">
+        <template v-if="! $root.$data.user">
             <!-- Sign In Modal -->
             <div id="sign-in-modal" class="modal">
                 <div class="modal-content">
@@ -130,7 +130,7 @@
 
                     this.form = {};
 
-                    this.$parent.$data['user'] = response.data;
+                    this.$root.$data.user = response.data;
 
                     ga('send', 'event', 'User', 'sign-in');
                 }, (response) => {
@@ -140,7 +140,7 @@
 
             signOut() {
                 this.$http.get('/api/v1/auth/sign-out').then((response) => {
-                    this.$parent.$data['user'] = null;
+                    this.$root.$data.user = null;
 
                     this.$router.go({name: 'home'});
                 });

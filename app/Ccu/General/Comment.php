@@ -24,6 +24,13 @@ class Comment extends Entity
     ];
 
     /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = ['liked'];
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array
@@ -54,6 +61,20 @@ class Comment extends Entity
      * @var array
      */
     protected $with = ['user'];
+
+    /**
+     * Get the comment's user_id attribute.
+     *
+     * @return bool
+     */
+    public function getLikedAttribute()
+    {
+        if (! \Auth::guard()->check()) {
+            return false;
+        }
+
+        return $this->likes()->where('user_id', \Auth::guard()->user()->getAuthIdentifier())->exists();
+    }
 
     /**
      * Get the comment's user_id attribute.

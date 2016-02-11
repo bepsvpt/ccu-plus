@@ -63,60 +63,59 @@
             <section id="comments">
                 <h5><i class="fa fa-comments"></i> 課程評論</h5>
 
-                <div v-if="$parent.$data['user']">
-                    <div class="row">
-                        <form @submit.prevent="create()" class="col s12">
-                            <div class="row">
-                                <div class="input-field col s12">
-                                    <textarea
-                                        v-model="form.content"
-                                        id="content"
-                                        class="materialize-textarea validate"
-                                        maxlength="3000"
-                                        length="3000"
-                                        required
-                                    ></textarea>
-                                    <label for="content">評論...</label>
-                                </div>
+                <!-- 課程評論表單 -->
+                <div v-if="null !== $root.$data.user">
+                    <form @submit.prevent="create()">
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <textarea
+                                    v-model="form.comment.content"
+                                    id="content"
+                                    class="materialize-textarea validate"
+                                    maxlength="3000"
+                                    length="3000"
+                                    required
+                                ></textarea>
+                                <label for="content">評論...</label>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="input-field col s12 m6">
+                                <select
+                                    v-model="form.comment.professor"
+                                    id="professor"
+                                    multiple
+                                    required
+                                >
+                                    <option value="" disabled selected>授課教授</option>
+                                    <template v-for="professor in professors">
+                                        <option value="{{ professor.id }}">{{ professor.name }}</option>
+                                    </template>
+                                </select>
                             </div>
 
-                            <div class="row">
-                                <div class="input-field col s12 m6">
-                                    <select
-                                        v-model="form.professor"
-                                        id="professor"
-                                        multiple
-                                        required
+                            <div class="input-field col s12 m6">
+                                <div class="right">
+                                    <input
+                                        v-model="form.comment.anonymous"
+                                        id="anonymous"
+                                        type="checkbox"
+                                        class="filled-in"
                                     >
-                                        <option value="" disabled selected>授課教授</option>
-                                        <template v-for="professor in professors">
-                                            <option value="{{ professor.id }}">{{ professor.name }}</option>
-                                        </template>
-                                    </select>
-                                </div>
+                                    <label for="anonymous">匿名</label>
 
-                                <div class="input-field col s12 m6">
-                                    <div class="right">
-                                        <input
-                                            v-model="form.anonymous"
-                                            id="anonymous"
-                                            type="checkbox"
-                                            class="filled-in"
-                                        >
-                                        <label for="anonymous">匿名</label>
-
-                                        <button
-                                            type="submit"
-                                            class="btn waves-effect waves-light"
-                                            style="margin-left: 20px; vertical-align: text-top;"
-                                        >
-                                            <span>送出 <i class="fa fa-send right"></i></span>
-                                        </button>
-                                    </div>
+                                    <button
+                                        type="submit"
+                                        class="btn waves-effect waves-light"
+                                        style="margin-left: 20px; vertical-align: text-top;"
+                                    >
+                                        <span>送出 <i class="fa fa-send right"></i></span>
+                                    </button>
                                 </div>
                             </div>
-                        </form>
-                    </div>
+                        </div>
+                    </form>
                 </div>
 
                 <template v-for="comment in comments.data">
@@ -125,6 +124,7 @@
                             <template v-if="null !== comment.user">
                                 <strong class="teal-text text-darken-1">{{ comment.user.nickname }}</strong>
                             </template>
+
                             <template v-else>
                                 <span class="grey-text text-darken-1">匿名</span>
                             </template>
@@ -139,8 +139,11 @@
                         </div>
 
                         <div class="card-content comment-footer">
-                            <span>讚</span>
-                            <span> · </span>
+                            <template v-if="null !== $root.$data.user">
+                                <span><a @click="like(comment)">{{ comment.liked ? '收回讚' : '讚' }}</a></span>
+                                <span> · </span>
+                            </template>
+
                             <span class="green-text"><i class="fa fa-thumbs-o-up"></i> {{ comment.likes }}</span>
                             <span> · </span>
                             <span
@@ -148,8 +151,11 @@
                                 data-tooltip="{{ comment.created_at }}"
                                 data-time-humanize="{{ comment.created_at }}"
                             ></span>
-                            <span> · </span>
-                            <span>留言</span>
+
+                            <template v-if="null !== $root.$data.user">
+                                <span> · </span>
+                                <span>留言</span>
+                            </template>
                         </div>
                     </div>
                 </template>
@@ -171,7 +177,9 @@
                 currentSemester: 0,
                 comments: [],
                 form: {
-                    anonymous: false
+                    comment: {
+                        anonymous: false
+                    }
                 }
             };
         },
@@ -229,12 +237,21 @@
             },
 
             create() {
-                this.$http.post(`/api/v1/courses/${this.$route.params.seriesId}/comments`, this.form).then((response) => {
+                this.$http.post(`/api/v1/courses/${this.$route.params.seriesId}/comments`, this.form.comment).then((response) => {
                     this.$dispatch('http-response', response);
 
                     this.comments.data.unshift(response.data);
 
-                    this.form.content = '';
+                    this.form.comment.content = '';
+                }, (response) => {
+                    this.$dispatch('http-response', response);
+                });
+            },
+
+            like(comment) {
+                this.$http.patch(`/api/v1/courses/${this.$route.params.seriesId}/comments/${comment.id}/like`).then((response) => {
+                    comment.likes = response.data.likes;
+                    comment.liked = !comment.liked;
                 }, (response) => {
                     this.$dispatch('http-response', response);
                 });
@@ -265,7 +282,7 @@
             });
 
             $(document).on('change', '#professor', function () {
-                _this.$set(`form['professor']`, $(this).val());
+                _this.$set(`form.comment['professor']`, $(this).val());
             });
         }
     }
