@@ -36,11 +36,11 @@
                         <div class="row">
                             <div class="col s4 m2">
                                 <p><i class="fa fa-info-circle fa-fw fa-inverse"></i> 授課年度</p>
-                                <p style="margin-left: 25px;">{{ info.semester.name }}</p>
+                                <p style="margin-left: 22px;">{{ info.semester.name }}</p>
                             </div>
                             <div class="col s8 m10">
                                 <p><i class="fa fa-user fa-fw fa-inverse"></i> 授課教師</p>
-                                <p style="margin-left: 25px;">{{ professorsJoin(info.professors) }}</p>
+                                <p style="margin-left: 22px;">{{ professorsJoin(info.professors) }}</p>
                             </div>
                         </div>
                     </div>
@@ -48,7 +48,7 @@
                     <div class="card-action white-text">
                         <p><i class="fa fa-info-circle fa-fw fa-inverse"></i> 授課歷史資料</p>
 
-                        <p style="margin-left: 25px;">
+                        <p style="margin-left: 22px;">
                             <a
                                 v-for="course in courses"
                                 @click="currentSemester = $index"
