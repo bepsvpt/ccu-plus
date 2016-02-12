@@ -140,7 +140,7 @@
 
                         <div class="card-content comment-footer">
                             <template v-if="null !== $root.$data.user">
-                                <span><a @click="like(comment)">{{ comment.liked ? '收回讚' : '讚' }}</a></span>
+                                <span><a @click="likeComment(comment)">{{ comment.liked ? '收回讚' : '讚' }}</a></span>
                                 <span> · </span>
                             </template>
 
@@ -248,7 +248,7 @@
                 });
             },
 
-            like(comment) {
+            likeComment(comment) {
                 this.$http.patch(`/api/v1/courses/${this.$route.params.seriesId}/comments/${comment.id}/like`).then((response) => {
                     comment.likes = response.data.likes;
                     comment.liked = !comment.liked;
