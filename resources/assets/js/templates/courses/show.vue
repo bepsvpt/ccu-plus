@@ -1,4 +1,5 @@
 <template>
+    <!-- 課程資訊 -->
     <section>
         <div class="card blue-grey darken-1">
             <div class="card-content white-text">
@@ -40,7 +41,8 @@
             </ul>
         </div>
 
-        <section id="comments" class="col s12" style="-webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none;">
+        <!-- 課程評論 -->
+        <section id="comments" class="col s12 user-select-none">
             <template v-if="$root.$data.user">
                 <!-- 課程評論按鈕 -->
                 <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
@@ -137,10 +139,10 @@
 
                             <div class="col s10 m11">
                                 <blockquote class="pre-line"><!--
-                                     --><span>受評教授：{{ professorsJoin(comment.professors) }}</span><br><br><!--
-                                     --><span>{{ comment.content }}</span><!--
-                                     --><span class="grey-text right" style="font-style: italic;">— <span data-time-humanize="{{ comment.created_at }}"></span></span><!--
-                                 --></blockquote>
+                                 --><span>受評教授：{{ professorsJoin(comment.professors) }}</span><br><br><br><!--
+                                 --><span>{{ comment.content }}</span><br><!--
+                                 --><span>　</span><span class="grey-text right" style="font-style: italic;">— <span data-time-humanize="{{ comment.created_at }}"></span></span><!--
+                             --></blockquote>
 
                                 <div v-if="comment.comments.length" class="card-action" style="padding: 0;">
                                     <template v-for="subComment in comment.comments">
@@ -151,7 +153,7 @@
                                                     <span v-else class="grey-text text-darken-1">匿名</span>
                                                 </div>
 
-                                                <a @click="likeComment(subComment)" class="green-text" style="font-size: 1.3em;">
+                                                <a @click="likeComment(subComment)" class="green-text" style="margin-right: 0; font-size: 1.3em;">
                                                     <i :class="[subComment.liked ? 'fa-thumbs-up' : 'fa-thumbs-o-up']" class="fa"></i>
                                                     <span>{{ subComment.likes }}</span>
                                                 </a>
@@ -159,9 +161,9 @@
 
                                             <div class="col s10 m11">
                                                 <blockquote class="pre-line"><!--
-                                                     --><span>{{ subComment.content }}</span><!--
-                                                     --><span class="grey-text right" style="font-style: italic;">— <span data-time-humanize="{{ subComment.created_at }}"></span></span><!--
-                                                 --></blockquote>
+                                                 --><span>{{ subComment.content }}</span><br><!--
+                                                 --><span>　</span><span class="grey-text right" style="font-style: italic;">— <span data-time-humanize="{{ subComment.created_at }}"></span></span><!--
+                                             --></blockquote>
                                             </div>
                                         </div>
                                     </template>
@@ -217,8 +219,11 @@
                     </div>
                 </div>
             </template>
+
+            <h5 v-if="! comments.data.length" class="center" style="margin-top: 50px;">尚無評論</h5>
         </section>
 
+        <!-- 考古題 -->
         <section id="exams" class="col s12">
         </section>
     </div>
@@ -230,7 +235,7 @@
             return {
                 courses: [],
                 currentSemester: 0,
-                comments: [],
+                comments: {data: []},
                 form: {
                     comment: {},
                     subComments: []

@@ -10,7 +10,7 @@ export default {
   routes: {
     '/': {
       name: 'home',
-      component: Vue.extend({template: `<h1>Hello World!</h1>`})
+      component: Vue.extend({template: `<h1 class="center">Hello World!</h1>`})
     },
     '/sign-up': {
       name: 'sign-up',
@@ -27,6 +27,10 @@ export default {
     '/ecourse-lite': {
       name: 'ecourse-lite',
       component: courseLite
+    },
+    '/trading': {
+      name: 'trading',
+      component: Vue.extend({template: `<h1 class="center">敬請期待！</h1>`})
     },
     '*': {
       name: 'not-found',
