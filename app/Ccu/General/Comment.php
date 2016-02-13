@@ -36,7 +36,7 @@ class Comment extends Entity
      * @var array
      */
     protected $fillable = [
-        'user_id', 'content', 'anonymous', 'likes',
+        'user_id', 'comment_id', 'content', 'anonymous', 'likes',
     ];
 
     /**

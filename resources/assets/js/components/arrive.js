@@ -20,13 +20,6 @@ function arrive() {
       $(this).characterCounter();
     });
 
-    // http://materializecss.com/pushpin.html#initialization
-    $('.tabs-pushpin').pushpin({top: 64});
-
-    $(document).arrive('.tabs-pushpin', function() {
-      $(this).pushpin({top: 64});
-    });
-
     // http://materializecss.com/forms.html#select
     $(document).arrive('select', function() {
       $(this).material_select();

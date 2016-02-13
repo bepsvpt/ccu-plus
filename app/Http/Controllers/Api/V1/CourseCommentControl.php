@@ -33,16 +33,26 @@ class CourseCommentControl extends ApiController
             return $this->responseNotFound();
         }
 
-        $comment = $course->comments()->save(new Comment([
+        $model = new Comment([
             'user_id' => $request->user()->getAttribute('id'),
             'comment_id' => $request->input('comment_id'),
             'content' => $request->input('content'),
-            'anonymous' => $request->input('anonymous'),
-        ]));
+            'anonymous' => $request->input('anonymous') ?? false,
+        ]);
 
-        $comment->professors()->sync($request->input('professor'));
+        if (! $request->has('comment_id')) {
+            $comment = $course->comments()->save($model);
 
-        return $this->setData($comment->fresh()->load(['comments', 'professors']))->responseCreated();
+            $comment->professors()->sync($request->input('professor'));
+
+            $comment = $comment->fresh()->load(['comments', 'professors']);
+        } else {
+            $model->save();
+
+            $comment = $model->fresh()->load(['comments']);
+        }
+
+        return $this->setData($comment)->responseCreated();
     }
 
     public function waterfall(Request $request)
