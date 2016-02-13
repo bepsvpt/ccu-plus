@@ -6,7 +6,7 @@ use Sunra\PhpSimple\HtmlDomParser;
 
 class Course extends Core
 {
-    const LIST = self::BASE_URL.'/Courses_Admin/take_course.php?frame=1';
+    const LISTS = self::BASE_URL.'/Courses_Admin/take_course.php?frame=1';
 
     /**
      * 分析課程列表頁面.

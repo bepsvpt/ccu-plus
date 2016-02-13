@@ -7,7 +7,7 @@ use Sunra\PhpSimple\HtmlDomParser;
 
 class Announcement extends Core
 {
-    const LIST = self::BASE_URL.'/news/news.php';
+    const LISTS = self::BASE_URL.'/news/news.php';
     const CONTENT = self::BASE_URL.'/news/content.php';
 
     /**

@@ -6,7 +6,7 @@ use Sunra\PhpSimple\HtmlDomParser;
 
 class Grade extends Core
 {
-    const LIST = self::BASE_URL.'/Trackin/SGQueryFrame1.php';
+    const LISTS = self::BASE_URL.'/Trackin/SGQueryFrame1.php';
 
     /**
      * 分析成績列表.

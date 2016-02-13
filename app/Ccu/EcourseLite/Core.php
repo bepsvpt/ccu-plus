@@ -99,7 +99,7 @@ abstract class Core
             $_this->setCourseId($courseId)->touchSession();
         }
 
-        $response = $_this->client->get(static::LIST, [
+        $response = $_this->client->get(static::LISTS, [
             'cookies' => $_this->jar,
         ]);
 

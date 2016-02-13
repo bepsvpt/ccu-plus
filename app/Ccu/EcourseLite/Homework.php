@@ -2,13 +2,12 @@
 
 namespace App\Ccu\EcourseLite;
 
-use Carbon\Carbon;
 use GuzzleHttp\Promise;
 use Sunra\PhpSimple\HtmlDomParser;
 
 class Homework extends Core
 {
-    const LIST = self::BASE_URL.'/Testing_Assessment/show_allwork.php';
+    const LISTS = self::BASE_URL.'/Testing_Assessment/show_allwork.php';
 
     /**
      * 分析作業列表.
@@ -30,7 +29,7 @@ class Homework extends Core
                 'date' => trim($row->children(3)->plaintext),
             ];
 
-            $promises['content'][] = $this->client->getAsync(self::LIST, [
+            $promises['content'][] = $this->client->getAsync(self::LISTS, [
                 'allow_redirects' => false,
                 'cookies' => $this->jar,
                 'query' => [
@@ -38,7 +37,7 @@ class Homework extends Core
                     'action' => 'showwork',
                 ],
             ]);
-            $promises['submitted'][] = $this->client->getAsync(self::LIST, [
+            $promises['submitted'][] = $this->client->getAsync(self::LISTS, [
                 'cookies' => $this->jar,
                 'query' => [
                     'work_id' => $id,

@@ -7,7 +7,7 @@ use Sunra\PhpSimple\HtmlDomParser;
 
 class Attachment extends Core
 {
-    const LIST = self::BASE_URL.'/textbook/course_menu.php?list=1';
+    const LISTS = self::BASE_URL.'/textbook/course_menu.php?list=1';
     const CONTENT = self::BASE_URL.'/textbook/';
 
     /**
