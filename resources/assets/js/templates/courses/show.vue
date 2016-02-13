@@ -1,13 +1,15 @@
 <style lang="scss">
-    .professor:not(:first-child) {
-        margin-left: 5px;
-    }
-
     .tabs-pushpin {
         margin-top: 180px;
 
         a {
             user-select: none;
+        }
+    }
+
+    .comment-footer {
+        a, span {
+            margin-right: 5px !important;
         }
     }
 </style>
@@ -61,66 +63,81 @@
             <br>
 
             <section id="comments">
-                <h5><i class="fa fa-comments"></i> 課程評論</h5>
+                <div v-if="$root.$data.user" class="right-align">
+                    <!-- 課程評論按鈕 -->
+                    <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
+                        <button class="btn-floating btn-large waves-effect waves-light green modal-trigger" data-target="course-comment-modal">
+                            <i class="large material-icons">add</i>
+                        </button>
+                    </div>
 
-                <!-- 課程評論表單 -->
-                <div v-if="null !== $root.$data.user">
-                    <form @submit.prevent="create()">
-                        <div class="row">
-                            <div class="input-field col s12">
-                                <textarea
-                                    v-model="form.comment.content"
-                                    id="content"
-                                    class="materialize-textarea validate"
-                                    maxlength="3000"
-                                    length="3000"
-                                    required
-                                ></textarea>
-                                <label for="content">評論...</label>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="input-field col s12 m6">
-                                <select
-                                    v-model="form.comment.professor"
-                                    id="professor"
-                                    multiple
-                                    required
-                                >
-                                    <option value="" disabled selected>授課教授</option>
-                                    <template v-for="professor in professors">
-                                        <option value="{{ professor.id }}">{{ professor.name }}</option>
-                                    </template>
-                                </select>
-                            </div>
-
-                            <div class="input-field col s12 m6">
-                                <div class="right">
-                                    <input
-                                        v-model="form.comment.anonymous"
-                                        id="anonymous"
-                                        type="checkbox"
-                                        class="filled-in"
-                                    >
-                                    <label for="anonymous">匿名</label>
-
-                                    <button
-                                        type="submit"
-                                        class="btn waves-effect waves-light"
-                                        style="margin-left: 20px; vertical-align: text-top;"
-                                    >
-                                        <span>送出 <i class="fa fa-send right"></i></span>
-                                    </button>
+                    <!-- 課程評論表單 -->
+                    <div id="course-comment-modal" class="modal">
+                        <div class="modal-content">
+                            <form @submit.prevent="create()">
+                                <div class="row">
+                                    <div class="input-field col s12">
+                                        <legend style="font-size: 24px;"><i class="fa fa-comments"></i> 課程評論</legend>
+                                    </div>
                                 </div>
-                            </div>
+
+                                <div class="row">
+                                    <div class="input-field col s12">
+                                        <textarea
+                                            v-model="form.comment.content"
+                                            id="content"
+                                            class="materialize-textarea validate"
+                                            maxlength="3000"
+                                            length="3000"
+                                            required
+                                        ></textarea>
+                                        <label for="content">評論...</label>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="input-field col s12 m6">
+                                        <select
+                                            v-model="form.comment.professor"
+                                            id="professor"
+                                            multiple
+                                            required
+                                        >
+                                            <option value="" disabled selected>授課教授</option>
+                                            <template v-for="professor in professors">
+                                                <option value="{{ professor.id }}">{{ professor.name }}</option>
+                                            </template>
+                                        </select>
+                                    </div>
+
+                                    <div class="input-field col s12 m6">
+                                        <div class="right">
+                                            <input
+                                                v-model="form.comment.anonymous"
+                                                id="anonymous"
+                                                type="checkbox"
+                                                class="filled-in"
+                                            >
+                                            <label for="anonymous">匿名</label>
+
+                                            <button
+                                                type="submit"
+                                                class="btn waves-effect waves-light"
+                                                style="margin-left: 20px; vertical-align: text-top;"
+                                            >
+                                                <span>送出 <i class="fa fa-send right"></i></span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
-                    </form>
+                    </div>
                 </div>
 
                 <template v-for="comment in comments.data">
                     <div class="card">
-                        <div class="card-content comment-header">
+                        <div class="card-content">
                             <template v-if="null !== comment.user">
                                 <strong class="teal-text text-darken-1">{{ comment.user.nickname }}</strong>
                             </template>
@@ -130,17 +147,20 @@
                             </template>
                         </div>
 
-                        <div class="card-content comment-content">
-                            <blockquote class="pre-line"><span>受評教授：{{ professorsJoin(comment.professors) }}</span>
+                        <div class="card-action">
+                            <blockquote
+                                class="pre-line"
+                                style="margin: 0;"
+                            ><span>受評教授：{{ professorsJoin(comment.professors) }}</span>
 
 
                                 <span>{{ comment.content }}</span>
                             </blockquote>
                         </div>
 
-                        <div class="card-content comment-footer">
-                            <template v-if="null !== $root.$data.user">
-                                <span><a @click="likeComment(comment)">{{ comment.liked ? '收回讚' : '讚' }}</a></span>
+                        <div class="card-action comment-footer">
+                            <template v-if="$root.$data.user">
+                                <a @click="likeComment(comment)">{{ comment.liked ? '收回讚' : '讚' }}</a>
                                 <span> · </span>
                             </template>
 
@@ -152,9 +172,84 @@
                                 data-time-humanize="{{ comment.created_at }}"
                             ></span>
 
-                            <template v-if="null !== $root.$data.user">
-                                <span> · </span>
-                                <span>留言</span>
+                            <template v-if="comment.comments.length">
+                                <div>
+                                    <template v-for="subComment in comment.comments">
+                                        <div class="card">
+                                            <div class="card-content">
+                                                <template v-if="subComment.user">
+                                                    <strong class="teal-text text-darken-1">{{ subComment.user.nickname }}</strong>
+                                                </template>
+
+                                                <template v-else>
+                                                    <span class="grey-text text-darken-1">匿名</span>
+                                                </template>
+                                            </div>
+
+                                            <div class="card-action">
+                                                <blockquote
+                                                    class="pre-line"
+                                                    style="margin: 0;"
+                                                ><span>{{ subComment.content }}</span></blockquote>
+                                            </div>
+
+                                            <div class="card-action comment-footer">
+                                                <template v-if="$root.$data.user">
+                                                    <a @click="likeComment(subComment)">{{ subComment.liked ? '收回讚' : '讚' }}</a>
+                                                    <span> · </span>
+                                                </template>
+
+                                                <span class="green-text"><i class="fa fa-thumbs-o-up"></i> {{ subComment.likes }}</span>
+                                                <span> · </span>
+                                                <span
+                                                    class="tooltipped"
+                                                    data-tooltip="{{ subComment.created_at }}"
+                                                    data-time-humanize="{{ subComment.created_at }}"
+                                                ></span>
+                                            </div>
+                                        </div>
+                                    </template>
+                                </div>
+                            </template>
+
+                            <template v-if="$root.$data.user">
+                                <form @submit.prevent="create()">
+                                    <div class="row">
+                                        <div class="input-field col s12">
+                                        <textarea
+                                            v-model="form.subComments[$index].content"
+                                            id="content-{{ $index }}"
+                                            class="materialize-textarea validate"
+                                            maxlength="3000"
+                                            length="3000"
+                                            required
+                                        ></textarea>
+                                            <label for="content-{{ $index }}">評論...</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="input-field col s12">
+                                            <div class="right">
+                                                <input
+                                                    v-model="form.subComments[$index].anonymous"
+                                                    id="anonymous-{{ $index }}"
+                                                    type="checkbox"
+                                                    class="filled-in"
+                                                >
+                                                <label for="anonymous-{{ $index }}">匿名</label>
+
+                                                <button
+                                                    type="submit"
+                                                    class="btn waves-effect waves-light"
+                                                    style="margin-left: 20px; vertical-align: text-top;"
+                                                >
+                                                    <span>送出 <i class="fa fa-send right"></i></span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
                             </template>
                         </div>
                     </div>
@@ -179,7 +274,8 @@
                 form: {
                     comment: {
                         anonymous: false
-                    }
+                    },
+                    subComments: []
                 }
             };
         },
@@ -238,7 +334,9 @@
 
             create() {
                 this.$http.post(`/api/v1/courses/${this.$route.params.code}/comments`, this.form.comment).then((response) => {
-                    this.$dispatch('http-response', response);
+                    this.$dispatch('http-response', response, {
+                        'modal-close': '#course-comment-modal'
+                    });
 
                     this.comments.data.unshift(response.data);
 

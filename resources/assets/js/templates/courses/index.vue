@@ -131,7 +131,7 @@
                         </div>
 
                         <div class="card-content" style="padding: 0 20px;">
-                            <blockquote class="pre-line">{{ comment.content }}</blockquote>
+                            <blockquote class="pre-line" style="margin: 0;">{{ comment.content }}</blockquote>
                         </div>
 
                         <div class="card-content comment-footer">

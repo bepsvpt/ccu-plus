@@ -21,6 +21,8 @@ function arrive() {
     });
 
     // http://materializecss.com/pushpin.html#initialization
+    $('.tabs-pushpin').pushpin({top: 64});
+
     $(document).arrive('.tabs-pushpin', function() {
       $(this).pushpin({top: 64});
     });

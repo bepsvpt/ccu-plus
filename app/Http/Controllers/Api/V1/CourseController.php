@@ -12,8 +12,6 @@ class CourseController extends ApiController
 {
     public function search(Request $request)
     {
-        Cache::tags('course')->flush();
-
         $key = 'search-'.sha1(implode('|', $request->only(['college', 'department_id', 'keyword'])));
 
         $courses = Cache::tags('course')->remember($key, Course::MINUTES_PER_MONTH, function () use ($request) {

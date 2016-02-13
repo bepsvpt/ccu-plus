@@ -20,7 +20,7 @@ class CourseCommentControl extends ApiController
             return $this->responseNotFound();
         }
 
-        $comments = $course->comments()->with(['professors'])->latest()->simplePaginate(5);
+        $comments = $course->comments()->with(['comments', 'professors'])->latest()->simplePaginate(5);
 
         return $this->setData($comments)->responseOk();
     }
@@ -42,7 +42,7 @@ class CourseCommentControl extends ApiController
 
         $comment->professors()->sync($request->input('professor'));
 
-        return $this->setData($comment->fresh()->load(['professors']))->responseCreated();
+        return $this->setData($comment->fresh()->load(['comments', 'professors']))->responseCreated();
     }
 
     public function waterfall(Request $request)

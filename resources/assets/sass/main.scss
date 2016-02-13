@@ -18,13 +18,21 @@ footer {
   background-color: #827759 !important;
 }
 
-a {
+a, .cursor-pointer {
   cursor: pointer;
 }
 
 .pre-line {
   white-space: pre-line;
   word-wrap: break-word;
+}
+
+.full-height {
+  height: 100%;
+}
+
+.scroll-bar {
+  overflow-y: scroll;
 }
 
 .material-icons.circle {

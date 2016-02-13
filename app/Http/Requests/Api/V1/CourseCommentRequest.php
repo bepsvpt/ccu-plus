@@ -16,9 +16,9 @@ class CourseCommentRequest extends Request
         /* todo: Fix professor bug */
 
         return [
-            'comment_id' => 'sometimes|exists:comments,id',
+            'comment_id' => 'required_without:professor|exists:comments,id',
             'content' => 'required|string|max:3000',
-            'professor' => 'required|array',
+            'professor' => 'required_without:comment_id|array',
             'professor.*' => 'required|exists:categories,id,category,professor',
             'anonymous' => 'boolean',
         ];
