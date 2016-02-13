@@ -6,12 +6,6 @@
             user-select: none;
         }
     }
-
-    .comment-footer {
-        a, span {
-            margin-right: 5px !important;
-        }
-    }
 </style>
 
 <template>
@@ -63,7 +57,7 @@
             <br>
 
             <section id="comments">
-                <div v-if="$root.$data.user" class="right-align">
+                <template v-if="$root.$data.user">
                     <!-- 課程評論按鈕 -->
                     <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
                         <button class="btn-floating btn-large waves-effect waves-light green modal-trigger" data-target="course-comment-modal">
@@ -91,7 +85,7 @@
                                             length="3000"
                                             required
                                         ></textarea>
-                                        <label for="content">評論...</label>
+                                        <label for="content">評論</label>
                                     </div>
                                 </div>
 
@@ -133,124 +127,102 @@
                             </form>
                         </div>
                     </div>
-                </div>
+                </template>
 
                 <template v-for="comment in comments.data">
                     <div class="card">
-                        <div class="card-content">
-                            <template v-if="null !== comment.user">
-                                <strong class="teal-text text-darken-1">{{ comment.user.nickname }}</strong>
-                            </template>
+                        <div class="card-content" style="padding: 10px 20px;">
+                            <div class="row" style="margin-bottom: 0;">
+                                <div class="col s2 m1" style="padding: 0 0 0 0.75rem;">
+                                    <div class="pre-line">
+                                        <strong v-if="comment.user" class="teal-text text-darken-1">{{ comment.user.nickname }}</strong>
+                                        <span v-else class="grey-text text-darken-1">匿名</span>
+                                    </div>
 
-                            <template v-else>
-                                <span class="grey-text text-darken-1">匿名</span>
-                            </template>
-                        </div>
-
-                        <div class="card-action">
-                            <blockquote
-                                class="pre-line"
-                                style="margin: 0;"
-                            ><span>受評教授：{{ professorsJoin(comment.professors) }}</span>
-
-
-                                <span>{{ comment.content }}</span>
-                            </blockquote>
-                        </div>
-
-                        <div class="card-action comment-footer">
-                            <template v-if="$root.$data.user">
-                                <a @click="likeComment(comment)">{{ comment.liked ? '收回讚' : '讚' }}</a>
-                                <span> · </span>
-                            </template>
-
-                            <span class="green-text"><i class="fa fa-thumbs-o-up"></i> {{ comment.likes }}</span>
-                            <span> · </span>
-                            <span
-                                class="tooltipped"
-                                data-tooltip="{{ comment.created_at }}"
-                                data-time-humanize="{{ comment.created_at }}"
-                            ></span>
-
-                            <template v-if="comment.comments.length">
-                                <div>
-                                    <template v-for="subComment in comment.comments">
-                                        <div class="card">
-                                            <div class="card-content">
-                                                <template v-if="subComment.user">
-                                                    <strong class="teal-text text-darken-1">{{ subComment.user.nickname }}</strong>
-                                                </template>
-
-                                                <template v-else>
-                                                    <span class="grey-text text-darken-1">匿名</span>
-                                                </template>
-                                            </div>
-
-                                            <div class="card-action">
-                                                <blockquote
-                                                    class="pre-line"
-                                                    style="margin: 0;"
-                                                ><span>{{ subComment.content }}</span></blockquote>
-                                            </div>
-
-                                            <div class="card-action comment-footer">
-                                                <template v-if="$root.$data.user">
-                                                    <a @click="likeComment(subComment)">{{ subComment.liked ? '收回讚' : '讚' }}</a>
-                                                    <span> · </span>
-                                                </template>
-
-                                                <span class="green-text"><i class="fa fa-thumbs-o-up"></i> {{ subComment.likes }}</span>
-                                                <span> · </span>
-                                                <span
-                                                    class="tooltipped"
-                                                    data-tooltip="{{ subComment.created_at }}"
-                                                    data-time-humanize="{{ subComment.created_at }}"
-                                                ></span>
-                                            </div>
-                                        </div>
-                                    </template>
+                                    <a @click="likeComment(comment)" class="green-text">
+                                        <i :class="[comment.liked ? 'fa-thumbs-up' : 'fa-thumbs-o-up']" class="fa"></i>
+                                        <span>{{ comment.likes }}</span>
+                                    </a>
                                 </div>
-                            </template>
 
-                            <template v-if="$root.$data.user">
-                                <form @submit.prevent="create()">
-                                    <div class="row">
-                                        <div class="input-field col s12">
-                                        <textarea
-                                            v-model="form.subComments[$index].content"
-                                            id="content-{{ $index }}"
-                                            class="materialize-textarea validate"
-                                            maxlength="3000"
-                                            length="3000"
-                                            required
-                                        ></textarea>
-                                            <label for="content-{{ $index }}">評論...</label>
+                                <div class="col s10 m11">
+                                    <blockquote class="pre-line"><!--
+                                     --><span>受評教授：{{ professorsJoin(comment.professors) }}</span><br><br><!--
+                                     --><span>{{ comment.content }}</span><!--
+                                     --><span class="grey-text right" style="font-style: italic;">- <span data-time-humanize="{{ comment.created_at }}"></span></span><!--
+                                 --></blockquote>
+
+                                    <div class="card-action" style="padding: 0;">
+                                        <!--<template v-if="$root.$data.user">-->
+                                        <!--<span> · </span>-->
+                                        <!--<a @click="$set('comment.reply', true)">回覆</a>-->
+                                        <!--</template>-->
+
+                                        <div v-if="comment.comments.length">
+                                            <template v-for="subComment in comment.comments">
+                                                <div class="row" style="margin-bottom: 0;">
+                                                    <div class="col s2 m1" style="padding: 0 0 0 0.75rem;">
+                                                        <div class="pre-line">
+                                                            <strong v-if="subComment.user" class="teal-text text-darken-1">{{ subComment.user.nickname }}</strong>
+                                                            <span v-else class="grey-text text-darken-1">匿名</span>
+                                                        </div>
+
+                                                        <a @click="likeComment(subComment)" class="green-text">
+                                                            <i :class="[subComment.liked ? 'fa-thumbs-up' : 'fa-thumbs-o-up']" class="fa"></i>
+                                                            <span>{{ subComment.likes }}</span>
+                                                        </a>
+                                                    </div>
+
+                                                    <div class="col s10 m11">
+                                                        <blockquote class="pre-line"><!--
+                                                         --><span>{{ subComment.content }}</span><!--
+                                                         --><span class="grey-text right" style="font-style: italic;">- <span data-time-humanize="{{ subComment.created_at }}"></span></span><!--
+                                                     --></blockquote>
+                                                    </div>
+                                                </div>
+                                            </template>
                                         </div>
-                                    </div>
 
-                                    <div class="row">
-                                        <div class="input-field col s12">
-                                            <div class="right">
-                                                <input
-                                                    v-model="form.subComments[$index].anonymous"
-                                                    id="anonymous-{{ $index }}"
-                                                    type="checkbox"
-                                                    class="filled-in"
-                                                >
-                                                <label for="anonymous-{{ $index }}">匿名</label>
+                                        <template v-if="$root.$data.user && comment.reply">
+                                            <form @submit.prevent="create()" style="margin-top: 15px;">
+                                                <div class="row">
+                                                    <div class="input-field col s12 m9">
+                                            <textarea
+                                                v-model="form.subComments[$index].content"
+                                                id="content-{{ $index }}"
+                                                class="materialize-textarea validate"
+                                                maxlength="3000"
+                                                length="3000"
+                                                required
+                                            ></textarea>
+                                                        <label for="content-{{ $index }}">回覆</label>
+                                                    </div>
 
-                                                <button
-                                                    type="submit"
-                                                    class="btn waves-effect waves-light"
-                                                    style="margin-left: 20px; vertical-align: text-top;"
-                                                >
-                                                    <span>送出 <i class="fa fa-send right"></i></span>
-                                                </button>
-                                            </div>
-                                        </div>
+                                                    <div class="input-field col s12 m3">
+                                                        <div class="right">
+                                                            <input
+                                                                v-model="form.subComments[$index].anonymous"
+                                                                id="anonymous-{{ $index }}"
+                                                                type="checkbox"
+                                                                class="filled-in"
+                                                            >
+                                                            <label for="anonymous-{{ $index }}">匿名</label>
+
+                                                            <button
+                                                                type="submit"
+                                                                class="btn waves-effect waves-light"
+                                                                style="margin-left: 20px; vertical-align: text-top;"
+                                                            >
+                                                                <span>送出<i class="fa fa-send right"></i></span>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </template>
                                     </div>
-                                </form>
-                            </template>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </template>
@@ -347,6 +319,10 @@
             },
 
             likeComment(comment) {
+                if (! this.$root.$data.user) {
+                    return;
+                }
+
                 this.$http.patch(`/api/v1/courses/${this.$route.params.code}/comments/${comment.id}/like`).then((response) => {
                     comment.likes = response.data.likes;
                     comment.liked = !comment.liked;
