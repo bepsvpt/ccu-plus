@@ -26,7 +26,7 @@ class Attachment extends Entity
      * @var array
      */
     protected $fillable = [
-        'sha256', 'info', 'path',
+        'sha256', 'info', 'path', 'created_at',
     ];
 
     /**
