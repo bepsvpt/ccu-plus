@@ -40,7 +40,7 @@
             </ul>
         </div>
 
-        <section id="comments" class="col s12">
+        <section id="comments" class="col s12" style="-webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none;">
             <template v-if="$root.$data.user">
                 <!-- 課程評論按鈕 -->
                 <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
@@ -123,7 +123,7 @@
                                     <span v-else class="grey-text text-darken-1">匿名</span>
                                 </div>
 
-                                <a @click="likeComment(comment)" class="green-text" style="font-size: 1.2em;">
+                                <a @click="likeComment(comment)" class="green-text" style="font-size: 1.3em;">
                                     <i :class="[comment.liked ? 'fa-thumbs-up' : 'fa-thumbs-o-up']" class="fa"></i>
                                     <span>{{ comment.likes }}</span>
                                 </a>
@@ -151,7 +151,7 @@
                                                     <span v-else class="grey-text text-darken-1">匿名</span>
                                                 </div>
 
-                                                <a @click="likeComment(subComment)" class="green-text">
+                                                <a @click="likeComment(subComment)" class="green-text" style="font-size: 1.3em;">
                                                     <i :class="[subComment.liked ? 'fa-thumbs-up' : 'fa-thumbs-o-up']" class="fa"></i>
                                                     <span>{{ subComment.likes }}</span>
                                                 </a>
