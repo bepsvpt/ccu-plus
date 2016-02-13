@@ -12,8 +12,20 @@ let events = {
     const HTTP_SERVICE_UNAVAILABLE = 503;
     const HTTP_UNKNOWN_ERROR = 520;
 
+    this.toastCustomMessages = function () {
+      if (options.hasOwnProperty('messages')) {
+        for (let type in options.messages) {
+          if (options.messages.hasOwnProperty(type)) {
+            options.messages[type].map((value) => {
+              this[type](value);
+            });
+          }
+        }
+      }
+    };
+
     this.toastSuccess = function (message) {
-      this.toast(message, 'green');
+      this.toast(message, 'green', 'check_circle');
     };
 
     this.toastInfo = function (message, style = 'amber darken-2') {
@@ -21,10 +33,14 @@ let events = {
     };
 
     this.toastError = function (message) {
-      this.toast(`<i class="material-icons" style="margin-right: 3px;">warning</i>${message}`, 'red darken-2');
+      this.toast(message, 'red darken-2', 'warning');
     };
 
-    this.toast = function (message = '', style, duration = 4500) {
+    this.toast = function (message = '', style, icon = '', duration = 4500) {
+      if (icon.length > 0) {
+        message = `<i class="material-icons" style="margin-right: 3px;">${icon}</i>${message}`;
+      }
+
       Materialize.toast(message, duration, `rounded ${style}`);
     };
 
@@ -33,7 +49,9 @@ let events = {
         break;
 
       case HTTP_CREATED:
-        this.toastSuccess(`新增成功`);
+        if (! options.hasOwnProperty('messages')) {
+          this.toastSuccess(`新增成功`);
+        }
 
         break;
 
@@ -86,6 +104,8 @@ let events = {
 
         break;
     }
+
+    this.toastCustomMessages();
 
     if (! response.ok) {
       // Reset recaptcha.

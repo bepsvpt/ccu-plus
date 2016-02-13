@@ -31,6 +31,13 @@ class Course extends Entity
     protected $hidden = ['id', 'semester_id', 'department_id'];
 
     /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = ['new'];
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array
@@ -75,6 +82,22 @@ class Course extends Entity
         }
 
         return $this->primaryKey;
+    }
+
+    /**
+     * Get the comment's user_id attribute.
+     *
+     * @return bool
+     */
+    public function getNewAttribute()
+    {
+        static $latestSemesterId = null;
+
+        if (is_null($latestSemesterId)) {
+            $latestSemesterId = static::max('semester_id');
+        }
+
+        return $latestSemesterId === $this->getAttribute('semester_id');
     }
 
     /**

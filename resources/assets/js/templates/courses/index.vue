@@ -1,20 +1,5 @@
-<style lang="scss">
-    .comment {
-        &-header {
-            padding: 20px 20px 5px !important;
-        }
-
-        &-content {
-            padding: 5px 20px !important;
-        }
-
-        &-footer {
-             padding: 5px 20px 20px !important;
-        }
-    }
-</style>
-
 <template>
+    <!-- 搜尋表單 -->
     <div>
         <div class="row">
             <form class="col s12" @submit.prevent="search()">
@@ -66,11 +51,11 @@
         </div>
     </div>
 
+    <!-- 搜尋結果 -->
     <div>
         <table class="bordered highlight centered z-depth-1">
             <thead>
                 <tr>
-                    <th>學期</th>
                     <th class="hide-on-small-only">開課系所</th>
                     <th>課程代碼</th>
                     <th>課程名稱</th>
@@ -79,21 +64,24 @@
             </thead>
             <tbody>
                 <tr v-show="! loading.courses" v-for="course in courses">
-                    <td>{{ course.semester.name }}</td>
-                    <td class="hide-on-small-only">{{ course.department.name }}</td>
-                    <td>{{ course.code }}</td>
+                    <td class="hide-on-small-only" style="position: relative;">
+                        <i
+                            v-if="course.new"
+                            class="material-icons green-text icon-top"
+                            style="position: absolute; margin-left: -26px;"
+                        >fiber_new</i>
+
+                        <span>{{ course.department.name }}</span>
+                    </td>
                     <td>
+                        <span>{{ course.code }}</span>
+
                         <template v-if="course.dimension.length > 0">
-                            <a
-                                v-link="{name: 'courses.show', params: {code: course.code}}"
-                                class="tooltipped"
-                                data-tooltip="{{ course.dimension[0].name }}"
-                            >{{ course.name }}</a>
-                        </template>
-                        <template v-else>
-                            <a v-link="{name: 'courses.show', params: {code: course.code}}">{{ course.name }}</a>
+                            <br>
+                            <span>{{ course.dimension[0].name }}</span>
                         </template>
                     </td>
+                    <td><a v-link="{name: 'courses.show', params: {code: course.code}}">{{ course.name }}</a></td>
                     <td>
                         <template v-for="professor in course.professors | limitBy 5">
                             <span class="truncate">{{ professor.name }}</span>
@@ -142,7 +130,7 @@
                             >{{ comment.commentable.department.name }}：{{ comment.commentable.name }}</a>
                         </div>
 
-                        <div class="card-content comment-content">
+                        <div class="card-content" style="padding: 0 20px;">
                             <blockquote class="pre-line">{{ comment.content }}</blockquote>
                         </div>
 

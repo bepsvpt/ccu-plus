@@ -27,7 +27,7 @@ class SignInRequest extends Request
     public function messages()
     {
         return [
-            'username.exists' => '',
+            'username.exists' => '帳號或密碼錯誤',
         ];
     }
 }

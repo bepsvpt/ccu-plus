@@ -13,6 +13,8 @@ class CourseCommentRequest extends Request
      */
     public function rules()
     {
+        /** todo: Fix professor bug */
+
         return [
             'comment_id' => 'sometimes|exists:comments,id',
             'content' => 'required|string|max:3000',

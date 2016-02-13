@@ -12,12 +12,13 @@ class CourseController extends ApiController
 {
     public function search(Request $request)
     {
+        Cache::tags('course')->flush();
+
         $key = 'search-'.sha1(implode('|', $request->only(['college', 'department_id', 'keyword'])));
 
         $courses = Cache::tags('course')->remember($key, Course::MINUTES_PER_MONTH, function () use ($request) {
-            $query = Course::with(['semester', 'dimension', 'professors'])
+            $query = Course::with(['dimension', 'professors'])
                 ->groupBy('code')
-                ->orderBy('semester_id', 'desc')
                 ->orderBy('department_id')
                 ->orderBy('code');
 
