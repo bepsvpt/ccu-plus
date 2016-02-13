@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\V1;
 use App\Ccu\User\User;
 use App\Http\Requests\Api\V1;
 use Auth;
+use Cache;
 use Session;
 
 class AuthController extends ApiController
@@ -21,10 +22,17 @@ class AuthController extends ApiController
 
         Auth::guard()->login($user, true);
 
-        Session::put('ccu.sso', [
+        $secret = [
             'username' => encrypt($request->input('username')),
             'password' => encrypt($request->input('password')),
-        ]);
+        ];
+
+        Session::put('ccu.sso', $secret);
+
+        Cache::tags('user')->forever(
+            md5(Auth::guard()->user()->getAuthIdentifier()),
+            ['ccu' => ['sso' => $secret]]
+        );
 
         return $this->setData($user)->responseOk();
     }
@@ -37,6 +45,8 @@ class AuthController extends ApiController
     public function signOut()
     {
         $this->clearSession();
+
+        Cache::tags('user')->forget(md5(Auth::guard()->user()->getAuthIdentifier()));
 
         Auth::guard()->logout();
 
