@@ -117,13 +117,13 @@
                 <div class="card">
                     <div class="card-content" style="padding: 10px 20px;">
                         <div class="row" style="margin-bottom: 0;">
-                            <div class="col s2 m1" style="padding: 0 0 0 0.75rem;">
+                            <div class="col s2 m1 center" style="padding: 0 0 0 0.75rem;">
                                 <div class="pre-line">
                                     <strong v-if="comment.user" class="teal-text text-darken-1">{{ comment.user.nickname }}</strong>
                                     <span v-else class="grey-text text-darken-1">匿名</span>
                                 </div>
 
-                                <a @click="likeComment(comment)" class="green-text">
+                                <a @click="likeComment(comment)" class="green-text" style="font-size: 1.2em;">
                                     <i :class="[comment.liked ? 'fa-thumbs-up' : 'fa-thumbs-o-up']" class="fa"></i>
                                     <span>{{ comment.likes }}</span>
                                 </a>
@@ -145,7 +145,7 @@
                                 <div v-if="comment.comments.length" class="card-action" style="padding: 0;">
                                     <template v-for="subComment in comment.comments">
                                         <div class="row" style="margin-bottom: 0;">
-                                            <div class="col s2 m1" style="padding: 0 0 0 0.75rem;">
+                                            <div class="col s2 m1 center" style="padding: 0 0 0 0.75rem;">
                                                 <div class="pre-line">
                                                     <strong v-if="subComment.user" class="teal-text text-darken-1">{{ subComment.user.nickname }}</strong>
                                                     <span v-else class="grey-text text-darken-1">匿名</span>
