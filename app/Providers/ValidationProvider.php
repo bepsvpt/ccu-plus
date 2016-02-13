@@ -15,6 +15,7 @@ class ValidationProvider extends ServiceProvider
     public function boot()
     {
         Validator::extend('ccu_sign_in', 'App\Ccu\Validator\SignUpValidator@validate', '學號驗證失敗');
+        Validator::extend('phone', 'App\Ccu\Validator\PhoneValidator@validate', '手機格式不正確');
     }
 
     /**
