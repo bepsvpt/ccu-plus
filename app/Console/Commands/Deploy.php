@@ -156,6 +156,10 @@ class Deploy extends Command
      */
     protected function clearCache()
     {
+        Cache::tags('course')->flush();
+        Cache::tags('ecourse-lite')->flush();
+        Cache::tags('resource')->flush();
+
         $this->call('route:clear');
 
         $this->call('config:clear');
