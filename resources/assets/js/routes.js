@@ -20,7 +20,7 @@ export default {
       name: 'courses.index',
       component: coursesIndex
     },
-    '/courses/:seriesId': {
+    '/courses/:code': {
       name: 'courses.show',
       component: coursesShow
     },

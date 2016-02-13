@@ -237,7 +237,7 @@
             },
 
             create() {
-                this.$http.post(`/api/v1/courses/${this.$route.params.seriesId}/comments`, this.form.comment).then((response) => {
+                this.$http.post(`/api/v1/courses/${this.$route.params.code}/comments`, this.form.comment).then((response) => {
                     this.$dispatch('http-response', response);
 
                     this.comments.data.unshift(response.data);
@@ -249,7 +249,7 @@
             },
 
             likeComment(comment) {
-                this.$http.patch(`/api/v1/courses/${this.$route.params.seriesId}/comments/${comment.id}/like`).then((response) => {
+                this.$http.patch(`/api/v1/courses/${this.$route.params.code}/comments/${comment.id}/like`).then((response) => {
                     comment.likes = response.data.likes;
                     comment.liked = !comment.liked;
                 }, (response) => {
@@ -267,7 +267,7 @@
         created() {
             let _this = this;
 
-            this.$http.get(`/api/v1/courses/${this.$route.params.seriesId}`).then((response) => {
+            this.$http.get(`/api/v1/courses/${this.$route.params.code}`).then((response) => {
                 this.courses = response.data;
             }, (response) => {
                 this.$dispatch('http-response', response, {
@@ -277,7 +277,7 @@
                 });
             });
 
-            this.$http.get(`/api/v1/courses/${this.$route.params.seriesId}/comments`).then((response) => {
+            this.$http.get(`/api/v1/courses/${this.$route.params.code}/comments`).then((response) => {
                 this.comments = response.data;
             });
 

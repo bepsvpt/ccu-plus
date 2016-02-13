@@ -85,13 +85,13 @@
                     <td>
                         <template v-if="course.dimension.length > 0">
                             <a
-                                v-link="{name: 'courses.show', params: {seriesId: course.series_id}}"
+                                v-link="{name: 'courses.show', params: {code: course.code}}"
                                 class="tooltipped"
                                 data-tooltip="{{ course.dimension[0].name }}"
                             >{{ course.name }}</a>
                         </template>
                         <template v-else>
-                            <a v-link="{name: 'courses.show', params: {seriesId: course.series_id}}">{{ course.name }}</a>
+                            <a v-link="{name: 'courses.show', params: {code: course.code}}">{{ course.name }}</a>
                         </template>
                     </td>
                     <td>
@@ -137,7 +137,7 @@
                             </template>
 
                             <a
-                                v-link="{name: 'courses.show', params: {seriesId: comment.commentable.series_id}}"
+                                v-link="{name: 'courses.show', params: {code: comment.commentable.code}}"
                                 class="right"
                             >{{ comment.commentable.department.name }}：{{ comment.commentable.name }}</a>
                         </div>

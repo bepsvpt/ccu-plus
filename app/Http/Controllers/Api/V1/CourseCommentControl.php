@@ -12,9 +12,9 @@ use Illuminate\Http\Request;
 
 class CourseCommentControl extends ApiController
 {
-    public function index($seriesId)
+    public function index($code)
     {
-        $course = Course::where('series_id', $seriesId)->first();
+        $course = Course::where('code', $code)->first();
 
         if (is_null($course)) {
             return $this->responseNotFound();
@@ -25,9 +25,9 @@ class CourseCommentControl extends ApiController
         return $this->setData($comments)->responseOk();
     }
 
-    public function store(V1\CourseCommentRequest $request, $seriesId)
+    public function store(V1\CourseCommentRequest $request, $code)
     {
-        $course = Course::where('series_id', $seriesId)->first();
+        $course = Course::where('code', $code)->first();
 
         if (is_null($course)) {
             return $this->responseNotFound();
@@ -50,7 +50,7 @@ class CourseCommentControl extends ApiController
         $key = 'comment-waterfall-'.$request->input('id', 0);
 
         $comments = Cache::tags('course')->remember($key, 5, function () use ($request) {
-            Course::setPrimaryKey('series_id');
+            Course::setPrimaryKey('code');
 
             $query = Comment::with(['commentable'])
                 ->where('commentable_type', 'course')
@@ -68,7 +68,7 @@ class CourseCommentControl extends ApiController
         return $this->setData($comments)->responseOk();
     }
 
-    public function like(Request $request, $seriesId, $commentId)
+    public function like(Request $request, $code, $commentId)
     {
         $comment = Comment::with(['likes'])->where('id', $commentId)->first();
 

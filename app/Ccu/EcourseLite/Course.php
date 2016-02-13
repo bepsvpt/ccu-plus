@@ -40,9 +40,6 @@ class Course extends Core
             }
 
             $temp['courseId'] = substr(strrchr($row->children(3)->find('a', 0)->href, '='), 1);
-            $temp['seriesId'] = \App\Ccu\Course::where('code', strstr($temp['code'], '_', true))
-                ->first(['series_id'])
-                ->getAttribute('series_id');
 
             $result[] = $temp;
         }

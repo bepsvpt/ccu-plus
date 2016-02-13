@@ -36,7 +36,7 @@ class Course extends Entity
      * @var array
      */
     protected $fillable = [
-        'semester_id', 'code', 'department_id', 'name', 'series_id',
+        'semester_id', 'code', 'department_id', 'name',
     ];
 
     /**
@@ -124,7 +124,7 @@ class Course extends Entity
      */
     public function comments()
     {
-        return $this->morphMany(Comment::class, 'commentable', null, null, 'series_id');
+        return $this->morphMany(Comment::class, 'commentable', null, null, 'code');
     }
 
     /**

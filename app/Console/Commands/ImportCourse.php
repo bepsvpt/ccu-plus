@@ -62,7 +62,7 @@ class ImportCourse extends Command
     {
         $this->init();
 
-        $this->save($this->semesterId(), $this->parse());
+        $this->save($this->parse(), $this->semesterId());
 
         $this->info('');
 
@@ -89,6 +89,11 @@ class ImportCourse extends Command
         }
     }
 
+    /**
+     * 取得學期 id.
+     *
+     * @return int
+     */
     protected function semesterId()
     {
         $semester = $this->option('semester') ?? $this->ask('請輸入匯入學年及學期（如：1042）');
@@ -112,19 +117,16 @@ class ImportCourse extends Command
      */
     protected function parse()
     {
-        $courses = [];
-
         foreach ($this->files as $file) {
             $content = $this->removeAnnoys($this->filesystem->get($file));
 
             $rows = HtmlDomParser::str_get_html($content)->find('tr');
 
-            // 移除表格標題列
-            array_shift($rows);
-
+            // 系所代碼
             $department = $this->filesystem->name($file);
 
-            foreach ($rows as $row) {
+            // 需先移除表格標題列
+            foreach (array_slice($rows, 1) as $row) {
                 $courses[$department][] = $this->getColumns($row, $department);
             }
 
@@ -133,7 +135,7 @@ class ImportCourse extends Command
             }
         }
 
-        return $courses;
+        return $courses ?? [];
     }
 
     /**
@@ -160,7 +162,7 @@ class ImportCourse extends Command
     /**
      * 取得欄位資料.
      *
-     * @param \PHPHtmlParser\Dom\HtmlNode $row
+     * @param \simple_html_dom_node $row
      * @param string $department
      * @return array
      */
@@ -171,28 +173,25 @@ class ImportCourse extends Command
         // I001：通識
         $i = ('I001' === $department) ? 0 : 1;
 
-        $size = count($name);
-
-        $result = [];
-
         foreach ($row->children() as $node) {
-            if ($i >= $size) {
+            if ($i >= 10) {
                 break;
             }
 
             $result[$name[$i++]] = trim($node->plaintext);
         }
 
-        return $result;
+        return $result ?? [];
     }
 
     /**
      * 將課程資料存到資料庫中.
      *
-     * @param int $semester
      * @param array $data
+     * @param int $semesterId
+     * @return void
      */
-    protected function save($semester, $data)
+    protected function save($data, $semesterId)
     {
         $bar = $this->output->createProgressBar($this->numberOfCourses);
 
@@ -204,33 +203,18 @@ class ImportCourse extends Command
 
             foreach ($courses as $course) {
                 $model = Course::with(['professors'])
-                    ->where('semester_id', $semester)
+                    ->where('semester_id', $semesterId)
                     ->where('code', $course['code'])
                     ->first();
 
                 if (! is_null($model)) {
-                    $model->professors()->sync(array_merge(
-                        $model->getRelation('professors')->pluck('id')->toArray(),
-                        $this->professors($course['professors'])->pluck('id')->toArray()
-                    ));
-
-                    $bar->advance();
-
-                    continue;
-                }
-
-                $model = Course::create([
-                    'semester_id' => $semester,
-                    'code' => $course['code'],
-                    'department_id' => $departmentId,
-                    'name' => mb_strstr($course['name'], ' ', true),
-                    'series_id' => $this->seriesId($course['code']),
-                ]);
-
-                $model->professors()->saveMany($this->professors($course['professors']));
-
-                if ('I001' === $department) {
-                    $model->dimension()->save(Category::getCategories('course.dimension', $course['grade']));
+                    $this->updateCourse($model, $course);
+                } else {
+                    $this->createCourse($course, [
+                        'semesterId' => $semesterId,
+                        'departmentId' => $departmentId,
+                        'department' => $department,
+                    ]);
                 }
 
                 $bar->advance();
@@ -256,37 +240,56 @@ class ImportCourse extends Command
     }
 
     /**
-     * 取得群組 id.
+     * 新增課程.
      *
-     * @param string $code
-     * @return int
+     * @param array $course
+     * @param array $data
+     * @return void
      */
-    protected function seriesId($code)
+    protected function createCourse($course, $data)
     {
-        $course = Course::orderBy('id')->where('code', $code)->first();
+        $model = Course::create([
+            'semester_id' => $data['semesterId'],
+            'code' => $course['code'],
+            'department_id' => $data['departmentId'],
+            'name' => mb_strstr($course['name'], ' ', true),
+        ]);
 
-        if (! is_null($course)) {
-            return $course->getAttribute('series_id');
+        $model->professors()->saveMany($this->professors($course['professors']));
+
+        if ('I001' === $data['department']) {
+            $model->dimension()->save(Category::getCategories('course.dimension', $course['grade']));
         }
+    }
 
-        $max = Course::max('series_id');
-
-        return is_null($max) ? 1 : $max + 1;
+    /**
+     * 更新課程.
+     *
+     * @param Course $model
+     * @param array $course
+     * @return void
+     */
+    protected function updateCourse($model, $course)
+    {
+        $model->professors()->sync(array_merge(
+            $model->getRelation('professors')->pluck('id')->toArray(),
+            $this->professors($course['professors'])->pluck('id')->toArray()
+        ));
     }
 
     /**
      * 取得教授 collection.
      *
      * @param string $professors
-     * @return \Illuminate\Database\Eloquent\Collection|static[]
+     * @return \Illuminate\Database\Eloquent\Collection
      */
     protected function professors($professors)
     {
-        //$professors = explode(' ', str_replace('  ', ' ', str_replace('教師未定', '', $professors)));
         $professors = explode(' ', $professors);
 
         $result = Category::where('category', 'professor')->whereIn('name', $professors)->get();
 
+        // 將尚未有資料的教授新增到資料庫中
         foreach (array_diff($professors, $result->pluck('name')->toArray()) as $name) {
             $result->push(Category::create(['category' => 'professor', 'name' => $name])->fresh());
         }

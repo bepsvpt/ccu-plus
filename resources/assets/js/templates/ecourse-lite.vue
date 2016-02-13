@@ -13,7 +13,7 @@
                         <i class="material-icons circle green">book</i>
                         <a
                             @click.stop
-                            v-link="{name: 'courses.show', params: {seriesId: course.seriesId}}"
+                            v-link="{name: 'courses.show', params: {code: course.code.substr(0, course.code.indexOf('_'))}}"
                             target="_blank"
                             class="title"
                         >{{ course.name }}</a>

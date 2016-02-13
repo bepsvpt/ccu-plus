@@ -16,7 +16,7 @@ class CourseController extends ApiController
 
         $courses = Cache::tags('course')->remember($key, Course::MINUTES_PER_MONTH, function () use ($request) {
             $query = Course::with(['semester', 'dimension', 'professors'])
-                ->groupBy('series_id')
+                ->groupBy('code')
                 ->orderBy('semester_id', 'desc')
                 ->orderBy('department_id')
                 ->orderBy('code');
@@ -43,11 +43,11 @@ class CourseController extends ApiController
         return $this->setData($courses)->responseOk();
     }
 
-    public function show($seriesId)
+    public function show($code)
     {
-        $course = Cache::tags('course')->remember("info-{$seriesId}", Course::MINUTES_PER_MONTH, function () use ($seriesId) {
+        $course = Cache::tags('course')->remember("info-{$code}", Course::MINUTES_PER_MONTH, function () use ($code) {
             return Course::with(['semester', 'professors'])
-                ->where('series_id', $seriesId)
+                ->where('code', $code)
                 ->orderBy('semester_id', 'desc')
                 ->get();
         });

@@ -21,11 +21,11 @@ let events = {
     };
 
     this.toastError = function (message) {
-      this.toast(message, 'red');
+      this.toast(`<i class="material-icons" style="margin-right: 3px;">warning</i>${message}`, 'red darken-2');
     };
 
     this.toast = function (message = '', style, duration = 4500) {
-      Materialize.toast(message, duration, style);
+      Materialize.toast(message, duration, `rounded ${style}`);
     };
 
     switch (response.status) {
