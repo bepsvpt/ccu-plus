@@ -1,6 +1,6 @@
 <template>
     <div class="parallax-container">
-        <div class="parallax"><img src="/assets/images/home/p1.jpg"></div>
+        <div class="parallax"><img src="/assets/images/home/p1.jpg" style="width: 100%;"></div>
         <div class="container" style="position: inherit;">
             <img src="/assets/images/home/p1.svg" class="home-cover-img">
         </div>
