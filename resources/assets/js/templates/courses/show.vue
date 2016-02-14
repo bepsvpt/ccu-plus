@@ -112,7 +112,7 @@
                                         class="btn btn-large waves-effect waves-light"
                                         style="margin-left: 35px; vertical-align: text-top;"
                                     >
-                                        <span><i class="fa fa-send right"></i></span>
+                                        <span><i class="fa fa-send"></i></span>
                                     </button>
                                 </div>
                             </div>
