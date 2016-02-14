@@ -2,7 +2,7 @@
     <div class="parallax-container">
         <div class="parallax"><img src="/assets/images/home/p1.jpg"></div>
         <div class="container" style="position: inherit;">
-            <img src="/assets/images/home/p1.svg" style="width: 30%; margin-left: 35%; margin-top: 5%;">
+            <img src="/assets/images/home/p1.svg" style="width: 30%; margin-left: 35%; margin-top: 10%;">
         </div>
     </div>
 
