@@ -51,9 +51,21 @@ blockquote {
   height: 600px;
 }
 
+.home-cover-img {
+  width: 30%;
+  margin-left: 35%;
+  margin-top: 10%;
+}
+
 @media only screen and (max-width: 600px) {
   .parallax-container {
     height: 350px;
+  }
+
+  .home-cover-img {
+    width: 50%;
+    margin-left: 25%;
+    margin-top: 10%;
   }
 }
 

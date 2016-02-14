@@ -2,7 +2,7 @@
     <div class="parallax-container">
         <div class="parallax"><img src="/assets/images/home/p1.jpg"></div>
         <div class="container" style="position: inherit;">
-            <img src="/assets/images/home/p1.svg" style="width: 30%; margin-left: 35%; margin-top: 10%;">
+            <img src="/assets/images/home/p1.svg" class="home-cover-img">
         </div>
     </div>
 
@@ -16,7 +16,7 @@
                 <h5 class="grey-text text-darken-1" style="line-height: 180%;">
                     曾幾何時，我們曾經想要在選課時有過來人的經驗來指引我們<br>
                     曾幾何時，我們曾經想要一套更好、更親民的 Ecourse 系統<br>
-                    曾幾何時，我們都想讓這些夢實現，但是一直苦無機會，困擾遲遲揮之不去<br>
+                    曾幾何時，我們都想讓這些夢實現，但是一直苦無機會，困擾遲遲不去<br><br>
                     現在，我們推出 CCU PLUS，劃時代的服務，將顛覆我們既往選課以及學業上的模式
                 </h5>
             </div>
