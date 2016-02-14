@@ -113,7 +113,7 @@
                 <h5><i class="fa fa-comments"></i> 最新評論</h5>
 
                 <template v-for="comment in comments">
-                    <div class="card hoverable" data-comment>
+                    <div class="card hoverable user-select-none" data-comment>
                         <div class="card-content comment-header">
                             <template v-if="null !== comment.user">
                                 <strong class="teal-text text-darken-1">{{ comment.user.nickname }}</strong>

@@ -23,7 +23,7 @@ class User extends Entity implements AuthenticatableContract
      * @var array
      */
     protected $fillable = [
-        'username', 'email', 'phone', 'nickname',
+        'username', 'email', 'phone', 'nickname', 'remember_token',
     ];
 
     /**

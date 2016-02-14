@@ -6,6 +6,7 @@ use App\Ccu\User\User;
 use App\Http\Requests\Api\V1;
 use Auth;
 use Cache;
+use Hash;
 use Session;
 
 class AuthController extends ApiController
@@ -73,7 +74,15 @@ class AuthController extends ApiController
      */
     public function signUp(V1\SignUpRequest $request)
     {
-        $user = User::create($request->only(['username', 'nickname']));
+        if ($request->has(['old_email', 'old_password'])) {
+            if (! $this->transformOldAccount($request)) {
+                return $this->setMessages(['username' => ['舊信箱不存在或舊密碼錯誤']])->responseUnprocessableEntity();
+            }
+
+            $user = User::where('username', $request->input('username'))->first();
+        } else {
+            $user = User::create($request->only(['username', 'nickname']));
+        }
 
         if (! $user->exists) {
             return $this->responseUnknownError();
@@ -84,5 +93,29 @@ class AuthController extends ApiController
         Auth::guard()->login($user, true);
 
         return $this->setData($user)->responseCreated();
+    }
+
+    /**
+     * 轉移舊帳號.
+     *
+     * @param V1\SignUpRequest $request
+     * @return bool
+     */
+    protected function transformOldAccount($request)
+    {
+        $user = User::where('username', $request->input('old_email'))->first();
+
+        if (is_null($user)) {
+            return false;
+        } elseif (! Hash::check($request->input('old_password'), $user->getAttribute('remember_token'))) {
+            return false;
+        }
+
+        $user->update([
+            'username' => $request->input('username'),
+            'nickname' => $request->input('nickname'),
+        ]);
+
+        return true;
     }
 }

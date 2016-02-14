@@ -55,6 +55,34 @@
                 </div>
             </div>
 
+            <!-- old email -->
+            <div class="row">
+                <div class="input-field col s12">
+                    <i class="material-icons prefix">person</i>
+                    <input
+                        v-model="form.old_email"
+                        id="old_email"
+                        type="email"
+                        placeholder="如您欲轉移舊帳號才需填寫此欄位"
+                    >
+                    <label for="old_email">舊信箱</label>
+                </div>
+            </div>
+
+            <!-- old password -->
+            <div class="row">
+                <div class="input-field col s12">
+                    <i class="material-icons prefix">lock</i>
+                    <input
+                        v-model="form.old_password"
+                        id="old_password"
+                        type="password"
+                        placeholder="如您欲轉移舊帳號才需填寫此欄位"
+                    >
+                    <label for="old_password">舊密碼</label>
+                </div>
+            </div>
+
             <!-- recaptcha -->
             <div class="row">
                 <div class="col s12">
