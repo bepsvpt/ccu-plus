@@ -32,6 +32,7 @@ class CourseCommentRequest extends Request
     public function messages()
     {
         return [
+            'content.required' => '內容不能留空',
             'professor.*.required' => '請選擇授課教授',
             'professor.*.exists' => '您所選擇的授課教授不存在',
         ];

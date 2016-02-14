@@ -40,11 +40,9 @@
                     <div class="input-field col s12 m2">
                         <button
                             type="submit"
-                            class="btn waves-effect waves-light"
+                            class="btn btn-large waves-effect waves-light"
                             :disabled="loading.courses"
-                        >
-                            <span>搜尋</span><i class="fa fa-search right"></i>
-                        </button>
+                        ><i class="fa fa-search"></i></button>
                     </div>
                 </div>
             </form>
@@ -107,11 +105,11 @@
         <br>
 
         <div class="row">
-            <div class="col s12 m5">
-                <h5><i class="fa fa-heart"></i> 課程追蹤</h5>
-            </div>
+            <!--<div class="col s12 m5">-->
+                <!--<h5><i class="fa fa-heart"></i> 課程追蹤</h5>-->
+            <!--</div>-->
 
-            <div class="col s12 m7">
+            <div class="col s12 offset-m1 m10">
                 <h5><i class="fa fa-comments"></i> 最新評論</h5>
 
                 <template v-for="comment in comments">

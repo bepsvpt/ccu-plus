@@ -45,8 +45,8 @@
     <div class="row">
         <div class="col s12">
             <ul class="tabs">
-                <li class="tab col s6"><a href="#comments" class="active"><i class="fa fa-comments fa-fw"></i> 課程評論</a></li>
-                <li class="tab col s6"><a href="#exams"><i class="fa fa-file fa-fw"></i> 考古題</a></li>
+                <li class="tab col s12"><a href="#comments" class="active"><i class="fa fa-comments fa-fw"></i> 課程評論</a></li>
+                <!--<li class="tab col s6"><a href="#exams"><i class="fa fa-file fa-fw"></i> 考古題</a></li>-->
             </ul>
         </div>
 
@@ -66,7 +66,7 @@
                 <div v-if="reply">
                     <br>
 
-                    <form @submit.prevent="create(form.comment, comments.data)">
+                    <form @submit.prevent="create(form.comment, comments)">
                         <div class="row">
                             <div class="input-field col s12">
                                 <textarea
@@ -75,6 +75,7 @@
                                     class="materialize-textarea validate"
                                     maxlength="3000"
                                     length="3000"
+                                    autofocus
                                     required
                                 ></textarea>
                                 <label for="content">評論</label>
@@ -108,10 +109,10 @@
 
                                     <button
                                         type="submit"
-                                        class="btn waves-effect waves-light"
-                                        style="margin-left: 20px; vertical-align: text-top;"
+                                        class="btn btn-large waves-effect waves-light"
+                                        style="margin-left: 35px; vertical-align: text-top;"
                                     >
-                                        <span>送出 <i class="fa fa-send right"></i></span>
+                                        <span><i class="fa fa-send right"></i></span>
                                     </button>
                                 </div>
                             </div>
@@ -122,7 +123,7 @@
                 </div>
             </template>
 
-            <template v-for="comment in comments.data">
+            <template v-for="comment in comments">
                 <div class="card">
                     <div class="card-content" style="padding: 10px 20px;">
                         <div class="row" style="margin-bottom: 0;">
@@ -227,7 +228,7 @@
                 </div>
             </template>
 
-            <div v-if="! comments.data.length" class="center">
+            <div v-if="! comments.length" class="center">
                 <h4 class="grey-text"><i class="material-icons large">chat_bubble_outline</i></h4>
 
                 <h5>您上過這堂課嗎？</h5>
@@ -248,7 +249,7 @@
             return {
                 courses: [],
                 currentSemester: 0,
-                comments: {data: []},
+                comments: [],
                 form: {
                     comment: {},
                     subComments: []

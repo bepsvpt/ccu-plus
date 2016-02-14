@@ -20,7 +20,7 @@ class CourseCommentControl extends ApiController
             return $this->responseNotFound();
         }
 
-        $comments = $course->comments()->with(['comments', 'professors'])->latest()->simplePaginate(5);
+        $comments = $course->comments()->with(['comments', 'professors'])->latest()->get();
 
         return $this->setData($comments)->responseOk();
     }

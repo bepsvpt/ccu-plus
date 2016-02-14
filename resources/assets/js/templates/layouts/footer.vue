@@ -37,8 +37,9 @@
 
         <div class="footer-copyright">
             <div class="container">
-                <span>© 2016 <a class="grey-text text-lighten-4" href="https://ccu.plus">ccu.plus</a></span>
-                <span class="grey-text text-lighten-4 right">Collaborator: <a class="grey-text text-lighten-4" href="https://www.facebook.com/1281974381" target="_blank">Gary Gong</a></span>
+                <a href="https://ccu.plus">
+                    <img src="/assets/images/copyright.svg" height="20" style="vertical-align: middle">
+                </a>
             </div>
         </div>
     </footer>

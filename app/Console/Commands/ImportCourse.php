@@ -150,6 +150,7 @@ class ImportCourse extends Command
             '<font.*>' => '',
             '</font>' => '',
             '<br.*>' => PHP_EOL,
+            '　+' => '',
         ];
 
         foreach ($patterns as $pattern => $replacement) {
