@@ -23,10 +23,21 @@ class AuthController extends ApiController
 
         Auth::guard()->login($user, true);
 
-        $secret = [
-            'username' => encrypt($request->input('username')),
-            'password' => encrypt($request->input('password')),
-        ];
+        $this->setUpCache($request->only('username', 'password'));
+
+        return $this->setData($user)->responseOk();
+    }
+
+    /**
+     * Set up cache.
+     *
+     * @param array $secret
+     * @return void
+     */
+    protected function setUpCache($secret)
+    {
+        $secret['username'] = encrypt($secret['username']);
+        $secret['password'] = encrypt($secret['password']);
 
         Session::put('ccu.sso', $secret);
 
@@ -34,8 +45,6 @@ class AuthController extends ApiController
             md5(Auth::guard()->user()->getAuthIdentifier()),
             ['ccu' => ['sso' => $secret]]
         );
-
-        return $this->setData($user)->responseOk();
     }
 
     /**
@@ -91,6 +100,8 @@ class AuthController extends ApiController
         $user->fresh();
 
         Auth::guard()->login($user, true);
+
+        $this->setUpCache($request->only('username', 'password'));
 
         return $this->setData($user)->responseCreated();
     }
