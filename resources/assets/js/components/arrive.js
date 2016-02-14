@@ -15,6 +15,13 @@ function arrive() {
       $(this).sideNav();
     });
 
+    // http://materializecss.com/modals.html#initialization
+    $('.parallax').parallax();
+
+    $(document).arrive('.parallax', function() {
+      $(this).parallax();
+    });
+
     // http://materializecss.com/forms.html#character-counter
     $(document).arrive('input[length], textarea[length]', function() {
       $(this).characterCounter();

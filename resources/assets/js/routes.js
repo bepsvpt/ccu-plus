@@ -1,3 +1,4 @@
+import Home from './templates/home.vue';
 import signUp from './templates/sign-up.vue';
 import coursesIndex from './templates/courses/index.vue';
 import coursesShow from './templates/courses/show.vue';
@@ -10,7 +11,7 @@ export default {
   routes: {
     '/': {
       name: 'home',
-      component: Vue.extend({template: `<h1 class="center">Hello World!</h1>`})
+      component: Home
     },
     '/sign-up': {
       name: 'sign-up',

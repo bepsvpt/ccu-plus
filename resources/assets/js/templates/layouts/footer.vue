@@ -37,7 +37,7 @@
 
         <div class="footer-copyright">
             <div class="container">
-                <a href="https://ccu.plus">
+                <a v-link="{name: 'home'}">
                     <img src="/assets/images/copyright.svg" height="20" style="vertical-align: middle">
                 </a>
             </div>
