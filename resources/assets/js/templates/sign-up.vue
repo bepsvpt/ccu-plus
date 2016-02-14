@@ -63,10 +63,9 @@
                         v-model="form.old_email"
                         id="old_email"
                         type="email"
-                        class="validate"
                         placeholder="如您欲轉移舊帳號才需填寫此欄位"
                     >
-                    <label for="old_email">舊信箱</label>
+                    <label class="active" for="old_email">舊信箱</label>
                 </div>
             </div>
 
@@ -81,7 +80,7 @@
                         class="validate"
                         placeholder="如您欲轉移舊帳號才需填寫此欄位"
                     >
-                    <label for="old_password">舊密碼</label>
+                    <label class="active" for="old_password">舊密碼</label>
                 </div>
             </div>
 
