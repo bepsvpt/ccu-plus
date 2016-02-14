@@ -168,13 +168,17 @@ class ImportCourse extends Command
      */
     protected function getColumns($row, $department)
     {
-        static $name = ['domain', 'grade', 'code', 'class', 'name', 'professors', 'hours', 'credit', 'time', 'location'];
+        static $name = [
+            'domain', 'grade', 'code', 'class', 'name',
+            'professors', 'hours', 'credit', 'type', 'time',
+            'location', 'limit',
+        ];
 
         // I001：通識
         $i = ('I001' === $department) ? 0 : 1;
 
         foreach ($row->children() as $node) {
-            if ($i >= 10) {
+            if ($i >= 12) {
                 break;
             }
 
@@ -255,7 +259,13 @@ class ImportCourse extends Command
             'name' => mb_strstr($course['name'], ' ', true),
         ]);
 
-        $model->professors()->saveMany($this->professors($course['professors']));
+        $professors = $this->professors($course['professors']);
+
+        foreach ($professors->keys() as $key) {
+            $join[$key] = ['class' => $course['class'], 'credit' => $course['credit']];
+        }
+
+        $model->professors()->saveMany($professors, $join ?? []);
 
         if ('I001' === $data['department']) {
             $model->dimension()->save(Category::getCategories('course.dimension', $course['grade']));
@@ -275,6 +285,16 @@ class ImportCourse extends Command
             $model->getRelation('professors')->pluck('id')->toArray(),
             $this->professors($course['professors'])->pluck('id')->toArray()
         ));
+
+        $model = $model->fresh(['professors']);
+
+        foreach ($model->getRelation('professors') as $professor) {
+            $pivot = $professor->getRelation('pivot');
+
+            if (empty($pivot->getAttribute('class'))) {
+                $pivot->update(['class' => $course['class'], 'credit' => $course['credit']]);
+            }
+        }
     }
 
     /**

@@ -3,8 +3,17 @@
     <section>
         <div class="card blue-grey darken-1">
             <div class="card-content white-text">
-                <span class="card-title">{{ info.name }}</span>
-                <p>{{ info.department.name }} {{ info.code }}</p>
+                <div class="row" style="margin-bottom: 0;">
+                    <div class="col s9 m11">
+                        <span class="card-title">{{ info.name }}</span>
+                        <p>{{ info.department.name }} {{ info.code }}</p>
+                    </div>
+
+                    <div v-if="info.professors.length" class="col s3 m1 center">
+                        <h3 style="margin: 0;">{{ info.professors[0].pivot.credit }}</h3>
+                        <h6 style="margin: 0.3rem 0 0 0;">學分</h6>
+                    </div>
+                </div>
             </div>
 
             <div class="card-action white-text">
@@ -15,7 +24,7 @@
                     </div>
                     <div class="col s8 m10">
                         <p><i class="fa fa-user fa-fw fa-inverse"></i> 授課教師</p>
-                        <p style="margin-left: 22px;">{{ professorsJoin(info.professors) }}</p>
+                        <p style="margin-left: 22px;">{{{ professorsJoin(info) }}}</p>
                     </div>
                 </div>
             </div>
@@ -36,8 +45,8 @@
     <div class="row">
         <div class="col s12">
             <ul class="tabs">
-                <li class="tab col s3"><a href="#comments" class="active">課程評論</a></li>
-                <li class="tab col s3"><a href="#exams">考古題</a></li>
+                <li class="tab col s6"><a href="#comments" class="active"><i class="fa fa-comments fa-fw"></i> 課程評論</a></li>
+                <li class="tab col s6"><a href="#exams"><i class="fa fa-file fa-fw"></i> 考古題</a></li>
             </ul>
         </div>
 
@@ -45,73 +54,71 @@
         <section id="comments" class="col s12 user-select-none">
             <template v-if="$root.$data.user">
                 <!-- 課程評論按鈕 -->
-                <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
-                    <button class="btn-floating btn-large waves-effect waves-light green modal-trigger" data-target="course-comment-modal">
-                        <i class="large material-icons">add</i>
+                <div v-if="! reply" class="fixed-action-btn">
+                    <button
+                        @click="$set('reply', true)"
+                        class="btn-floating btn-large waves-effect waves-light green"
+                    ><i class="large material-icons">add</i>
                     </button>
                 </div>
 
                 <!-- 課程評論表單 -->
-                <div id="course-comment-modal" class="modal">
-                    <div class="modal-content">
-                        <form @submit.prevent="create(form.comment, comments.data)">
-                            <div class="row">
-                                <div class="input-field col s12">
-                                    <legend style="font-size: 24px;"><i class="fa fa-comments"></i> 課程評論</legend>
-                                </div>
+                <div v-if="reply">
+                    <br>
+
+                    <form @submit.prevent="create(form.comment, comments.data)">
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <textarea
+                                    v-model="form.comment.content"
+                                    id="content"
+                                    class="materialize-textarea validate"
+                                    maxlength="3000"
+                                    length="3000"
+                                    required
+                                ></textarea>
+                                <label for="content">評論</label>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="input-field col s12 m6">
+                                <select
+                                    v-model="form.comment.professor"
+                                    id="professor"
+                                    multiple
+                                    required
+                                >
+                                    <option value="" disabled selected>授課教授</option>
+                                    <template v-for="professor in professors">
+                                        <option value="{{ professor.id }}">{{ professor.name }}</option>
+                                    </template>
+                                </select>
                             </div>
 
-                            <div class="row">
-                                <div class="input-field col s12">
-                                        <textarea
-                                            v-model="form.comment.content"
-                                            id="content"
-                                            class="materialize-textarea validate"
-                                            maxlength="3000"
-                                            length="3000"
-                                            required
-                                        ></textarea>
-                                    <label for="content">評論</label>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="input-field col s12 m6">
-                                    <select
-                                        v-model="form.comment.professor"
-                                        id="professor"
-                                        multiple
-                                        required
+                            <div class="input-field col s12 m6">
+                                <div class="right">
+                                    <input
+                                        v-model="form.comment.anonymous"
+                                        id="anonymous"
+                                        type="checkbox"
+                                        class="filled-in"
                                     >
-                                        <option value="" disabled selected>授課教授</option>
-                                        <template v-for="professor in professors">
-                                            <option value="{{ professor.id }}">{{ professor.name }}</option>
-                                        </template>
-                                    </select>
-                                </div>
+                                    <label for="anonymous">匿名</label>
 
-                                <div class="input-field col s12 m6">
-                                    <div class="right">
-                                        <input
-                                            v-model="form.comment.anonymous"
-                                            id="anonymous"
-                                            type="checkbox"
-                                            class="filled-in"
-                                        >
-                                        <label for="anonymous">匿名</label>
-
-                                        <button
-                                            type="submit"
-                                            class="btn waves-effect waves-light"
-                                            style="margin-left: 20px; vertical-align: text-top;"
-                                        >
-                                            <span>送出 <i class="fa fa-send right"></i></span>
-                                        </button>
-                                    </div>
+                                    <button
+                                        type="submit"
+                                        class="btn waves-effect waves-light"
+                                        style="margin-left: 20px; vertical-align: text-top;"
+                                    >
+                                        <span>送出 <i class="fa fa-send right"></i></span>
+                                    </button>
                                 </div>
                             </div>
-                        </form>
-                    </div>
+                        </div>
+                    </form>
+
+                    <br>
                 </div>
             </template>
 
@@ -119,7 +126,7 @@
                 <div class="card">
                     <div class="card-content" style="padding: 10px 20px;">
                         <div class="row" style="margin-bottom: 0;">
-                            <div class="col s2 m1 center" style="padding: 0 0 0 0.75rem;">
+                            <div class="col s3 m1 center" style="padding: 0 0 0 0.75rem;">
                                 <div class="pre-line">
                                     <strong v-if="comment.user" class="teal-text text-darken-1">{{ comment.user.nickname }}</strong>
                                     <span v-else class="grey-text text-darken-1">匿名</span>
@@ -137,9 +144,9 @@
                                 </template>
                             </div>
 
-                            <div class="col s10 m11">
+                            <div class="col s9 m11">
                                 <blockquote class="pre-line"><!--
-                                 --><span>受評教授：{{ professorsJoin(comment.professors) }}</span><br><br><br><!--
+                                 --><span>受評教授：{{ professorsJoin(comment) }}</span><br><br><br><!--
                                  --><span>{{ comment.content }}</span><br><!--
                                  --><span>　</span><span class="grey-text right" style="font-style: italic;">— <span data-time-humanize="{{ comment.created_at }}"></span></span><!--
                              --></blockquote>
@@ -204,10 +211,10 @@
 
                                                     <button
                                                         type="submit"
-                                                        class="btn waves-effect waves-light"
-                                                        style="margin-left: 20px; vertical-align: text-top;"
+                                                        class="btn btn-large waves-effect waves-light"
+                                                        style="margin-left: 35px; vertical-align: text-top;"
                                                     >
-                                                        <span>回覆<i class="fa fa-send right"></i></span>
+                                                        <i class="fa fa-reply"></i>
                                                     </button>
                                                 </div>
                                             </div>
@@ -220,7 +227,13 @@
                 </div>
             </template>
 
-            <h5 v-if="! comments.data.length" class="center" style="margin-top: 50px;">尚無評論</h5>
+            <div v-if="! comments.data.length" class="center">
+                <h4 class="grey-text"><i class="material-icons large">chat_bubble_outline</i></h4>
+
+                <h5>您上過這堂課嗎？</h5>
+
+                <h5>點擊右下角的按鈕，成為第一位分享者吧！</h5>
+            </div>
         </section>
 
         <!-- 考古題 -->
@@ -289,17 +302,28 @@
                 document.body.scrollTop = document.getElementById(e.target.getAttribute('data-target')).offsetTop - 16;
             },
 
-            professorsJoin(professors) {
-                return professors.map((professor) => {
-                    return professor.name;
+            professorsJoin(info) {
+                let year, term;
+
+                if (info.hasOwnProperty('code')) {
+                    year = info.semester.name.substr(0, info.semester.name.length - 1);
+                    term = info.semester.name.includes('上') ? 1 : 2;
+                }
+
+                return info.professors.map((professor) => {
+                    if (! info.hasOwnProperty('code')) {
+                        return professor.name;
+                    }
+
+                    let query = `courseno=${info.code}_${professor.pivot.class}&year=${year}&term=${term}`;
+
+                    return `<a href="https://ecourse.ccu.edu.tw/php/Courses_Admin/guest3.php?${query}" target="_blank" style="margin-right: 0;">${professor.name}</a>`;
                 }).join('、');
             },
 
             create(form, target) {
                 this.$http.post(`/api/v1/courses/${this.$route.params.code}/comments`, form).then((response) => {
-                    this.$dispatch('http-response', response, {
-                        'modal-close': '#course-comment-modal'
-                    });
+                    this.$dispatch('http-response', response);
 
                     target.unshift(response.data);
 

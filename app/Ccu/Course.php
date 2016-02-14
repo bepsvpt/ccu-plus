@@ -137,7 +137,8 @@ class Course extends Entity
      */
     public function professors()
     {
-        return $this->belongsToMany(Category::class, 'course_professor', 'course_id', 'professor_id');
+        return $this->belongsToMany(Category::class, 'course_professor', 'course_id', 'professor_id')
+            ->withPivot(['class', 'credit']);
     }
 
     /**
