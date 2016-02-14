@@ -16,7 +16,6 @@ class Kernel extends ConsoleKernel
         Commands\Deploy::class,
         Commands\DownloadCourseArchive::class,
         Commands\ImportCourse::class,
-        Commands\TransformOldData::class,
     ];
 
     /**

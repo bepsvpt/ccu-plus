@@ -64,18 +64,6 @@ return [
             'strict'    => false,
         ],
 
-        'old' => [
-            'driver'    => 'mysql',
-            'host'      => env('DB_HOST', 'localhost'),
-            'database'  => env('DB_OLD_DATABASE', 'forge'),
-            'username'  => env('DB_OLD_USERNAME', 'forge'),
-            'password'  => env('DB_OLD_PASSWORD', ''),
-            'charset'   => 'utf8mb4',
-            'collation' => 'utf8mb4_unicode_ci',
-            'prefix'    => '',
-            'strict'    => false,
-        ],
-
         'pgsql' => [
             'driver'   => 'pgsql',
             'host'     => env('DB_HOST', 'localhost'),
