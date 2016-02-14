@@ -9,7 +9,7 @@
     <div class="grey lighten-4" style="padding-top: 3rem; padding-bottom: 3rem;">
         <div class="row container" style="margin: 0 auto;">
             <div class="col s12 m3 center">
-                <h2 class="grey-text"><i class="fa fa-compass fa-3x"></i></h2>
+                <h2 class="teal-text text-lighten-3"><i class="fa fa-compass fa-3x"></i></h2>
             </div>
             <div class="col s12 m9">
                 <h3 class="header  grey-text text-darken-3">無可替代。屬於中正人的校園系統</h3>
