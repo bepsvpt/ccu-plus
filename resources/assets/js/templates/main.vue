@@ -29,7 +29,7 @@
 
         created() {
             this.$http.get('/api/v1/profile').then((response) => {
-                if (response.data.hasOwnProperty('username')) {
+                if (response.data.hasOwnProperty('nickname')) {
                     this.$data['user'] = response.data;
                 }
             });
