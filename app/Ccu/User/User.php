@@ -32,6 +32,6 @@ class User extends Entity implements AuthenticatableContract
      * @var array
      */
     protected $hidden = [
-        'id', 'email', 'phone', 'remember_token', 'created_at', 'updated_at',
+        'id', 'username', 'email', 'phone', 'remember_token', 'created_at', 'updated_at',
     ];
 }
