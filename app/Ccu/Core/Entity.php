@@ -15,7 +15,7 @@ class Entity extends Eloquent
     /**
      * CCU Plus Version.
      */
-    const VERSION = '0.0.1';
+    const VERSION = '1.0.0';
 
     /**
      * The number of models to return for pagination.
