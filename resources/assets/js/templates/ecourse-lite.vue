@@ -182,7 +182,7 @@
     </div>
 </template>
 
-<script>
+<script type="text/babel">
     import ProgressBar from '../components/progress.vue';
 
     export default {

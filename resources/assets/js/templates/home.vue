@@ -24,7 +24,7 @@
     </div>
 </template>
 
-<script>
+<script type="text/babel">
     export default {
         created() {
             $('main').addClass('container-remove');

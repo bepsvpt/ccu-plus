@@ -8,7 +8,7 @@
     <app-footer></app-footer>
 </template>
 
-<script>
+<script type="text/babel">
     import header from './layouts/header.vue';
     import footer from './layouts/footer.vue';
     import events from '../components/events';

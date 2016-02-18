@@ -103,7 +103,7 @@
     </div>
 </template>
 
-<script>
+<script type="text/babel">
     import Recaptcha from '../components/recaptcha.vue';
 
     export default {

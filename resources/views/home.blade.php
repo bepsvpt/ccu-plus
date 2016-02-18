@@ -10,6 +10,8 @@
         <meta property="og:image" content="{{ asset('assets/images/ccu-plus.png') }}">
         <meta property="og:locale" content="zh_TW">
         <meta property="fb:app_id" content="1706154966284270">
+        <meta name="theme-color" content="#9d9171" >
+        <meta name="apple-mobile-web-app-status-bar-style" content="#9d9171">
         <title>CCU Plus | 全新生活 由此領航</title>
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato&subset=latin,latin-ext">
