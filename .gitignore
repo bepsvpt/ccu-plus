@@ -1,9 +1,11 @@
-vendor/
-node_modules/
-public/js/
-public/css/
+/certs
+/node_modules
+/public/assets/js/*.map
+/vendor
 
 Homestead.yaml
 Homestead.json
 
 .env
+npm-debug.log
+stats.json

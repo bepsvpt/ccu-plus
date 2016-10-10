@@ -13,38 +13,7 @@ class HomeController extends Controller
      */
     public function home()
     {
-        if ('production' === config('app.env')) {
-            $js = $this->elixir('js/main.js');
-            $css = $this->elixir('css/main.css');
-        } else {
-            $js = asset('js/main.js');
-            $css = asset('css/main.css');
-        }
-
-        return view('home', compact('js', 'css'));
-    }
-
-    /**
-     * Get the path to a versioned Elixir file.
-     *
-     * @param  string  $file
-     * @return string
-     *
-     * @throws \InvalidArgumentException
-     */
-    protected function elixir($file)
-    {
-        static $manifest = null;
-
-        if (is_null($manifest)) {
-            $manifest = json_decode(file_get_contents(public_path('assets/build/rev-manifest.json')), true);
-        }
-
-        if (isset($manifest[$file])) {
-            return '/assets/build/'.$manifest[$file];
-        }
-
-        throw new \InvalidArgumentException("File {$file} not defined in asset manifest.");
+        return view('home');
     }
 
     /**

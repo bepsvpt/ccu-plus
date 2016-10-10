@@ -2,46 +2,80 @@
 
 return [
 
-    'x_content_type_options' => 'nosniff',
-
-    'x_frame_options' => 'sameorigin',
-
-    'x_xss_protection' => '1; mode=block',
-
     /*
-     * Content Security Policy
+     * X-Content-Type-Options
      *
-     * Reference: https://developer.mozilla.org/en-US/docs/Web/Security/CSP
+     * Reference: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Content-Type-Options
+     *
+     * Available Value: 'nosniff'
      */
-    'csp' => [
-        'rule' => "default-src 'none'; script-src 'self' 'unsafe-eval' https: ajax.googleapis.com www.google.com www.gstatic.com www.google-analytics.com cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https: fonts.googleapis.com cdnjs.cloudflare.com; img-src 'self' https:; frame-src https://www.google.com/recaptcha/; font-src https: fonts.gstatic.com cdnjs.cloudflare.com; connect-src 'self'",
 
-        /*
-         * The URIs that should be excluded to add CSP header.
-         */
-        'except' => [
-            //
-        ],
-    ],
+    'x-content-type-options' => 'nosniff',
 
     /*
-     * Make sure you enable https first.
+     * X-XSS-Protection
+     *
+     * Reference: https://msdn.microsoft.com/en-us/library/jj542450(v=vs.85).aspx
+     *
+     * Available Value: 'noopen'
      */
-    'force_https' => env('FORCE_HTTPS', false),
+
+    'x-download-options' => 'noopen',
+
+    /*
+     * X-Frame-Options
+     *
+     * Reference: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Frame-Options
+     *
+     * Available Value: 'deny', 'sameorigin', 'allow-from <uri>'
+     */
+
+    'x-frame-options' => 'sameorigin',
+
+    /*
+     * X-Permitted-Cross-Domain-Policies
+     *
+     * Reference: https://www.adobe.com/devnet/adobe-media-server/articles/cross-domain-xml-for-streaming.html
+     *
+     * Available Value: 'all', 'none', 'master-only', 'by-content-type', 'by-ftp-filename'
+     */
+
+    'x-permitted-cross-domain-policies' => 'none',
+
+    /*
+     * X-XSS-Protection
+     *
+     * Reference: https://blogs.msdn.microsoft.com/ieinternals/2011/01/31/controlling-the-xss-filter
+     *
+     * Available Value: '1', '0', '1; mode=block'
+     */
+
+    'x-xss-protection' => '1; mode=block',
+
+    /*
+     * Referrer-Policy
+     *
+     * Reference: https://w3c.github.io/webappsec-referrer-policy
+     *
+     * Available Value: 'no-referrer', 'no-referrer-when-downgrade', 'origin', 'origin-when-crossorigin', 'unsafe-url'
+     */
+
+    'referrer-policy' => 'origin-when-cross-origin',
 
     /*
      * HTTP Strict Transport Security
      *
-     * https://developer.mozilla.org/en-US/docs/Web/Security/HTTP_strict_transport_security
+     * Reference: https://developer.mozilla.org/en-US/docs/Web/Security/HTTP_strict_transport_security
      *
-     * Note: hsts will only add when the request is secure or config is set to force https
+     * Please ensure your website had set up ssl/tls before enable hsts.
      */
+
     'hsts' => [
-        'enable' => false,
+        'enable' => env('SECURITY_HEADER_HSTS_ENABLE', false),
 
-        'max_age' => 15552000,
+        'max-age' => 15552000,
 
-        'include_sub_domains' => false,
+        'include-sub-domains' => false,
     ],
 
     /*
@@ -49,18 +83,140 @@ return [
      *
      * Reference: https://developer.mozilla.org/en-US/docs/Web/Security/Public_Key_Pinning
      *
-     * Note: hpkp will only add when the request is secure or config is set to force https
+     * hpkp will be ignored if hashes is empty.
      */
-    'hpkp' => [
-        'enable' => false,
 
-        'pins' => [
+    'hpkp' => [
+        'hashes' => [
+            [
+                'algo' => 'sha256',
+                'hash' => 'your-hash',
+            ],
+        ],
+
+        'include-sub-domains' => false,
+
+        'max-age' => 15552000,
+
+        'report-only' => false,
+
+        'report-uri' => null,
+    ],
+
+    /*
+         * Content Security Policy
+         *
+         * Reference: https://developer.mozilla.org/en-US/docs/Web/Security/CSP
+         *
+         * csp will be ignored if custom-csp is not null.
+         *
+         * Note: custom-csp does not support report-only.
+         */
+
+    'custom-csp' => env('SECURITY_HEADER_CUSTOM_CSP', null),
+
+    'csp' => [
+        'report-only' => false,
+
+        'report-uri' => null,
+
+        'upgrade-insecure-requests' => false,
+
+        'base-uri' => [
             //
         ],
 
-        'max_age' => 300,
+        'default-src' => [
+            //
+        ],
 
-        'include_sub_domains' => false,
+        'child-src' => [
+            //
+        ],
+
+        'script-src' => [
+            'allow' => [
+                'https://www.google-analytics.com/analytics.js',
+                'https://www.google.com/recaptcha/api.js',
+                'https://www.gstatic.com/recaptcha/',
+            ],
+
+            'hashes' => [
+                ['sha256' => 'XeqhOrCJa2NvmeD6kpFcpzbGdqohH1e0DZ+0BF0p5fE='],
+            ],
+
+            'nonces' => [
+                //
+            ],
+
+            'self' => true,
+
+            'unsafe-inline' => false,
+
+            'unsafe-eval' => false,
+        ],
+
+        'style-src' => [
+            'allow' => [
+                //
+            ],
+
+            'self' => true,
+
+            'unsafe-inline' => true,
+        ],
+
+        'img-src' => [
+            'types' => [
+                'https:',
+            ],
+
+            'self' => true,
+
+            'data' => false,
+        ],
+
+        /*
+         * The following directives are all use 'allow' and 'self' flag.
+         *
+         * Note: default value of 'self' flag is false.
+         */
+
+        'font-src' => [
+            'self' => true,
+        ],
+
+        'connect-src' => [
+            'allow' => [
+                'wss://localhost:*',
+            ],
+
+            'self' => true,
+        ],
+
+        'form-action' => [
+            //
+        ],
+
+        'frame-ancestors' => [
+            //
+        ],
+
+        'media-src' => [
+            //
+        ],
+
+        'object-src' => [
+            //
+        ],
+
+        /*
+         * plugin-types only support 'allow'.
+         */
+
+        'plugin-types' => [
+            //
+        ],
     ],
 
 ];

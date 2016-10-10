@@ -1,0 +1,98 @@
+html {
+  font-family: "Lato", "Roboto", sans-serif;
+  overflow-y:scroll;
+}
+
+body {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+nav {
+  background-color: #9D9171;
+
+  .brand-logo {
+    font-size: inherit;
+
+    img {
+      margin-top: -3px;
+      height: 44px;
+      vertical-align: middle;
+    }
+  }
+}
+
+main {
+  flex: 1 0 auto;
+  margin-top: 20px !important;
+}
+
+footer {
+  background-color: #827759 !important;
+}
+
+a, .cursor-pointer {
+  cursor: pointer;
+}
+
+blockquote {
+  min-height: 5.5rem;
+  border-left: 5px solid #bbdefb;
+}
+
+.container-remove {
+  width: 100%;
+  max-width: inherit;
+  margin-top: 0 !important;
+}
+
+.parallax-container {
+  height: 600px;
+}
+
+.home-cover-img {
+  width: 30%;
+  margin-left: 35%;
+  margin-top: 10%;
+}
+
+@media only screen and (max-width: 600px) {
+  .parallax-container {
+    height: 350px;
+  }
+
+  .home-cover-img {
+    width: 50%;
+    margin-left: 25%;
+    margin-top: 20%;
+  }
+}
+
+.pre-line {
+  white-space: pre-line;
+  word-wrap: break-word;
+}
+
+.user-select-none {
+  user-select: none;
+}
+
+.material-icons.circle {
+  top: 14%;
+}
+
+.fixed-action-btn {
+  bottom: 45px;
+  right: 24px;
+}
+
+.icon {
+  &-top {
+    vertical-align: top;
+  }
+
+  &-bottom {
+    vertical-align: bottom;
+  }
+}

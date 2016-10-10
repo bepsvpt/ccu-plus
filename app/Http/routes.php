@@ -5,8 +5,6 @@ use Illuminate\Routing\Router;
 /* @var Router $router */
 
 $router->group(['middleware' => 'secure-header'], function (Router $router) {
-    $router->get('/', ['middleware' => ['web'], 'as' => 'home', 'uses' => 'HomeController@home']);
-
     $router->post('deploy', ['uses' => 'HomeController@deploy']);
     $router->get('opcache-reset', ['as' => 'opcache-reset', 'uses' => 'HomeController@opcacheReset']);
 });
@@ -40,3 +38,5 @@ $router->group(['prefix' => 'api', 'namespace' => 'Api', 'middleware' => ['web']
         });
     });
 });
+
+$router->get('{redirect?}', ['middleware' => ['secure-header', 'web'], 'as' => 'home', 'uses' => 'HomeController@home'])->where('redirect', '.*');

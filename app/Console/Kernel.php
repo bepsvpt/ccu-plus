@@ -13,6 +13,8 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
+        Commands\Build\AssetsPostBuild::class,
+        Commands\Build\SubresourceIntegrity::class,
         Commands\Deploy::class,
         Commands\DownloadCourseArchive::class,
         Commands\ImportCourse::class,

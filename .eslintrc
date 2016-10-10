@@ -1,0 +1,24 @@
+{
+  "parser": "babel-eslint",
+  "plugins": [
+    "html"
+  ],
+  "env": {
+    "browser" : true
+  },
+  "globals": {
+    "$": true,
+    "Materialize": true
+  },
+  "extends": "eslint-config-vue",
+  "rules": {
+    "space-unary-ops": [2, {
+      "words": true,
+      "nonwords": false,
+      "overrides": {
+        "!": true
+      }
+    }],
+    "yoda": ["error", "always", { "exceptRange": true }]
+  }
+}
