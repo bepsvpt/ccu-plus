@@ -6,7 +6,7 @@ const routes = [
     path: '/',
     components: {
       default: require('../views/core.vue'),
-      header: require('../views/layouts/header.vue'),
+      header: require('../views/header/header.vue'),
       footer: require('../views/layouts/footer.vue')
     },
     children: [
