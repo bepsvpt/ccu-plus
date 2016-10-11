@@ -142,7 +142,7 @@ return [
             ],
 
             'hashes' => [
-                ['sha256' => 'XeqhOrCJa2NvmeD6kpFcpzbGdqohH1e0DZ+0BF0p5fE='],
+                ['sha256' => 'fIZDad9T38vdF9+iTW+Z4n5BLZTsUecQ4YOtE7X65gs='],
             ],
 
             'nonces' => [
@@ -153,7 +153,7 @@ return [
 
             'unsafe-inline' => false,
 
-            'unsafe-eval' => false,
+            'unsafe-eval' => true,
         ],
 
         'style-src' => [

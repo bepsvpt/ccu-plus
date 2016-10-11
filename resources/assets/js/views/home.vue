@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <main>
     <h2>Current counts: <span>{{ count }}</span> !</h2>
-  </div>
+  </main>
 </template>
 
 <script>

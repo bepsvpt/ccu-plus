@@ -1,5 +1,4 @@
 const webpack = require('webpack')
-const fs = require('fs')
 const path = require('path')
 const production = process.argv.includes('-p')
 
@@ -31,6 +30,12 @@ const config = {
 
   plugins: [
     require('./build/on-build-webpack'),
+    require('./build/extract-text-webpack').instance,
+    new webpack.LoaderOptionsPlugin({
+      vue: {
+        loaders: require('./build/extract-text-webpack').loaders
+      }
+    }),
     new webpack.optimize.CommonsChunkPlugin({ name: 'vendor', filename: 'vendor.js' })
   ],
 
@@ -44,7 +49,7 @@ if (! production) {
 } else {
   config.plugins.push(
     new webpack.EnvironmentPlugin(['NODE_ENV']),
-    new webpack.optimize.OccurrenceOrderPlugin(true),
+    new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.optimize.UglifyJsPlugin({ compress: { warnings: false }, output: { comments: false }})
   )
 }
