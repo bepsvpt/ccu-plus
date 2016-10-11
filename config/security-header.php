@@ -60,7 +60,7 @@ return [
      * Available Value: 'no-referrer', 'no-referrer-when-downgrade', 'origin', 'origin-when-crossorigin', 'unsafe-url'
      */
 
-    'referrer-policy' => 'origin-when-cross-origin',
+    'referrer-policy' => 'strict-origin-when-cross-origin',
 
     /*
      * HTTP Strict Transport Security
@@ -189,6 +189,7 @@ return [
         'connect-src' => [
             'allow' => [
                 'wss://localhost:*',
+                'https://quotes.rest/qod.json',
             ],
 
             'self' => true,

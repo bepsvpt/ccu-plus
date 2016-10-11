@@ -10,10 +10,10 @@ const routes = [
       footer: require('../views/layouts/footer.vue')
     },
     children: [
-      { path: '', name: 'home', component: resolve => require(['../views/home.vue'], resolve) },
-      { path: '*', name: 'not-found', component: resolve => require(['../views/not-found.vue'], resolve) }
+      { path: '', name: 'home', component: resolve => require(['../views/home.vue'], resolve) }
     ]
-  }
+  },
+  { path: '*', name: 'not-found', component: resolve => require(['../views/not-found.vue'], resolve) }
 ]
 
 const scrollBehavior = (to, from, savedPosition) => {

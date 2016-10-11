@@ -1,11 +1,7 @@
 <style lang="scss" scoped>
-  .is-fullheight {
-    min-height: calc(100vh - 50px);
-  }
-
   .warning-container {
-    &> * {
-      margin: 1.5rem 0;
+    &> *:not(:last-child) {
+      margin-bottom: 2rem;
     }
 
     .warning-image {
@@ -19,8 +15,16 @@
       }
     }
 
-    a {
+    .title {
+      color: #000;
+    }
+
+    .subtitle a {
       color: #00d1b2 !important;
+    }
+
+    .quote {
+      color: grey;
     }
   }
 </style>
@@ -37,16 +41,59 @@
           </span>
         </div>
 
-        <h1 class="title">船長，這裡沒路了</h1>
+        <h1 class="title">船長，這裡是無風帶</h1>
 
-        <h2 class="subtitle">
+        <h2 class="subtitle is-4">
           <router-link :to="{ name: 'home' }" exact>回首頁</router-link>
         </h2>
+
+        <p v-if="!saying">&nbsp;</p>
+
+        <transition name="fade">
+          <em v-if="saying" class="quote">{{ saying }}</em>
+        </transition>
       </div>
     </div>
   </main>
 </template>
 
 <script>
-  export default {}
+  export default {
+    data () {
+      return {
+        quote: {
+          content: '',
+          author: ''
+        }
+      }
+    },
+
+    computed: {
+      saying () {
+        if (! this.quote.content) {
+          return ''
+        }
+
+        return `${this.quote.content} - ${this.quote.author}`
+      }
+    },
+
+    methods: {
+      fetchQuote () {
+        this.$http.get('https://quotes.rest/qod.json').then(response => {
+          const quote = response.body.contents.quotes.shift()
+
+          this.quote.content = quote.quote
+          this.quote.author = quote.author
+        }, response => {
+          this.quote.content = 'The Higher We Dreamed, the Closer We Succeed.'
+          this.quote.author = 'Dreamers'
+        })
+      }
+    },
+
+    created () {
+      this.fetchQuote()
+    }
+  }
 </script>
