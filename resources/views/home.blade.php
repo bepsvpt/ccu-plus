@@ -23,7 +23,6 @@
       <router-view name="footer"></router-view>
     </div>
 
-    {{--<script src="https://www.google-analytics.com/analytics.js" defer></script>--}}
     <script src="https://www.google.com/recaptcha/api.js?onload=vueRecaptchaApiLoaded&render=explicit" defer></script>
     <script src="{{ _asset('vendor.js') }}" integrity="sha384-BIyeTAPUiNVJKk3ByNla8KTOfxeI9pvIQIYj/AQX4bNWj0BQdqInvSE4f0v3K7Sr" defer></script>
     <script src="{{ _asset('main.js') }}" integrity="sha384-CIcXA6yTvEunyVmLUVKFPaUGVowQFQwZwV7w3UFrwCw1I7Eb1OcVOqnAAUxo1YcV" defer></script>
