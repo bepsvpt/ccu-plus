@@ -10,7 +10,7 @@ const routes = [
       footer: require('../views/layouts/footer.vue')
     },
     children: [
-      { path: '', name: 'home', component: resolve => require(['../views/home.vue'], resolve), meta: { title: 'CCU Plus | 全新生活 由此領航' }},
+      { path: '', name: 'home', component: resolve => require(['../views/home.vue'], resolve) },
       { path: '*', name: 'not-found', component: resolve => require(['../views/not-found.vue'], resolve) }
     ]
   }
