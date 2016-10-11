@@ -1,6 +1,10 @@
 <style lang="scss" scoped>
+  .is-fullheight {
+    min-height: calc(100vh - 50px);
+  }
+
   .warning-container {
-    &> {
+    &> * {
       margin: 1.5rem 0;
     }
 
