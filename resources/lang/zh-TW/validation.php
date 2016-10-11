@@ -53,6 +53,7 @@ return [
         'array'   => ':attribute 最多有 :max 個元素。',
     ],
     'mimes'                => ':attribute 必須為 :values 的檔案。',
+    'mimetypes'            => ':attribute 必須為 :values 的檔案。',
     'min'                  => [
         'numeric' => ':attribute 不能小於 :min。',
         'file'    => ':attribute 不能小於 :min kb。',
@@ -80,6 +81,7 @@ return [
     'string'               => ':attribute 必須是一個字串。',
     'timezone'             => ':attribute 必須是一個正確的時區值。',
     'unique'               => ':attribute 已經存在。',
+    'uploaded'             => ':attribute 上傳失敗。',
     'url'                  => ':attribute 的格式錯誤。',
 
     /*
