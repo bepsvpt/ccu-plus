@@ -12,7 +12,6 @@
                 <ul id="nav-mobile" class="right hide-on-med-and-down">
                     <li><a v-link="{name: 'courses.index'}"><i class="fa fa-book fa-fw"></i> 課程評論</a></li>
                     <li><a v-if="$root.$data.user" v-link="{name: 'ecourse-lite'}"><i class="fa fa-cloud fa-fw"></i> Ecourse Lite</a></li>
-                    <li><a v-link="{name: 'trading'}"><i class="fa fa-shopping-cart fa-fw"></i> 二手交易</a></li>
 
                     <template v-if="$root.$data.user">
                         <li><a><i class="fa fa-user fa-fw"></i> {{ $root.$data.user.nickname }}</a></li>
@@ -29,7 +28,6 @@
                 <ul id="mobile-menu" class="side-nav">
                     <li><a v-link="{name: 'courses.index'}"><i class="fa fa-book fa-fw"></i> 課程評論</a></li>
                     <li><a v-if="$root.$data.user" v-link="{name: 'ecourse-lite'}"><i class="fa fa-cloud fa-fw"></i> Ecourse Lite</a></li>
-                    <li><a v-link="{name: 'trading'}"><i class="fa fa-shopping-cart fa-fw"></i> 二手交易</a></li>
 
                     <template v-if="$root.$data.user">
                         <li><a><i class="fa fa-user fa-fw"></i> {{ $root.$data.user.nickname }}</a></li>

@@ -29,10 +29,6 @@ export default {
       name: 'ecourse-lite',
       component: courseLite
     },
-    '/trading': {
-      name: 'trading',
-      component: Vue.extend({template: `<h1 class="center">敬請期待！</h1>`})
-    },
     '*': {
       name: 'not-found',
       component: notFound

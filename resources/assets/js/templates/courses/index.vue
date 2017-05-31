@@ -62,12 +62,26 @@
             </thead>
             <tbody>
                 <tr v-show="! loading.courses" v-for="course in courses">
-                    <td class="hide-on-small-only" style="position: relative;">
-                        <i
-                            v-if="course.new"
-                            class="material-icons green-text icon-top"
-                            style="position: absolute; margin-left: -26px;"
-                        >fiber_new</i>
+                    <td class="hide-on-small-only">
+                        <div style="display: inline-block; vertical-align: middle;">
+                            <i
+                              v-if="course.new"
+                              class="material-icons green-text icon-top tooltipped"
+                              style="display: block;"
+                              data-position="bottom"
+                              data-delay="50"
+                              data-tooltip="新課程"
+                            >fiber_new</i>
+
+                            <i
+                              v-if="course.comments_count > 0"
+                              class="material-icons blue-text icon-top tooltipped"
+                              style="display: block;"
+                              data-position="bottom"
+                              data-delay="50"
+                              data-tooltip="{{ course.comments_count }} 則評論"
+                            >comment</i>
+                        </div>
 
                         <span>{{ course.department.name }}</span>
                     </td>
@@ -78,6 +92,18 @@
                             <br>
                             <span>{{ course.dimension[0].name }}</span>
                         </template>
+
+                        <div class="hide-on-med-and-up">
+                            <i
+                              v-if="course.new"
+                              class="material-icons green-text icon-top"
+                            >fiber_new</i>
+
+                            <i
+                              v-if="course.comments_count > 0"
+                              class="material-icons blue-text icon-top"
+                            >comment</i>
+                        </div>
                     </td>
                     <td><a v-link="{name: 'courses.show', params: {code: course.code}}">{{ course.name }}</a></td>
                     <td>

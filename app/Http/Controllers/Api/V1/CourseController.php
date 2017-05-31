@@ -16,6 +16,7 @@ class CourseController extends ApiController
 
         $courses = Cache::tags('course')->remember($key, Course::MINUTES_PER_MONTH, function () use ($request) {
             $query = Course::with(['dimension', 'professors'])
+                ->withCount('comments')
                 ->groupBy('code')
                 ->orderBy('department_id')
                 ->orderBy('code');
