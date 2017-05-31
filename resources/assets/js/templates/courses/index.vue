@@ -275,7 +275,9 @@
             },
 
             selectTouchTimes() {
-                $('select').material_select();
+                setTimeout(() => {
+                  $('select').material_select()
+                }, 1);
             }
         },
 
