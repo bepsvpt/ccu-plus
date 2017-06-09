@@ -14,7 +14,7 @@ class CourseController extends ApiController
     {
         $key = 'search-'.sha1(implode('|', $request->only(['college', 'department_id', 'keyword'])));
 
-        $courses = Cache::tags('course')->remember($key, Course::MINUTES_PER_MONTH, function () use ($request) {
+        $courses = Cache::tags('course')->remember($key, Course::MINUTES_QUARTER_DAY, function () use ($request) {
             $query = Course::with(['dimension', 'professors'])
                 ->withCount('comments')
                 ->groupBy('code')
