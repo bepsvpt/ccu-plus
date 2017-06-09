@@ -17,9 +17,9 @@ class CourseController extends ApiController
         $courses = Cache::tags('course')->remember($key, Course::MINUTES_QUARTER_DAY, function () use ($request) {
             $query = Course::with(['dimension', 'professors'])
                 ->withCount('comments')
-                ->groupBy('code')
                 ->orderBy('department_id')
-                ->orderBy('code');
+                ->orderBy('code')
+                ->orderBy('semester_id', 'desc');
 
             if ($request->has('department_id')) {
                 $query = $query->where('department_id', $request->input('department_id'));
@@ -37,7 +37,17 @@ class CourseController extends ApiController
                 });
             }
 
-            return $query->get();
+            $courses = $query->get()->groupBy('name')->map(function ($course) {
+                $professors = $course->pluck('professors')->collapse()->unique('id')->values();
+
+                $course->first()->offsetUnset('professors');
+
+                $course->first()->professors = $professors;
+
+                return $course->first();
+            });
+
+            return $courses->values();
         });
 
         return $this->setData($courses)->responseOk();
