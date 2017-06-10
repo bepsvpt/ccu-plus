@@ -135,7 +135,9 @@ return [
         ],
 
         'child-src' => [
-            //
+            'allow' => [
+                'https://www.google.com/recaptcha/',
+            ],
         ],
 
         'script-src' => [
@@ -209,9 +211,7 @@ return [
         ],
 
         'frame-ancestors' => [
-            'allow' => [
-                'https://www.google.com/recaptcha/',
-            ],
+            //
         ],
 
         'media-src' => [
