@@ -46,7 +46,7 @@ class Kernel extends HttpKernel
      */
     protected $routeMiddleware = [
         'auth' => \App\Http\Middleware\Authenticate::class,
-        'secure-header' => \Bepsvpt\LaravelSecurityHeader\SecurityHeaderMiddleware::class,
+        'secure-header' => \Bepsvpt\SecureHeaders\SecureHeadersMiddleware::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
     ];
 }

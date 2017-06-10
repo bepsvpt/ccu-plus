@@ -5,11 +5,11 @@
   "type": "project",
   "require": {
     "php": ">=5.6",
-    "laravel/framework": "5.2.*",
-    "bepsvpt/laravel-security-header": "~1.1",
+    "bepsvpt/secure-headers": "^3.0",
     "doctrine/dbal": "~2.5",
     "greggilbert/recaptcha": "~2.1",
     "guzzlehttp/guzzle": "~6.1",
+    "laravel/framework": "5.2.*",
     "nesbot/carbon": "~1.20",
     "predis/predis": "~1.0",
     "sunra/php-simple-html-dom-parser": "1.5.*"
@@ -61,6 +61,8 @@
     ]
   },
   "config": {
-    "preferred-install": "dist"
+    "preferred-install": "dist",
+    "sort-packages": true,
+    "optimize-autoloader": true
   }
 }

@@ -160,7 +160,7 @@ return [
         /*
          * Packages Service Providers...
          */
-        Bepsvpt\LaravelSecurityHeader\SecurityHeaderServiceProvider::class,
+        Bepsvpt\SecureHeaders\SecureHeadersServiceProvider::class,
         Greggilbert\Recaptcha\RecaptchaServiceProvider::class,
 
     ],
