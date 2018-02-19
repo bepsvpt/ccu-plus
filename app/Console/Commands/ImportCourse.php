@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use App\Ccu\Course;
 use App\Ccu\General\Category;
 use Cache;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Filesystem\Filesystem;
 use Sunra\PhpSimple\HtmlDomParser;
 
@@ -239,6 +240,7 @@ class ImportCourse extends Command
     {
         static $transform = [
             '2366' => '2386',
+            '2574' => '2504',
         ];
 
         return $transform[$department] ?? $department;
@@ -269,7 +271,13 @@ class ImportCourse extends Command
         $model->professors()->saveMany($professors, $join ?? []);
 
         if ('I001' === $data['department']) {
-            $model->dimension()->save(Category::getCategories('course.dimension', $course['grade']));
+            $dimension = Category::getCategories('course.dimension', $course['grade']);
+
+            if ($dimension instanceof Collection) {
+                $dimension = Category::getCategories('course.dimension', '向度未明');
+            }
+
+            $model->dimension()->save($dimension);
         }
     }
 
@@ -302,7 +310,7 @@ class ImportCourse extends Command
      * 取得教授 collection.
      *
      * @param string $professors
-     * @return \Illuminate\Database\Eloquent\Collection
+     * @return Collection
      */
     protected function professors($professors)
     {
