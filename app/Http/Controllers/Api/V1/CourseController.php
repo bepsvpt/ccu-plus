@@ -37,7 +37,7 @@ class CourseController extends ApiController
                 });
             }
 
-            $courses = $query->get()->groupBy('name')->map(function ($course) {
+            $courses = $query->get()->groupBy('code')->map(function ($course) {
                 $professors = $course->pluck('professors')->collapse()->unique('id')->values();
 
                 $course->first()->offsetUnset('professors');
