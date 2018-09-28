@@ -138,7 +138,7 @@
             <div class="col s12 offset-m1 m10">
                 <h5><i class="fa fa-comments"></i> 最新評論</h5>
 
-                <template v-for="comment in comments">
+                <template v-for="comment in comments" v-if="!!comment.content">
                     <div class="card hoverable user-select-none" data-comment>
                         <div class="card-content comment-header">
                             <template v-if="null !== comment.user">
