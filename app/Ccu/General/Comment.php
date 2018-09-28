@@ -4,9 +4,12 @@ namespace App\Ccu\General;
 
 use App\Ccu\Core\Entity;
 use App\Ccu\User\User;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Comment extends Entity
 {
+    use SoftDeletes;
+
     /**
      * The table associated with the model.
      *
