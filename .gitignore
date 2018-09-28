@@ -2,6 +2,7 @@ vendor/
 node_modules/
 public/js/
 public/css/
+public/opcache-reset.php
 
 Homestead.yaml
 Homestead.json
