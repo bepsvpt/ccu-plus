@@ -133,12 +133,12 @@
                                     <span v-else class="grey-text text-darken-1">匿名</span>
                                 </div>
 
-                                <a @click="likeComment(comment)" class="green-text" style="font-size: 1.3em;">
+                                <a v-if="!!comment.content" @click="likeComment(comment)" class="green-text" style="font-size: 1.3em;">
                                     <i :class="[comment.liked ? 'fa-thumbs-up' : 'fa-thumbs-o-up']" class="fa"></i>
                                     <span>{{ comment.likes }}</span>
                                 </a>
 
-                                <template v-if="$root.$data.user && ! comment.reply">
+                                <template v-if="$root.$data.user && ! comment.reply && !!comment.content">
                                     <br><br>
 
                                     <a @click="$set('form.subComments[$index]', {}) & $set('comment.reply', true)"><i class="fa fa-reply"></i> 回覆</a>
@@ -148,7 +148,8 @@
                             <div class="col s9 m11">
                                 <blockquote class="pre-line"><!--
                                  --><span>受評教授：{{ professorsJoin(comment) }}</span><br><br><br><!--
-                                 --><span>{{ comment.content }}</span><br><!--
+                                 --><span v-if="!!comment.content">{{ comment.content }}</span><!--
+                                 --><i v-else class="grey-text">應教授或第三方要求，此評論已被刪除</i><br><!--
                                  --><span>　</span><span class="grey-text right" style="font-style: italic;">— <span data-time-humanize="{{ comment.created_at }}"></span></span><!--
                              --></blockquote>
 
@@ -161,7 +162,7 @@
                                                     <span v-else class="grey-text text-darken-1">匿名</span>
                                                 </div>
 
-                                                <a @click="likeComment(subComment)" class="green-text" style="margin-right: 0; font-size: 1.3em;">
+                                                <a v-if="!!subComment.content" @click="likeComment(subComment)" class="green-text" style="margin-right: 0; font-size: 1.3em;">
                                                     <i :class="[subComment.liked ? 'fa-thumbs-up' : 'fa-thumbs-o-up']" class="fa"></i>
                                                     <span>{{ subComment.likes }}</span>
                                                 </a>
@@ -169,7 +170,8 @@
 
                                             <div class="col s10 m11">
                                                 <blockquote class="pre-line"><!--
-                                                 --><span>{{ subComment.content }}</span><br><!--
+                                                 --><span v-if="!!subComment.content">{{ subComment.content }}</span><!--
+                                                 --><i v-else class="grey-text">應教授或第三方要求，此評論已被刪除</i><br><!--
                                                  --><span>　</span><span class="grey-text right" style="font-style: italic;">— <span data-time-humanize="{{ subComment.created_at }}"></span></span><!--
                                              --></blockquote>
                                             </div>
