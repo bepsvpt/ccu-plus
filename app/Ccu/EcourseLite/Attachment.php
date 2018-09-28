@@ -26,6 +26,7 @@ class Attachment extends Core
             $promises[] = $this->client->getAsync(self::CONTENT.$row->href, [
                 'http_errors' => false,
                 'cookies' => $this->jar,
+                'verify' => false,
             ]);
         }
 

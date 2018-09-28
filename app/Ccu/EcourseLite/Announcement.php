@@ -33,6 +33,7 @@ class Announcement extends Core
                 'query' => [
                     'a_id' => substr(strrchr(strstr($row->find('a', 0)->outertext, '&system', true), '='), 1),
                 ],
+                'verify' => false,
             ]);
         }
 

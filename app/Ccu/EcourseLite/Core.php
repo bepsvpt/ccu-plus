@@ -53,6 +53,7 @@ abstract class Core
         $response = $this->client->get(self::SIGN_IN, [
             'allow_redirects' => false,
             'cookies' => $this->jar,
+            'verify' => false,
         ]);
 
         if (! str_contains($response->getHeaderLine('location'), 'Courses_Admin')) {
@@ -76,6 +77,7 @@ abstract class Core
                 'pass' => decrypt(Session::get('ccu.sso.password')),
                 'ver' => 'C',
             ],
+            'verify' => false,
         ]);
 
         if (! str_contains($response->getHeaderLine('location'), 'Courses_Admin')) {
@@ -101,6 +103,7 @@ abstract class Core
 
         $response = $_this->client->get(static::LISTS, [
             'cookies' => $_this->jar,
+            'verify' => false,
         ]);
 
         return $_this->parseLists($response->getBody()->getContents());
@@ -119,6 +122,7 @@ abstract class Core
                 'query' => [
                     'courseid' => $this->courseId,
                 ],
+                'verify' => false,
             ]);
 
             Session::put('ccu.ecourse.courseId', $this->courseId);

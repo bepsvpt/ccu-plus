@@ -36,6 +36,7 @@ class Homework extends Core
                     'work_id' => $id,
                     'action' => 'showwork',
                 ],
+                'verify' => false,
             ]);
             $promises['submitted'][] = $this->client->getAsync(self::LISTS, [
                 'cookies' => $this->jar,
@@ -43,6 +44,7 @@ class Homework extends Core
                     'work_id' => $id,
                     'action' => 'seemywork',
                 ],
+                'verify' => false,
             ]);
         }
 
