@@ -4,12 +4,9 @@ namespace App\Ccu\General;
 
 use App\Ccu\Core\Entity;
 use App\Ccu\User\User;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Comment extends Entity
 {
-    use SoftDeletes;
-
     /**
      * The table associated with the model.
      *
@@ -77,6 +74,21 @@ class Comment extends Entity
         }
 
         return $this->likes()->where('user_id', \Auth::guard()->user()->getAuthIdentifier())->exists();
+    }
+
+    /**
+     * Get the comment's user_id attribute.
+     *
+     * @param int $value
+     * @return int|null
+     */
+    public function getContentAttribute($value)
+    {
+        if (is_null($this->getAttribute('deleted_at'))) {
+            return $value;
+        }
+
+        return null;
     }
 
     /**
